@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сетевая шпаргалка</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0;
+    background: #f4f6f9;
+    color: #1f2933;
+    line-height: 1.55;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: #fff;
+    padding: 28px 20px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 6px; font-size: 26px; }
+  header p { margin: 0; opacity: 0.9; font-size: 14px; }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 18px 12px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav button {
+    padding: 10px 16px;
+    border: 2px solid #2563eb;
+    background: #fff;
+    color: #2563eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  nav button:hover { background: #e0ecff; }
+  nav button.active {
+    background: #2563eb;
+    color: #fff;
+  }
+  main {
+    max-width: 960px;
+    margin: 24px auto;
+    padding: 0 16px 60px;
+  }
+  .tab {
+    display: none;
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    animation: fade 0.25s ease;
+  }
+  .tab.active { display: block; }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  h2 {
+    margin-top: 0;
+    color: #1e3a8a;
+    border-bottom: 2px solid #e0ecff;
+    padding-bottom: 8px;
+  }
+  h3 { color: #1e40af; margin-bottom: 6px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #eff6ff; color: #1e3a8a; }
+  tr:nth-child(even) td { background: #fafbfd; }
+  code {
+    background: #eef2f7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 13px;
+    color: #b91c1c;
+  }
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 14px 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  .os-block {
+    background: #f8fafc;
+    border-left: 4px solid #2563eb;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .os-block strong { color: #1e3a8a; }
+  .note {
+    background: #fff7ed;
+    border-left: 4px solid #f59e0b;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Сетевая шпаргалка</h1>
+  <p>IP · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы (Windows · macOS · Linux)</p>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('info', this)">Общая информация</button>
+  <button onclick="showTab('diag', this)">Диагностика сети</button>
+  <button onclick="showTab('http', this)">HTTP vs HTTPS</button>
+  <button onclick="showTab('servers', this)">Серверы</button>
+  <button onclick="showTab('router', this)">Маршрутизатор</button>
+</nav>
+
+<main>
+
+  <!-- ========== ОБЩАЯ ИНФОРМАЦИЯ ========== -->
+  <section id="info" class="tab active">
+    <h2>Общая информация</h2>
+    <p>Базовые понятия, которые нужны для понимания любой сети — от домашней до корпоративной.</p>
+
+    <table>
+      <tr><th>Понятие</th><th>Определение</th><th>Пример</th></tr>
+      <tr>
+        <td><strong>IP-адрес</strong></td>
+        <td>Уникальный числовой адрес устройства в сети. Бывает IPv4 (32 бита) и IPv6 (128 бит).</td>
+        <td><code>192.168.1.10</code></td>
+      </tr>
+      <tr>
+        <td><strong>Маска подсети</strong></td>
+        <td>Определяет, какая часть IP-адреса относится к сети, а какая — к хосту. Часто записывается как префикс <code>/24</code>.</td>
+        <td><code>255.255.255.0</code> = <code>/24</code></td>
+      </tr>
+      <tr>
+        <td><strong>Шлюз (Default Gateway)</strong></td>
+        <td>IP-адрес устройства (обычно роутера), через которое компьютер выходит в другие сети, включая интернет.</td>
+        <td><code>192.168.1.1</code></td>
+      </tr>
+      <tr>
+        <td><strong>DNS</strong></td>
+        <td>Domain Name System — система, преобразующая понятные имена в IP-адреса.</td>
+        <td><code>google.com</code> → <code>142.250.74.14</code></td>
+      </tr>
+    </table>
+
+    <h3>Как посмотреть свои параметры</h3>
+    <div class="os-block"><strong>Windows:</strong> <code>ipconfig /all</code></div>
+    <div class="os-block"><strong>macOS:</strong> <code>ifconfig</code> или <code>ipconfig getifaddr en0</code></div>
+    <div class="os-block"><strong>Linux:</strong> <code>ip addr</code> или <code>ifconfig -a</code></div>
+
+    <h3>Диапазоны частных (локальных) адресов</h3>
+    <ul>
+      <li><code>10.0.0.0/8</code> — крупные корпоративные сети</li>
+      <li><code>172.16.0.0/12</code> — средние сети</li>
+      <li><code>192.168.0.0/16</code> — домашние и офисные сети</li>
+    </ul>
+  </section>
+
+  <!-- ========== ДИАГНОСТИКА СЕТИ ========== -->
+  <section id="diag" class="tab">
+    <h2>Диагностика сети</h2>
+    <p>Основные команды для проверки соединения и поиска проблем. Приведены для Windows, macOS и Linux.</p>
+
+    <h3>Ping — проверка доступности узла</h3>
+    <div class="os-block"><strong>Windows:</strong> <code>ping 8.8.8.8</code> (по умолчанию 4 пакета)</div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>ping 8.8.8.8</code> (бесконечно, остановить <code>Ctrl+C</code>)</div>
+    <p>Показывает, отвечает ли узел, и время отклика (RTT).</p>
+
+    <h3>Traceroute / Tracert — маршрут до узла</h3>
+    <div class="os-block"><strong>Windows:</strong> <code>tracert google.com</code></div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>traceroute google.com</code></div>
+    <p>Показывает все промежуточные маршрутизаторы (хопы) на пути к цели.</p>
+
+    <h3>NSLookup / Dig — проверка DNS</h3>
+    <div class="os-block"><strong>Windows / macOS / Linux:</strong> <code>nslookup google.com</code></div>
+    <div class="os-block"><strong>macOS / Linux (расширенно):</strong> <code>dig google.com</code></div>
+    <p>Проверяет, правильно ли имя домена преобразуется в IP.</p>
+
+    <h3>Netstat / SS — соединения и порты</h3>
+    <div class="os-block"><strong>Windows:</strong> <code>netstat -an</code></div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>netstat -tuln</code> или <code>ss -tuln</code></div>
+    <p>Показывает открытые порты и активные подключения.</p>
+
+    <h3>Проверка конкретного порта</h3>
+    <div class="os-block"><strong>Windows (PowerShell):</strong> <code>Test-NetConnection google.com -Port 443</code></div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>nc -zv google.com 443</code></div>
+
+    <h3>Сброс сетевых настроек (если ничего не помогает)</h3>
+    <div class="os-block"><strong>Windows:</strong> <code>ipconfig /flushdns</code>, <code>ipconfig /release</code> + <code>ipconfig /renew</code></div>
+    <div class="os-block"><strong>macOS:</strong> <code>sudo dscacheutil -flushcache</code></div>
+    <div class="os-block"><strong>Linux:</strong> <code>sudo systemctl restart NetworkManager</code></div>
+
+    <div class="note">
+      <strong>Совет:</strong> если <code>ping 8.8.8.8</code> работает, а сайты не открываются — проблема почти наверняка в DNS.
+    </div>
+  </section>
+
+  <!-- ========== HTTP vs HTTPS ========== -->
+  <section id="http" class="tab">
+    <h2>HTTP vs HTTPS</h2>
+
+    <h3>Определения</h3>
+    <p><strong>HTTP</strong> (HyperText Transfer Protocol) — протокол передачи гипертекста. Передаёт данные между браузером и сервером <em>в открытом виде</em>.</p>
+    <p><strong>HTTPS</strong> (HTTP Secure) — тот же HTTP, но работающий поверх шифрования TLS/SSL. Данные передаются зашифрованными.</p>
+
+    <h3>Ключевые отличия</h3>
+    <table>
+      <tr>
+        <th>Параметр</th>
+        <th>HTTP</th>
+        <th>HTTPS</th>
+      </tr>
+      <tr><td>Порт по умолчанию</td><td>80</td><td>443</td></tr>
+      <tr><td>Шифрование</td><td>Нет, открытый текст</td><td>Да, TLS/SSL</td></tr>
+      <tr><td>Защита от перехвата</td><td>Уязвим (MITM, сниффинг)</td><td>Защищён</td></tr>
+      <tr><td>Аутентификация сервера</td><td>Нет</td><td>Да, через сертификат</td></tr>
+      <tr><td>Целостность данных</td><td>Не гарантируется</td><td>Контролируется</td></tr>
+      <tr><td>Скорость</td><td>Чуть быстрее (нет шифрования)</td><td>Незначительно медленнее</td></tr>
+      <tr><td>Современный статус</td><td>Устаревший</td><td>Стандарт де-факто</td></tr>
+    </table>
+
+    <h3>Что даёт HTTPS</h3>
+    <ul>
+      <li><strong>Шифрование</strong> — пароли, карты, переписка не видны провайдеру и злоумышленнику.</li>
+      <li><strong>Аутентификацию</strong> — сертификат подтверждает, что вы на настоящем сайте, а не на фишинговой копии.</li>
+      <li><strong>Целостность</strong> — данные нельзя незаметно подменить по пути.</li>
+    </ul>
+
+    <h3>Проверка сертификата в терминале</h3>
+    <div class="os-block"><strong>Windows / macOS / Linux:</strong> <code>curl -v https://example.com</code></div>
+    <div class="os-block"><strong>Открыть сертификат:</strong> <code>openssl s_client -connect example.com:443 -servername example.com</code></div>
+
+    <div class="note">
+      HTTPS — это не «отдельный протокол», а HTTP поверх TLS. Порт 443 и «замочек» в браузере — просто внешние признаки.
+    </div>
+  </section>
+
+  <!-- ========== СЕРВЕРЫ ========== -->
+  <section id="servers" class="tab">
+    <h2>Серверы</h2>
+
+    <h3>Что такое сервер</h3>
+    <p><strong>Сервер</strong> — это компьютер (или программа), который предоставляет ресурсы, данные или сервисы другим устройствам — <em>клиентам</em> — по сети. Клиент отправляет запрос, сервер его обрабатывает и возвращает ответ.</p>
+    <p>Типы серверов: веб-сервер (Apache, Nginx), файловый (SMB, FTP), почтовый, базы данных (MySQL, PostgreSQL), DNS, игровой и т.д.</p>
+
+    <h3>Основные порты серверных сервисов</h3>
+    <table>
+      <tr><th>Сервис</th><th>Порт</th><th>Назначение</th></tr>
+      <tr><td>HTTP</td><td>80</td><td>Веб без шифрования</td></tr>
+      <tr><td>HTTPS</td><td>443</td><td>Веб с шифрованием</td></tr>
+      <tr><td>SSH</td><td>22</td><td>Удалённое управление Linux</td></tr>
+      <tr><td>RDP</td><td>3389</td><td>Удалённый рабочий стол Windows</td></tr>
+      <tr><td>MySQL</td><td>3306</td><td>База данных MySQL</td></tr>
+      <tr><td>PostgreSQL</td><td>5432</td><td>База данных PostgreSQL</td></tr>
+      <tr><td>DNS</td><td>53</td><td>Разрешение имён</td></tr>
+      <tr><td>SMB</td><td>445</td><td>Сетевые папки Windows</td></tr>
+    </table>
+
+    <h3>Как подключиться к серверу</h3>
+    <div class="os-block"><strong>Linux / macOS:</strong> <code>ssh user@server_ip</code></div>
+    <div class="os-block"><strong>Windows (PowerShell 10+):</strong> <code>ssh user@server_ip</code></div>
+    <div class="os-block"><strong>Windows (GUI):</strong> PuTTY, MobaXterm или WinSCP</div>
+    <p>Для Windows-серверов — RDP-клиент <code>mstsc</code> (встроен в Windows) или Microsoft Remote Desktop на macOS.</p>
+
+    <h3>Как проверить доступность сервера и порта</h3>
+    <div class="os-block"><strong>Пинг:</strong> <code>ping server_ip</code></div>
+    <div class="os-block"><strong>Порт (macOS / Linux):</strong> <code>nc -zv server_ip 443</code></div>
+    <div class="os-block"><strong>Порт (Windows PowerShell):</strong> <code>Test-NetConnection server_ip -Port 443</code></div>
+    <div class="os-block"><strong>HTTP-ответ:</strong> <code>curl -I https://server_ip</code></div>
+
+    <h3>Просмотр открытых портов на самом сервере</h3>
+    <div class="os-block"><strong>Linux:</strong> <code>ss -tuln</code> или <code>netstat -tuln</code></div>
+    <div class="os-block"><strong>Windows:</strong> <code>netstat -an</code></div>
+
+    <h3>Базовые принципы работы с сервером</h3>
+    <ul>
+      <li>Никогда не работайте под <code>root</code> постоянно — используйте <code>sudo</code> и отдельного пользователя.</li>
+      <li>SSH-ключи безопаснее паролей: <code>ssh-keygen</code> → <code>ssh-copy-id user@server</code>.</li>
+      <li>Обновляйте систему: <code>sudo apt update &amp;&amp; sudo apt upgrade</code> (Debian/Ubuntu) или <code>sudo dnf upgrade</code> (RHEL/Fedora).</li>
+      <li>Проверяйте логи: <code>journalctl -xe</code>, <code>tail -f /var/log/syslog</code>.</li>
+      <li>Для Windows — Event Viewer и <code>Get-EventLog</code> в PowerShell.</li>
+    </ul>
+  </section>
+
+  <!-- ========== МАРШРУТИЗАТОР ========== -->
+  <section id="router" class="tab">
+    <h2>Маршрутизатор</h2>
+
+    <h3>Что такое маршрутизатор</h3>
+    <p><strong>Маршрутизатор (router)</strong> — устройство, которое соединяет разные сети и направляет пакеты между ними на основе <em>таблицы маршрутизации</em>. Домашний роутер — это маршрутизатор + коммутатор + точка доступа Wi-Fi в одном корпусе.</p>
+
+    <h3>Основные команды (на примере Cisco IOS)</h3>
+    <table>
+      <tr><th>Задача</th><th>Команда</th></tr>
+      <tr><td>Вход в привилегированный режим</td><td><code>enable</code></td></tr>
+      <tr><td>Режим конфигурации</td><td><code>configure terminal</code></td></tr>
+      <tr><td>Просмотр таблицы маршрутизации</td><td><code>show ip route</code></td></tr>
+      <tr><td>Добавить статический маршрут</td><td><code>ip route &lt;сеть&gt; &lt;маска&gt; &lt;шлюз&gt;</code></td></tr>
+      <tr><td>Сохранить конфигурацию</td><td><code>copy running-config startup-config</code></td></tr>
+      <tr><td>Просмотр интерфейсов</td><td><code>show ip interface brief</code></td></tr>
+      <tr><td>Список VLAN</td><td><code>show vlan brief</code></td></tr>
+    </table>
+
+    <h3>Просмотр портов и интерфейсов</h3>
+    <div class="os-block"><strong>Cisco:</strong> <code>show interfaces status</code>, <code>show ip interface brief</code></div>
+    <div class="os-block"><strong>MikroTik:</strong> <code>/interface print</code>, <code>/ip address print</code></div>
+    <div class="os-block"><strong>Linux-роутер:</strong> <code>ip link show</code>, <code>ip addr</code>, <code>ss -tuln</code></div>
+    <div class="os-block"><strong>Windows-роутер (RRAS):</strong> <code>Get-NetAdapter</code>, <code>Get-NetIPAddress</code>, <code>netstat -an</code></div>
+
+    <h3>Настройка VLAN (пример на Cisco)</h3>
+    <pre><code>! Создаём VLAN 10
+vlan 10
+ name Office
+ exit
+
+! Назначаем порт в VLAN
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 10
+ exit
+
+! Проверка
+show vlan brief
+show interfaces status</code></pre>
+
+    <h3>Транковый порт (передача нескольких VLAN)</h3>
+    <pre><code>interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30
+ exit</code></pre>
+
+    <h3>MikroTik: VLAN через bridge</h3>
+    <pre><code>/interface bridge vlan
+add bridge=bridge1 tagged=ether1 untagged=ether2 vlan-ids=10
+
+/interface bridge port
+set [find interface=ether2] pvid=10</code></pre>
+
+    <h3>Linux: VLAN через iproute2</h3>
+    <pre><code>sudo ip link add link eth0 name eth0.10 type vlan id 10
+sudo ip addr add 192.168.10.1/24 dev eth0.10
+sudo ip link set eth0.10 up</code></pre>
+
+    <div class="note">
+      <strong>Важно:</strong> команды VLAN сильно зависят от производителя. Указанные примеры — для Cisco IOS (учебный стандарт), MikroTik RouterOS и Linux-роутеров. На домашних роутерах (TP-Link, ASUS, Keenetic) VLAN обычно настраивается через веб-интерфейс, а не через CLI.
+    </div>
+  </section>
+
+</main>
+
+<footer>Сетевая шпаргалка · Статический сайт для GitHub Pages</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
