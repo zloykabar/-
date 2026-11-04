@@ -36,24 +36,10 @@
     padding: 0 12px 40px;
   }
 
-  /* ===== ГЛАВНЫЙ ЭКРАН ===== */
-  .home-screen {
-    display: block;
-    animation: fade 0.25s ease;
-  }
+  .home-screen { display: block; animation: fade 0.25s ease; }
   .home-screen.hidden { display: none; }
-  .home-title {
-    text-align: center;
-    color: #1e3a8a;
-    margin: 8px 0 4px;
-    font-size: 20px;
-  }
-  .home-subtitle {
-    text-align: center;
-    color: #64748b;
-    font-size: 13px;
-    margin: 0 0 20px;
-  }
+  .home-title { text-align: center; color: #1e3a8a; margin: 8px 0 4px; font-size: 20px; }
+  .home-subtitle { text-align: center; color: #64748b; font-size: 13px; margin: 0 0 20px; }
   .cards-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -75,11 +61,7 @@
     min-height: 78px;
     touch-action: manipulation;
   }
-  .card:hover {
-    border-color: #2563eb;
-    box-shadow: 0 6px 18px rgba(37,99,235,0.15);
-    transform: translateY(-2px);
-  }
+  .card:hover { border-color: #2563eb; box-shadow: 0 6px 18px rgba(37,99,235,0.15); transform: translateY(-2px); }
   .card:active { transform: scale(0.985); }
   .card-icon {
     flex-shrink: 0;
@@ -93,25 +75,10 @@
     font-size: 26px;
   }
   .card-body { flex: 1; min-width: 0; }
-  .card-title {
-    font-weight: 700;
-    font-size: 16px;
-    color: #1e3a8a;
-    margin-bottom: 3px;
-  }
-  .card-desc {
-    font-size: 12.5px;
-    color: #64748b;
-    line-height: 1.4;
-  }
-  .card-arrow {
-    flex-shrink: 0;
-    color: #94a3b8;
-    font-size: 22px;
-    font-weight: 700;
-  }
+  .card-title { font-weight: 700; font-size: 16px; color: #1e3a8a; margin-bottom: 3px; }
+  .card-desc { font-size: 12.5px; color: #64748b; line-height: 1.4; }
+  .card-arrow { flex-shrink: 0; color: #94a3b8; font-size: 22px; font-weight: 700; }
 
-  /* ===== СТРАНИЦЫ РАЗДЕЛОВ ===== */
   .page {
     display: none;
     background: #fff;
@@ -264,10 +231,7 @@
     animation: modalFade 0.2s ease;
   }
   .modal-overlay.open { display: flex; }
-  @keyframes modalFade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  @keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
   .modal-content {
     background: #fff;
     border-radius: 14px;
@@ -339,11 +303,7 @@
     margin: 0;
     flex-shrink: 0;
   }
-  .cidr-wrap {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    max-height: none;
-  }
+  .cidr-wrap { overflow: auto; -webkit-overflow-scrolling: touch; max-height: none; }
   .cidr-table {
     margin: 0;
     font-size: 13px;
@@ -362,11 +322,7 @@
     white-space: nowrap;
     padding: 10px 8px;
   }
-  .cidr-table td {
-    text-align: center;
-    white-space: nowrap;
-    padding: 7px 8px;
-  }
+  .cidr-table td { text-align: center; white-space: nowrap; padding: 7px 8px; }
   .cidr-table td:first-child {
     font-weight: 700;
     color: #1e40af;
@@ -375,15 +331,141 @@
     left: 0;
     z-index: 1;
   }
-  .cidr-table th:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 3;
-    background: #1e3a8a;
-  }
+  .cidr-table th:first-child { position: sticky; left: 0; z-index: 3; background: #1e3a8a; }
   .cidr-table tr:nth-child(even) td { background: #fafbfd; }
   .cidr-table tr:nth-child(even) td:first-child { background: #dbeafe; }
   body.modal-lock { overflow: hidden; }
+
+  /* ===== ФОРМА БАТНИКА ===== */
+  .form-row { margin-bottom: 16px; }
+  .form-row label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 6px;
+  }
+  .form-row input[type="text"],
+  .form-row select,
+  .form-row textarea {
+    width: 100%;
+    padding: 11px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    color: #1f2933;
+    transition: border-color 0.15s ease;
+  }
+  .form-row input[type="text"]:focus,
+  .form-row select:focus,
+  .form-row textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+  }
+  .form-row textarea {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 220px;
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: auto;
+  }
+  .form-hint {
+    font-size: 12px;
+    color: #64748b;
+    margin: 4px 0 0;
+  }
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .checkbox-row input { width: 18px; height: 18px; accent-color: #2563eb; cursor: pointer; }
+
+  .templates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 6px 0 16px;
+  }
+  .tmpl-btn {
+    padding: 8px 12px;
+    min-height: 40px;
+    background: #eff6ff;
+    border: 2px solid #dbeafe;
+    color: #1e3a8a;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.15s ease;
+  }
+  .tmpl-btn:hover { background: #dbeafe; }
+  .tmpl-btn:active { transform: scale(0.97); }
+
+  .btn-generate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 22px;
+    min-height: 52px;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+    touch-action: manipulation;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .btn-generate:hover { background: #15803d; }
+  .btn-generate:active { transform: scale(0.98); }
+  .btn-generate::before { content: "💾"; font-size: 18px; }
+
+  .preview-wrap {
+    margin-top: 20px;
+    display: none;
+  }
+  .preview-wrap.show { display: block; }
+  .preview-wrap h4 { margin-top: 0; }
+  .preview {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    max-height: 320px;
+    overflow: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .status {
+    display: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-top: 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .status.show { display: block; }
+  .status.ok { background: #dcfce7; color: #166534; border-left: 4px solid #16a34a; }
+  .status.err { background: #fee2e2; color: #991b1b; border-left: 4px solid #dc2626; }
 
   /* ===== АДАПТИВ ===== */
   @media (min-width: 600px) {
@@ -434,7 +516,7 @@
 
 <header>
   <h1>Сетевая шпаргалка</h1>
-  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды</p>
+  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды · Батник</p>
 </header>
 
 <main>
@@ -504,6 +586,15 @@
         <div class="card-body">
           <div class="card-title">Команды</div>
           <div class="card-desc">PowerShell и CMD: установка, управление</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#batmaker" onclick="navigateTo('batmaker'); return false;">
+        <div class="card-icon">📄</div>
+        <div class="card-body">
+          <div class="card-title">Создать батник</div>
+          <div class="card-desc">Введите команды — получите .bat-файл</div>
         </div>
         <div class="card-arrow">›</div>
       </a>
@@ -1016,6 +1107,69 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
     </div>
   </section>
 
+  <!-- ========== СОЗДАТЬ БАТНИК ========== -->
+  <section id="batmaker" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
+    <h2>Создать батник</h2>
+    <p>Напишите текст того, что должен делать <code>.bat</code>-файл, и нажмите «Скачать .bat». Файл будет сохранён на ваш компьютер.</p>
+
+    <div class="form-row">
+      <label for="batName">Имя файла</label>
+      <input type="text" id="batName" value="script" placeholder="Например: diag" autocomplete="off">
+      <p class="form-hint">Расширение <code>.bat</code> добавится автоматически. Без пробелов и спецсимволов — лучше латиницей.</p>
+    </div>
+
+    <div class="form-row">
+      <label for="batEncoding">Кодировка</label>
+      <select id="batEncoding">
+        <option value="utf-8">UTF-8 (универсальная, современный Windows)</option>
+        <option value="windows-1251" selected>Windows-1251 (кириллица в CMD, старые Windows)</option>
+      </select>
+      <p class="form-hint">Если в батнике кириллица и при запуске видны «кракозябры» — попробуйте Windows-1251. UTF-8 обычно работает в Windows 10/11.</p>
+    </div>
+
+    <div class="form-row">
+      <label>Быстрые шаблоны</label>
+      <div class="templates">
+        <button class="tmpl-btn" onclick="loadTemplate('hello')">👋 Приветствие</button>
+        <button class="tmpl-btn" onclick="loadTemplate('ping')">📡 Ping</button>
+        <button class="tmpl-btn" onclick="loadTemplate('flushdns')">🧹 Очистка DNS</button>
+        <button class="tmpl-btn" onclick="loadTemplate('winget')">📦 Установка winget</button>
+        <button class="tmpl-btn" onclick="loadTemplate('netoff')">🚫 Отключить сеть</button>
+        <button class="tmpl-btn" onclick="loadTemplate('backup')">💾 Бэкап папки</button>
+        <button class="tmpl-btn" onclick="loadTemplate('clear')">🗑 Очистить</button>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="batBody">Текст батника</label>
+      <textarea id="batBody" spellcheck="false" placeholder="Введите команды CMD, например:&#10;@echo off&#10;echo Привет!&#10;pause">@echo off
+chcp 65001 >nul
+title Мой скрипт
+echo Привет! Это мой батник.
+pause</textarea>
+      <p class="form-hint">Каждая строка — отдельная команда CMD. <code>@echo off</code> отключает вывод команд, <code>pause</code> оставляет окно открытым.</p>
+    </div>
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="batAdmin">
+      <span>Запросить права администратора при запуске (UAC)</span>
+    </label>
+
+    <button class="btn-generate" onclick="generateBat()">Скачать .bat</button>
+
+    <div class="status" id="batStatus"></div>
+
+    <div class="preview-wrap" id="batPreviewWrap">
+      <h4>Предпросмотр файла</h4>
+      <pre class="preview" id="batPreview"></pre>
+    </div>
+
+    <div class="note" style="margin-top:20px;">
+      <strong>Безопасность:</strong> батник — это исполняемый файл. Не запускайте скрипты из непроверенных источников: они могут удалять файлы, менять настройки системы и устанавливать программы. Сайт лишь формирует текст файла — он ничего не выполняет у вас на компьютере.
+    </div>
+  </section>
+
 </main>
 
 <!-- ========== МОДАЛЬНОЕ ОКНО: ПОЛНАЯ ТАБЛИЦА CIDR ========== -->
@@ -1086,23 +1240,19 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
 <footer>Сетевая шпаргалка · Статический сайт для GitHub Pages</footer>
 
 <script>
-  // ===== Навигация между "страницами" =====
+  // ===== Навигация =====
   function navigateTo(id) {
-    // Скрываем всё
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const home = document.getElementById('home');
     home.classList.add('hidden');
 
     if (id === 'home' || !id) {
-      // Показываем главный экран
       home.classList.remove('hidden');
       history.replaceState(null, '', location.pathname + location.search);
     } else {
-      // Показываем нужную страницу
       const page = document.getElementById(id);
       if (page) {
         page.classList.add('active');
-        // Меняем хеш в адресной строке
         if (location.hash !== '#' + id) {
           history.pushState(null, '', '#' + id);
         }
@@ -1113,31 +1263,23 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Определяем, какую страницу открыть при загрузке
   function handleInitialRoute() {
     const hash = location.hash.replace('#', '');
-    if (hash) {
-      navigateTo(hash);
-    } else {
-      navigateTo('home');
-    }
+    if (hash) navigateTo(hash); else navigateTo('home');
   }
 
-  // Кнопки назад/вперёд браузера
   window.addEventListener('popstate', function () {
     const hash = location.hash.replace('#', '');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const home = document.getElementById('home');
     if (hash) {
-      // Показываем страницу без повторного pushState
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      const home = document.getElementById('home');
       home.classList.add('hidden');
       const page = document.getElementById(hash);
       if (page) page.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('home').classList.remove('hidden');
+      home.classList.remove('hidden');
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // ===== Модальное окно CIDR =====
@@ -1148,24 +1290,256 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
     const body = modal.querySelector('.modal-body');
     if (body) body.scrollTop = 0;
   }
-
   function closeCidrModal() {
     const modal = document.getElementById('cidrModal');
     modal.classList.remove('open');
     document.body.classList.remove('modal-lock');
   }
-
   function closeCidrModalOnBackdrop(event) {
-    if (event.target === event.currentTarget) {
-      closeCidrModal();
+    if (event.target === event.currentTarget) closeCidrModal();
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeCidrModal();
+  });
+
+  // ===== ГЕНЕРАТОР БАТНИКА =====
+  const templates = {
+    hello: {
+      name: 'hello',
+      body: `@echo off
+chcp 65001 >nul
+title Приветствие
+echo ================================
+echo   Привет! Это мой первый батник.
+echo ================================
+echo.
+echo Текущая дата: %date%
+echo Текущее время: %time%
+echo Пользователь: %username%
+echo Компьютер: %computername%
+echo.
+pause`
+    },
+    ping: {
+      name: 'ping_check',
+      body: `@echo off
+chcp 65001 >nul
+title Проверка доступности
+echo Проверяем 8.8.8.8...
+ping -n 4 8.8.8.8
+echo.
+echo Проверяем google.com...
+ping -n 4 google.com
+echo.
+echo Готово.
+pause`
+    },
+    flushdns: {
+      name: 'flush_dns',
+      body: `@echo off
+chcp 65001 >nul
+title Очистка DNS-кэша
+echo Очищаем кэш DNS...
+ipconfig /flushdns
+echo.
+echo Обновляем IP-адрес...
+ipconfig /release
+ipconfig /renew
+echo.
+echo Готово!
+pause`
+    },
+    winget: {
+      name: 'install_apps',
+      body: `@echo off
+chcp 65001 >nul
+title Установка программ через winget
+echo Устанавливаем базовый набор программ...
+echo.
+winget install --id Google.Chrome -e --silent --accept-package-agreements --accept-source-agreements
+winget install --id Mozilla.Firefox -e --silent --accept-package-agreements --accept-source-agreements
+winget install --id VideoLAN.VLC -e --silent --accept-package-agreements --accept-source-agreements
+winget install --id Notepad++.Notepad++ -e --silent --accept-package-agreements --accept-source-agreements
+echo.
+echo Установка завершена!
+pause`
+    },
+    netoff: {
+      name: 'net_off',
+      body: `@echo off
+chcp 65001 >nul
+title Отключение / включение сети
+echo Отключаем сетевой адаптер...
+netsh interface set interface "Ethernet" admin=disable
+echo.
+timeout /t 3 /nobreak >nul
+echo Включаем обратно...
+netsh interface set interface "Ethernet" admin=enable
+echo.
+echo Готово. Проверьте имя адаптера командой: ipconfig
+pause`
+    },
+    backup: {
+      name: 'backup_folder',
+      body: `@echo off
+chcp 65001 >nul
+title Резервное копирование
+set SOURCE=C:\\Users\\%username%\\Documents
+set DEST=D:\\Backup\\%date:~-4%-%date:~3,2%-%date:~0,2%
+echo Копируем из "%SOURCE%" в "%DEST%"...
+if not exist "%DEST%" mkdir "%DEST%"
+xcopy "%SOURCE%" "%DEST%" /E /I /H /Y
+echo.
+echo Бэкап завершён!
+pause`
+    },
+    clear: {
+      name: 'clear_screen',
+      body: `@echo off
+chcp 65001 >nul
+title Новый батник
+echo.
+echo Введите свои команды здесь.
+pause`
     }
+  };
+
+  function loadTemplate(key) {
+    const t = templates[key];
+    if (!t) return;
+    document.getElementById('batName').value = t.name;
+    document.getElementById('batBody').value = t.body;
+    document.getElementById('batStatus').classList.remove('show');
+    document.getElementById('batPreviewWrap').classList.remove('show');
+    document.getElementById('batBody').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      closeCidrModal();
+  function showStatus(msg, type) {
+    const el = document.getElementById('batStatus');
+    el.textContent = msg;
+    el.className = 'status show ' + type;
+  }
+
+  function sanitizeFileName(name) {
+    // Убираем опасные символы, оставляем буквы, цифры, дефис, подчёркивание
+    let clean = (name || 'script').trim();
+    clean = clean.replace(/\.bat$/i, '');
+    clean = clean.replace(/[\\/:*?"<>|\s]+/g, '_');
+    if (!clean) clean = 'script';
+    return clean + '.bat';
+  }
+
+  function encodeToBytes(text, encoding) {
+    if (encoding === 'windows-1251') {
+      // Кодируем в Windows-1251 вручную через карту символов
+      // Браузерный TextEncoder поддерживает только utf-8, поэтому делаем таблицу для кириллицы.
+      const cp1251 = {
+        0x0402:0x80,0x0403:0x81,0x201A:0x82,0x0453:0x83,0x201E:0x84,0x2026:0x85,0x2020:0x86,0x2021:0x87,
+        0x20AC:0x88,0x2030:0x89,0x0409:0x8A,0x2039:0x8B,0x040A:0x8C,0x040C:0x8D,0x040B:0x8E,0x040F:0x8F,
+        0x0452:0x90,0x2018:0x91,0x2019:0x92,0x201C:0x93,0x201D:0x94,0x2022:0x95,0x2013:0x96,0x2014:0x97,
+        0x0408:0x98,0x2122:0x99,0x0459:0x9A,0x203A:0x9B,0x045A:0x9C,0x045C:0x9D,0x045B:0x9E,0x045F:0x9F,
+        0x00A0:0xA0,0x040E:0xA1,0x045E:0xA2,0x0408:0xA3,0x00A4:0xA4,0x0490:0xA5,0x00A6:0xA6,0x00A7:0xA7,
+        0x0401:0xA8,0x00A9:0xA9,0x0404:0xAA,0x00AB:0xAB,0x00AC:0xAC,0x00AD:0xAD,0x00AE:0xAE,0x0407:0xAF,
+        0x00B0:0xB0,0x00B1:0xB1,0x0406:0xB2,0x0456:0xB3,0x0491:0xB4,0x00B5:0xB5,0x00B6:0xB6,0x00B7:0xB7,
+        0x0451:0xB8,0x2116:0xB9,0x0454:0xBA,0x00BB:0xBB,0x0458:0xBC,0x0405:0xBD,0x0455:0xBE,0x0457:0xBF,
+        0x0410:0xC0,0x0411:0xC1,0x0412:0xC2,0x0413:0xC3,0x0414:0xC4,0x0415:0xC5,0x0416:0xC6,0x0417:0xC7,
+        0x0418:0xC8,0x0419:0xC9,0x041A:0xCA,0x041B:0xCB,0x041C:0xCC,0x041D:0xCD,0x041E:0xCE,0x041F:0xCF,
+        0x0420:0xD0,0x0421:0xD1,0x0422:0xD2,0x0423:0xD3,0x0424:0xD4,0x0425:0xD5,0x0426:0xD6,0x0427:0xD7,
+        0x0428:0xD8,0x0429:0xD9,0x042A:0xDA,0x042B:0xDB,0x042C:0xDC,0x042D:0xDD,0x042E:0xDE,0x042F:0xDF,
+        0x0430:0xE0,0x0431:0xE1,0x0432:0xE2,0x0433:0xE3,0x0434:0xE4,0x0435:0xE5,0x0436:0xE6,0x0437:0xE7,
+        0x0438:0xE8,0x0439:0xE9,0x043A:0xEA,0x043B:0xEB,0x043C:0xEC,0x043D:0xED,0x043E:0xEE,0x043F:0xEF,
+        0x0440:0xF0,0x0441:0xF1,0x0442:0xF2,0x0443:0xF3,0x0444:0xF4,0x0445:0xF5,0x0446:0xF6,0x0447:0xF7,
+        0x0448:0xF8,0x0449:0xF9,0x044A:0xFA,0x044B:0xFB,0x044C:0xFC,0x044D:0xFD,0x044E:0xFE,0x044F:0xFF
+      };
+      const bytes = [];
+      for (let i = 0; i < text.length; i++) {
+        const code = text.charCodeAt(i);
+        if (code < 0x80) {
+          bytes.push(code);
+        } else if (cp1251[code] !== undefined) {
+          bytes.push(cp1251[code]);
+        } else {
+          bytes.push(0x3F); // '?'
+        }
+      }
+      return new Uint8Array(bytes);
     }
-  });
+    // UTF-8
+    return new TextEncoder().encode(text);
+  }
+
+  function generateBat() {
+    const nameInput = document.getElementById('batName');
+    const bodyInput = document.getElementById('batBody');
+    const encoding = document.getElementById('batEncoding').value;
+    const needAdmin = document.getElementById('batAdmin').checked;
+
+    const body = bodyInput.value || '';
+    if (!body.trim()) {
+      showStatus('❌ Текст батника пуст — введите хотя бы одну команду.', 'err');
+      return;
+    }
+
+    const fileName = sanitizeFileName(nameInput.value);
+
+    // Формируем финальный текст
+    let content = '';
+    // BOM для UTF-8, чтобы CMD корректно читал кириллицу (только для UTF-8)
+    const bom = encoding === 'utf-8' ? '\uFEFF' : '';
+
+    // Шапка запроса прав администратора
+    let adminHeader = '';
+    if (needAdmin) {
+      adminHeader = `@echo off
+:: --- Автозапрос прав администратора ---
+net session >nul 2>&1
+if %errorLevel% neq 0 (
+    echo Запрос прав администратора...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    exit /b
+)
+:: --- Конец блока UAC ---
+`;
+      // Если пользователь уже начал с @echo off, не дублируем
+      if (/^\s*@echo off/i.test(body)) {
+        adminHeader = `:: --- Автозапрос прав администратора ---
+net session >nul 2>&1
+if %errorLevel% neq 0 (
+    echo Запрос прав администратора...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
+    exit /b
+)
+:: --- Конец блока UAC ---
+`;
+      }
+    }
+
+    content = bom + adminHeader + body;
+    if (!content.endsWith('\n')) content += '\n';
+
+    // Предпросмотр
+    const previewEl = document.getElementById('batPreview');
+    previewEl.textContent = content.replace(/^\uFEFF/, '');
+    document.getElementById('batPreviewWrap').classList.add('show');
+
+    // Формируем и скачиваем файл
+    try {
+      const bytes = encodeToBytes(content, encoding);
+      const blob = new Blob([bytes], { type: 'application/x-bat' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+      showStatus('✅ Файл «' + fileName + '» готов и скачивается. Кодировка: ' + (encoding === 'utf-8' ? 'UTF-8' : 'Windows-1251') + '.', 'ok');
+    } catch (err) {
+      showStatus('❌ Ошибка при создании файла: ' + err.message, 'err');
+    }
+  }
 
   // Инициализация
   handleInitialRoute();
