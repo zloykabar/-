@@ -50,7 +50,7 @@
     color: #fff;
   }
   main {
-    max-width: 960px;
+    max-width: 1080px;
     margin: 24px auto;
     padding: 0 16px 60px;
   }
@@ -73,7 +73,7 @@
     border-bottom: 2px solid #e0ecff;
     padding-bottom: 8px;
   }
-  h3 { color: #1e40af; margin-bottom: 6px; }
+  h3 { color: #1e40af; margin-bottom: 6px; margin-top: 22px; }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -82,7 +82,7 @@
   }
   th, td {
     border: 1px solid #e2e8f0;
-    padding: 10px 12px;
+    padding: 8px 10px;
     text-align: left;
     vertical-align: top;
   }
@@ -130,13 +130,55 @@
     font-size: 12px;
     padding: 20px;
   }
+
+  /* Таблица CIDR */
+  .cidr-wrap {
+    max-height: 620px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin: 12px 0 8px;
+  }
+  .cidr-table {
+    margin: 0;
+    font-size: 13px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  .cidr-table th {
+    position: sticky;
+    top: 0;
+    background: #1e3a8a;
+    color: #fff;
+    z-index: 1;
+    font-weight: 600;
+    text-align: center;
+  }
+  .cidr-table td { text-align: center; white-space: nowrap; }
+  .cidr-table td:first-child {
+    font-weight: 700;
+    color: #1e40af;
+    background: #eff6ff;
+  }
+  .cidr-table tr:nth-child(even) td:first-child { background: #dbeafe; }
+  .cidr-table tr:nth-child(even) td { background: #fafbfd; }
+  .cidr-hint { font-size: 13px; color: #64748b; margin: 0 0 6px; }
+  .badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 6px;
+  }
 </style>
 </head>
 <body>
 
 <header>
   <h1>Сетевая шпаргалка</h1>
-  <p>IP · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы (Windows · macOS · Linux)</p>
+  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы (Windows · macOS · Linux)</p>
 </header>
 
 <nav>
@@ -189,6 +231,97 @@
       <li><code>172.16.0.0/12</code> — средние сети</li>
       <li><code>192.168.0.0/16</code> — домашние и офисные сети</li>
     </ul>
+
+    <!-- ===== МАСКА ПОДСЕТИ ===== -->
+    <h3>Маска подсети — подробнее</h3>
+    <p><strong>Маска подсети</strong> — это 32-битное число, которое «накладывается» на IP-адрес и отделяет сетевую часть от хостовой. В двоичном виде единицы идут подряд слева, а нули — справа:</p>
+
+    <pre><code>IP:    192.168.1.10   → 11000000.10101000.00000001.00001010
+Маска: 255.255.255.0  → 11111111.11111111.11111111.00000000
+                         └──────── сеть ───────┘└─ хост ─┘
+Результат (сеть):       192.168.1.0   — адрес самой сети
+Broadcast:              192.168.1.255 — широковещательный
+Хосты:                  192.168.1.1 … 192.168.1.254 (254 шт.)</code></pre>
+
+    <h4>Как считать в уме</h4>
+    <ul>
+      <li>Количество адресов в подсети = <strong>2<sup>(32 − префикс)</sup></strong>.</li>
+      <li>Количество <em>используемых</em> хостов = <strong>2<sup>(32 − префикс)</sup> − 2</strong> (адрес сети и broadcast нельзя назначить хостам).</li>
+      <li>Префикс <code>/24</code> → 2<sup>8</sup> = 256 адресов → 254 хоста.</li>
+      <li>Префикс <code>/30</code> → 2<sup>2</sup> = 4 адреса → 2 хоста (типично для линков «точка-точка»).</li>
+    </ul>
+
+    <h4>Маска с подстановочным знаком (Wildcard Mask)</h4>
+    <p>Используется в ACL и OSPF на оборудовании Cisco. Это <strong>инверсия обычной маски</strong>: где в маске <code>1</code> — в wildcard <code>0</code>, и наоборот.</p>
+    <div class="os-block">
+      <strong>Пример:</strong> маска <code>255.255.255.0</code> → wildcard <code>0.0.0.255</code><br>
+      <strong>Формула:</strong> <code>wildcard = 255.255.255.255 − маска</code>
+    </div>
+
+    <h4>Полная таблица CIDR</h4>
+    <p class="cidr-hint">Прокрутите таблицу внутри блока. Значения приведены для IPv4.</p>
+
+    <div class="cidr-wrap">
+      <table class="cidr-table">
+        <thead>
+          <tr>
+            <th>CIDR</th>
+            <th>Маска подсети</th>
+            <th>Маска с подстановочным знаком</th>
+            <th>Всего IP-адресов</th>
+            <th>Используемых IP-адресов</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>/32</td><td>255.255.255.255</td><td>0.0.0.0</td><td>1</td><td>1</td></tr>
+          <tr><td>/31</td><td>255.255.255.254</td><td>0.0.0.1</td><td>2</td><td>2*</td></tr>
+          <tr><td>/30</td><td>255.255.255.252</td><td>0.0.0.3</td><td>4</td><td>2</td></tr>
+          <tr><td>/29</td><td>255.255.255.248</td><td>0.0.0.7</td><td>8</td><td>6</td></tr>
+          <tr><td>/28</td><td>255.255.255.240</td><td>0.0.0.15</td><td>16</td><td>14</td></tr>
+          <tr><td>/27</td><td>255.255.255.224</td><td>0.0.0.31</td><td>32</td><td>30</td></tr>
+          <tr><td>/26</td><td>255.255.255.192</td><td>0.0.0.63</td><td>64</td><td>62</td></tr>
+          <tr><td>/25</td><td>255.255.255.128</td><td>0.0.0.127</td><td>128</td><td>126</td></tr>
+          <tr><td>/24</td><td>255.255.255.0</td><td>0.0.0.255</td><td>256</td><td>254</td></tr>
+          <tr><td>/23</td><td>255.255.254.0</td><td>0.0.1.255</td><td>512</td><td>510</td></tr>
+          <tr><td>/22</td><td>255.255.252.0</td><td>0.0.3.255</td><td>1 024</td><td>1 022</td></tr>
+          <tr><td>/21</td><td>255.255.248.0</td><td>0.0.7.255</td><td>2 048</td><td>2 046</td></tr>
+          <tr><td>/20</td><td>255.255.240.0</td><td>0.0.15.255</td><td>4 096</td><td>4 094</td></tr>
+          <tr><td>/19</td><td>255.255.224.0</td><td>0.0.31.255</td><td>8 192</td><td>8 190</td></tr>
+          <tr><td>/18</td><td>255.255.192.0</td><td>0.0.63.255</td><td>16 384</td><td>16 382</td></tr>
+          <tr><td>/17</td><td>255.255.128.0</td><td>0.0.127.255</td><td>32 768</td><td>32 766</td></tr>
+          <tr><td>/16</td><td>255.255.0.0</td><td>0.0.255.255</td><td>65 536</td><td>65 534</td></tr>
+          <tr><td>/15</td><td>255.254.0.0</td><td>0.1.255.255</td><td>131 072</td><td>131 070</td></tr>
+          <tr><td>/14</td><td>255.252.0.0</td><td>0.3.255.255</td><td>262 144</td><td>262 142</td></tr>
+          <tr><td>/13</td><td>255.248.0.0</td><td>0.7.255.255</td><td>524 288</td><td>524 286</td></tr>
+          <tr><td>/12</td><td>255.240.0.0</td><td>0.15.255.255</td><td>1 048 576</td><td>1 048 574</td></tr>
+          <tr><td>/11</td><td>255.224.0.0</td><td>0.31.255.255</td><td>2 097 152</td><td>2 097 150</td></tr>
+          <tr><td>/10</td><td>255.192.0.0</td><td>0.63.255.255</td><td>4 194 304</td><td>4 194 302</td></tr>
+          <tr><td>/9</td><td>255.128.0.0</td><td>0.127.255.255</td><td>8 388 608</td><td>8 388 606</td></tr>
+          <tr><td>/8</td><td>255.0.0.0</td><td>0.255.255.255</td><td>16 777 216</td><td>16 777 214</td></tr>
+          <tr><td>/7</td><td>254.0.0.0</td><td>1.255.255.255</td><td>33 554 432</td><td>33 554 430</td></tr>
+          <tr><td>/6</td><td>252.0.0.0</td><td>3.255.255.255</td><td>67 108 864</td><td>67 108 862</td></tr>
+          <tr><td>/5</td><td>248.0.0.0</td><td>7.255.255.255</td><td>134 217 728</td><td>134 217 726</td></tr>
+          <tr><td>/4</td><td>240.0.0.0</td><td>15.255.255.255</td><td>268 435 456</td><td>268 435 454</td></tr>
+          <tr><td>/3</td><td>224.0.0.0</td><td>31.255.255.255</td><td>536 870 912</td><td>536 870 910</td></tr>
+          <tr><td>/2</td><td>192.0.0.0</td><td>63.255.255.255</td><td>1 073 741 824</td><td>1 073 741 822</td></tr>
+          <tr><td>/1</td><td>128.0.0.0</td><td>127.255.255.255</td><td>2 147 483 648</td><td>2 147 483 646</td></tr>
+          <tr><td>/0</td><td>0.0.0.0</td><td>255.255.255.255</td><td>4 294 967 296</td><td>4 294 967 294</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>* /31</strong> — особый случай: по RFC 3021 такая подсеть используется на линках «точка-точка», и <em>оба</em> адреса назначаемы (адрес сети и broadcast не резервируются).<br>
+      <strong>/32</strong> — маска для одного конкретного хоста (host route), например, в статических маршрутах или NAT.
+    </div>
+
+    <h4>Быстрые примеры</h4>
+    <table>
+      <tr><th>Запись</th><th>Сеть</th><th>Первый хост</th><th>Последний хост</th><th>Broadcast</th></tr>
+      <tr><td><code>192.168.1.10/24</code></td><td>192.168.1.0</td><td>192.168.1.1</td><td>192.168.1.254</td><td>192.168.1.255</td></tr>
+      <tr><td><code>10.0.0.5/30</code></td><td>10.0.0.4</td><td>10.0.0.5</td><td>10.0.0.6</td><td>10.0.0.7</td></tr>
+      <tr><td><code>172.16.32.1/20</code></td><td>172.16.32.0</td><td>172.16.32.1</td><td>172.16.47.254</td><td>172.16.47.255</td></tr>
+    </table>
   </section>
 
   <!-- ========== ДИАГНОСТИКА СЕТИ ========== -->
