@@ -6,7 +6,11 @@
 <meta name="theme-color" content="#1e3a8a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Сетевая шпаргалка">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Сетевая шпаргалка">
 <meta name="format-detection" content="telephone=no">
+<meta name="description" content="Сетевая шпаргалка: IP, маски, диагностика, HTTP/HTTPS, серверы, роутеры, VoIP, команды, генератор батников, модель OSI.">
 <title>Сетевая шпаргалка</title>
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -49,6 +53,16 @@
   .card-title { font-weight: 700; font-size: 16px; color: #1e3a8a; margin-bottom: 3px; }
   .card-desc { font-size: 12.5px; color: #64748b; line-height: 1.4; }
   .card-arrow { flex-shrink: 0; color: #94a3b8; font-size: 22px; font-weight: 700; }
+
+  /* Спецкарточка установки */
+  .card.install-card {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 2px solid #a7f3d0;
+  }
+  .card.install-card:hover { border-color: #10b981; box-shadow: 0 6px 18px rgba(16,185,129,0.2); }
+  .card.install-card .card-icon { background: linear-gradient(135deg, #a7f3d0, #6ee7b7); }
+  .card.install-card .card-title { color: #065f46; }
+  .card.install-card .card-arrow { color: #059669; }
 
   .page {
     display: none; background: #fff; border-radius: 12px; padding: 18px 16px;
@@ -244,70 +258,32 @@
     margin-bottom: 20px;
   }
   .ai-box h4 {
-    margin: 0 0 8px;
-    color: #075985;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    margin: 0 0 8px; color: #075985; font-size: 15px;
+    display: flex; align-items: center; gap: 6px;
   }
   .ai-box textarea {
-    width: 100%;
-    padding: 11px 12px;
-    font-size: 14px;
-    font-family: inherit;
-    border: 2px solid #bae6fd;
-    border-radius: 8px;
-    background: #fff;
-    color: #1f2933;
-    min-height: 70px;
-    resize: vertical;
+    width: 100%; padding: 11px 12px; font-size: 14px; font-family: inherit;
+    border: 2px solid #bae6fd; border-radius: 8px; background: #fff;
+    color: #1f2933; min-height: 70px; resize: vertical;
   }
   .ai-box textarea:focus { outline: none; border-color: #0284c7; }
   .btn-ai {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 13px 22px;
-    min-height: 48px;
-    background: #0284c7;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-    touch-action: manipulation;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 22px; min-height: 48px; background: #0284c7; color: #fff;
+    border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; width: 100%; margin-top: 10px; touch-action: manipulation;
     transition: background 0.15s ease, transform 0.1s ease;
   }
   .btn-ai:hover { background: #0369a1; }
   .btn-ai:active { transform: scale(0.98); }
-  .ai-examples {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-  }
+  .ai-examples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   .ai-example {
-    padding: 6px 10px;
-    background: #fff;
-    border: 1px solid #bae6fd;
-    color: #075985;
-    border-radius: 14px;
-    font-size: 12px;
-    cursor: pointer;
-    touch-action: manipulation;
-    transition: background 0.15s ease;
+    padding: 6px 10px; background: #fff; border: 1px solid #bae6fd;
+    color: #075985; border-radius: 14px; font-size: 12px; cursor: pointer;
+    touch-action: manipulation; transition: background 0.15s ease;
   }
   .ai-example:hover { background: #e0f2fe; }
-  .ai-hint {
-    font-size: 12px;
-    color: #475569;
-    margin: 6px 0 0;
-  }
+  .ai-hint { font-size: 12px; color: #475569; margin: 6px 0 0; }
 
   /* ===== OSI ===== */
   .osi-layer {
@@ -328,6 +304,94 @@
     padding: 12px 14px; border-radius: 6px; margin: 14px 0;
   }
   .osi-highlight h4 { margin: 0 0 6px; }
+
+  /* ===== Плавающая кнопка установки ===== */
+  .fab-install {
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 50;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: #10b981;
+    color: #fff;
+    border: none;
+    border-radius: 28px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(16,185,129,0.4);
+    touch-action: manipulation;
+    transition: transform 0.12s ease, background 0.15s ease;
+  }
+  .fab-install.show { display: inline-flex; }
+  .fab-install:hover { background: #059669; }
+  .fab-install:active { transform: scale(0.95); }
+  .fab-install::before { content: "📲"; font-size: 18px; }
+
+  /* ===== Модалка установки ===== */
+  .install-steps { padding: 14px 18px; }
+  .install-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid #e2e8f0;
+  }
+  .install-step:last-child { border-bottom: none; }
+  .install-step-num {
+    flex-shrink: 0;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #2563eb; color: #fff; font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .install-step-text { flex: 1; font-size: 14px; }
+  .install-step-text strong { color: #1e3a8a; }
+  .install-actions {
+    display: flex; gap: 8px; padding: 14px 18px;
+    border-top: 1px solid #e2e8f0; flex-wrap: wrap;
+  }
+  .btn-install-native {
+    flex: 1; padding: 12px 16px; min-height: 46px;
+    background: #10b981; color: #fff; border: none; border-radius: 10px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    touch-action: manipulation; transition: background 0.15s ease;
+  }
+  .btn-install-native:hover { background: #059669; }
+  .btn-install-native:active { transform: scale(0.98); }
+  .install-platform-badge {
+    display: inline-block; background: #dbeafe; color: #1e40af;
+    font-size: 11px; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; margin-left: 6px; vertical-align: middle;
+  }
+
+  /* ===== Баннер установки (сверху) ===== */
+  .install-banner {
+    display: none;
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-bottom: 2px solid #a7f3d0;
+    padding: 12px 16px;
+    align-items: center;
+    gap: 12px;
+    animation: slideDown 0.3s ease;
+  }
+  .install-banner.show { display: flex; }
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .install-banner-icon { font-size: 24px; flex-shrink: 0; }
+  .install-banner-text { flex: 1; font-size: 13px; color: #065f46; }
+  .install-banner-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .install-banner-btn {
+    padding: 8px 14px; min-height: 38px; background: #10b981; color: #fff;
+    border: none; border-radius: 8px; font-size: 13px; font-weight: 700;
+    cursor: pointer; flex-shrink: 0; touch-action: manipulation;
+  }
+  .install-banner-close {
+    padding: 6px 10px; background: transparent; border: none;
+    color: #065f46; font-size: 18px; cursor: pointer; flex-shrink: 0;
+    line-height: 1;
+  }
 
   @media (min-width: 600px) {
     .cards-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -370,10 +434,67 @@
     .cidr-table th, .cidr-table td { padding: 6px 6px; }
     .card-icon { width: 46px; height: 46px; font-size: 22px; }
     .card-title { font-size: 15px; }
+    .fab-install { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
   }
 </style>
+<script>
+  // Динамический manifest — создаётся из data URL, чтобы работало без отдельного файла
+  (function() {
+    try {
+      const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs><rect width="192" height="192" rx="36" fill="url(#g)"/><text x="96" y="88" font-family="-apple-system,Arial,sans-serif" font-size="64" font-weight="800" fill="#fff" text-anchor="middle">🌐</text><text x="96" y="140" font-family="-apple-system,Arial,sans-serif" font-size="22" font-weight="700" fill="#bfdbfe" text-anchor="middle">СЕТЬ</text></svg>`;
+      const iconUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(iconSvg)));
+      const manifest = {
+        name: 'Сетевая шпаргалка',
+        short_name: 'Сеть',
+        description: 'IP, маски, диагностика, HTTP/HTTPS, серверы, роутеры, VoIP, команды, генератор батников, модель OSI.',
+        start_url: location.pathname + location.search,
+        scope: location.pathname,
+        display: 'standalone',
+        orientation: 'portrait',
+        background_color: '#f4f6f9',
+        theme_color: '#1e3a8a',
+        lang: 'ru',
+        icons: [
+          { src: iconUrl, sizes: '192x192', type: 'image/svg+xml', purpose: 'any' },
+          { src: iconUrl, sizes: '512x512', type: 'image/svg+xml', purpose: 'any' },
+          { src: iconUrl, sizes: 'any', type: 'image/svg+xml', purpose: 'maskable' }
+        ]
+      };
+      const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+      const manifestUrl = URL.createObjectURL(blob);
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = manifestUrl;
+      document.head.appendChild(link);
+      // Apple touch icon — SVG работает с iOS 12+
+      const appleLink = document.createElement('link');
+      appleLink.rel = 'apple-touch-icon';
+      appleLink.href = iconUrl;
+      document.head.appendChild(appleLink);
+      const favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      favicon.type = 'image/svg+xml';
+      favicon.href = iconUrl;
+      document.head.appendChild(favicon);
+      window.__appIconUrl = iconUrl;
+    } catch (e) {
+      console.warn('Не удалось создать manifest:', e);
+    }
+  })();
+</script>
 </head>
 <body>
+
+<!-- ===== Баннер установки ===== -->
+<div class="install-banner" id="installBanner">
+  <span class="install-banner-icon">📲</span>
+  <div class="install-banner-text">
+    <strong>Добавить на главный экран?</strong>
+    Открывайте шпаргалку в одно касание — как приложение.
+  </div>
+  <button class="install-banner-btn" onclick="openInstallModal()">Установить</button>
+  <button class="install-banner-close" onclick="dismissInstallBanner()" aria-label="Закрыть">×</button>
+</div>
 
 <header>
   <h1>Сетевая шпаргалка</h1>
@@ -388,6 +509,16 @@
     <p class="home-subtitle">Нажмите на карточку, чтобы перейти</p>
 
     <div class="cards-grid">
+      <!-- Установка на телефон — первая карточка -->
+      <a class="card install-card" href="#install" onclick="openInstallModal(); return false;">
+        <div class="card-icon">📲</div>
+        <div class="card-body">
+          <div class="card-title">Установить на телефон</div>
+          <div class="card-desc">Ярлык на главный экран — как приложение</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
       <a class="card" href="#info" onclick="navigateTo('info'); return false;">
         <div class="card-icon">🌐</div>
         <div class="card-body">
@@ -475,14 +606,13 @@
   <section id="osi" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Модель OSI</h2>
-    <p><strong>OSI</strong> (Open Systems Interconnection) — эталонная сетевая модель, описывающая, как данные передаются от приложения одного устройства к приложению другого. Модель разбивает процесс на 7 уровней, каждый из которых отвечает за свою часть работы .</p>
+    <p><strong>OSI</strong> (Open Systems Interconnection) — эталонная сетевая модель, описывающая, как данные передаются от приложения одного устройства к приложению другого. Модель разбивает процесс на 7 уровней, каждый из которых отвечает за свою часть работы.</p>
 
     <div class="osi-highlight">
       <h4>Зачем нужна модель OSI</h4>
-      <p>Разделение на уровни позволяет:</p>
       <ul>
         <li>Независимо разрабатывать и заменять протоколы на каждом уровне.</li>
-        <li>Понимать, на каком уровне возникает проблема (например, «не работает DNS» — это прикладной уровень, «не проходит пакет» — сетевой).</li>
+        <li>Понимать, на каком уровне возникает проблема.</li>
         <li>Стандартизировать оборудование и ПО от разных производителей.</li>
       </ul>
     </div>
@@ -491,86 +621,65 @@
 
     <div class="osi-layer">
       <div><span class="layer-num">7</span><span class="layer-name">Прикладной (Application)</span></div>
-      <p>Обеспечивает взаимодействие сети и пользователя. Предоставляет интерфейс для приложений: браузер, почтовый клиент, мессенджер .</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>HTTP</code>, <code>HTTPS</code>, <code>FTP</code>, <code>DNS</code>, <code>SMTP</code>, <code>DHCP</code>, <code>SSH</code> <br><strong>Устройства:</strong> Gateway, Proxy, Content-Switch </div>
+      <p>Обеспечивает взаимодействие сети и пользователя. Интерфейс для браузера, почтового клиента, мессенджера.</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>HTTP</code>, <code>HTTPS</code>, <code>FTP</code>, <code>DNS</code>, <code>SMTP</code>, <code>DHCP</code>, <code>SSH</code><br><strong>Устройства:</strong> Gateway, Proxy</div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">6</span><span class="layer-name">Представления (Presentation)</span></div>
-      <p>Преобразует данные в формат, понятный приложению: кодировка, сжатие, шифрование. Например, перевод текста в ASCII или UTF-8, сжатие в JPEG/MPEG, шифрование TLS .</p>
-      <div class="layer-meta"><strong>Примеры:</strong> <code>SSL/TLS</code>, <code>JPEG</code>, <code>MPEG</code>, <code>ASCII</code>, <code>Unicode</code> </div>
+      <p>Преобразует данные в формат, понятный приложению: кодировка, сжатие, шифрование.</p>
+      <div class="layer-meta"><strong>Примеры:</strong> <code>SSL/TLS</code>, <code>JPEG</code>, <code>MPEG</code>, <code>ASCII</code>, <code>Unicode</code></div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">5</span><span class="layer-name">Сеансовый (Session)</span></div>
-      <p>Устанавливает, поддерживает и завершает сеанс связи между двумя приложениями. Синхронизирует диалог, определяет право на передачу данных .</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>RPC</code>, <code>NetBIOS</code>, <code>SIP</code>, <code>L2TP</code>, <code>PPTP</code> </div>
+      <p>Устанавливает, поддерживает и завершает сеанс связи между двумя приложениями.</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>RPC</code>, <code>NetBIOS</code>, <code>SIP</code>, <code>L2TP</code>, <code>PPTP</code></div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">4</span><span class="layer-name">Транспортный (Transport)</span></div>
-      <p>Обеспечивает надёжную (или быструю) доставку данных от отправителя к получателю. Разбивает данные на сегменты, управляет потоком, исправляет ошибки, использует порты для адресации приложений .</p>
-      <div class="layer-meta">
-        <strong>Протоколы:</strong> <code>TCP</code> (надёжный, с соединением), <code>UDP</code> (быстрый, без соединения), <code>SCTP</code> <br>
-        <strong>PDU:</strong> сегменты (TCP) / датаграммы (UDP) 
-      </div>
+      <p>Обеспечивает надёжную (или быструю) доставку данных. Разбивает на сегменты, управляет потоком, использует порты.</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>TCP</code>, <code>UDP</code>, <code>SCTP</code><br><strong>PDU:</strong> сегменты / датаграммы</div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">3</span><span class="layer-name">Сетевой (Network)</span></div>
-      <p>Определяет путь передачи данных между разными сетями. Отвечает за логическую адресацию (IP-адреса) и маршрутизацию пакетов .</p>
-      <div class="layer-meta">
-        <strong>Протоколы:</strong> <code>IP</code> (IPv4/IPv6), <code>ICMP</code>, <code>IPsec</code>, <code>OSPF</code>, <code>BGP</code> <br>
-        <strong>PDU:</strong> пакет (packet) <br>
-        <strong>Устройства:</strong> маршрутизатор (router), Layer-3 Switch 
-      </div>
+      <p>Определяет путь передачи данных между разными сетями. Логическая адресация (IP) и маршрутизация.</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>IP</code>, <code>ICMP</code>, <code>IPsec</code>, <code>OSPF</code>, <code>BGP</code><br><strong>PDU:</strong> пакет<br><strong>Устройства:</strong> маршрутизатор, L3-switch</div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">2</span><span class="layer-name">Канальный (Data Link)</span></div>
-      <p>Обеспечивает передачу данных между соседними устройствами в одной сети. Упаковывает пакеты в кадры, использует MAC-адреса для идентификации устройств, контролирует ошибки .</p>
-      <div class="layer-meta">
-        <strong>Протоколы:</strong> <code>Ethernet</code> (IEEE 802.3), <code>Wi-Fi</code> (IEEE 802.11), <code>PPP</code>, <code>VLAN</code> <br>
-        <strong>PDU:</strong> кадр (frame) <br>
-        <strong>Устройства:</strong> коммутатор (switch), мост (bridge), точка доступа 
-      </div>
+      <p>Передаёт данные между соседними устройствами в одной сети. MAC-адреса, контроль ошибок.</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>Ethernet</code>, <code>Wi-Fi</code>, <code>PPP</code>, <code>VLAN</code><br><strong>PDU:</strong> кадр<br><strong>Устройства:</strong> коммутатор, мост, точка доступа</div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">1</span><span class="layer-name">Физический (Physical)</span></div>
-      <p>Передаёт биты (0 и 1) по физической среде: кабелю, оптоволокну, радиоволнам. Определяет электрические и механические параметры сигнала .</p>
-      <div class="layer-meta">
-        <strong>Среда:</strong> витая пара, оптоволокно, коаксиал, радиоволны <br>
-        <strong>PDU:</strong> биты (bits) <br>
-        <strong>Устройства:</strong> концентратор (hub), репитер, кабель, разъёмы 
-      </div>
+      <p>Передаёт биты (0 и 1) по физической среде: кабелю, оптоволокну, радиоволнам.</p>
+      <div class="layer-meta"><strong>Среда:</strong> витая пара, оптоволокно, радиоволны<br><strong>PDU:</strong> биты<br><strong>Устройства:</strong> концентратор, репитер, кабель</div>
     </div>
 
     <h3>Соответствие OSI и TCP/IP</h3>
-    <p>Стек TCP/IP, на котором работает интернет, использует 4 уровня. Три верхних уровня OSI (прикладной, представления, сеансовый) объединены в один — прикладной, а два нижних (канальный и физический) — в уровень доступа к сети .</p>
-
     <div class="table-scroll">
       <table>
         <tr><th>OSI</th><th>TCP/IP</th><th>Примеры протоколов</th><th>PDU</th></tr>
-        <tr><td>7. Прикладной<br>6. Представления<br>5. Сеансовый</td><td>Прикладной</td><td>HTTP, DNS, FTP, SMTP, SSH</td><td>Данные / Сообщение</td></tr>
-        <tr><td>4. Транспортный</td><td>Транспортный</td><td>TCP, UDP, SCTP</td><td>Сегмент / Датаграмма</td></tr>
-        <tr><td>3. Сетевой</td><td>Межсетевой (Internet)</td><td>IP, ICMP, OSPF, BGP</td><td>Пакет</td></tr>
+        <tr><td>7. Прикладной<br>6. Представления<br>5. Сеансовый</td><td>Прикладной</td><td>HTTP, DNS, FTP, SMTP, SSH</td><td>Данные</td></tr>
+        <tr><td>4. Транспортный</td><td>Транспортный</td><td>TCP, UDP, SCTP</td><td>Сегмент</td></tr>
+        <tr><td>3. Сетевой</td><td>Межсетевой</td><td>IP, ICMP, OSPF, BGP</td><td>Пакет</td></tr>
         <tr><td>2. Канальный<br>1. Физический</td><td>Доступ к сети</td><td>Ethernet, Wi-Fi, PPP</td><td>Кадр / Биты</td></tr>
       </table>
     </div>
 
     <h3>Инкапсуляция данных</h3>
-    <p>При передаче данные спускаются по уровням сверху вниз, и каждый уровень добавляет свой заголовок (header). Это называется <strong>инкапсуляцией</strong> .</p>
-
     <pre><code>Прикладной (7)      [Данные]
 Представления (6)   [Данные]
 Сеансовый (5)       [Данные]
 Транспортный (4)    [TCP-заголовок][Данные]        → Сегмент
-Сетевой (3)         [IP-заголовок][Сегмент]          → Пакет
-Канальный (2)       [Ethernet-заголовок][Пакет][FCS] → Кадр
-Физический (1)      101101001011010010110100...       → Биты</code></pre>
-
-    <p>На принимающей стороне происходит обратный процесс — <strong>декапсуляция</strong>: каждый уровень снимает свой заголовок и передаёт данные выше .</p>
+Сетевой (3)         [IP-заголовок][Сегмент]         → Пакет
+Канальный (2)       [Ethernet][Пакет][FCS]          → Кадр
+Физический (1)      101101001011010010110100...     → Биты</code></pre>
 
     <h3>Как запомнить порядок уровней</h3>
     <div class="os-block">
@@ -579,7 +688,7 @@
     </div>
 
     <div class="note">
-      <strong>Практическая польза:</strong> если у вас «не открывается сайт», начните с <strong>физического</strong> уровня (кабель, Wi-Fi), затем <strong>канального</strong> (MAC, коммутатор), <strong>сетевого</strong> (ping, IP, маршрут), <strong>транспортного</strong> (порт), и только потом <strong>прикладного</strong> (DNS, HTTP). Это и есть системный подход к диагностике.
+      <strong>Практическая польза:</strong> если у вас «не открывается сайт», начните с <strong>физического</strong> уровня, затем <strong>канального</strong> (MAC, коммутатор), <strong>сетевого</strong> (ping, IP), <strong>транспортного</strong> (порт) и только потом <strong>прикладного</strong> (DNS, HTTP).
     </div>
   </section>
 
@@ -587,31 +696,15 @@
   <section id="info" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Общая информация</h2>
-    <p>Базовые понятия, которые нужны для понимания любой сети — от домашней до корпоративной.</p>
+    <p>Базовые понятия, которые нужны для понимания любой сети.</p>
 
     <div class="table-scroll">
       <table>
         <tr><th>Понятие</th><th>Определение</th><th>Пример</th></tr>
-        <tr>
-          <td><strong>IP-адрес</strong></td>
-          <td>Уникальный числовой адрес устройства в сети. Бывает IPv4 (32 бита) и IPv6 (128 бит).</td>
-          <td><code>192.168.1.10</code></td>
-        </tr>
-        <tr>
-          <td><strong>Маска подсети</strong></td>
-          <td>Определяет, какая часть IP-адреса относится к сети, а какая — к хосту.</td>
-          <td><code>255.255.255.0</code> = <code>/24</code></td>
-        </tr>
-        <tr>
-          <td><strong>Шлюз</strong></td>
-          <td>IP-адрес устройства (обычно роутера), через которое компьютер выходит в другие сети.</td>
-          <td><code>192.168.1.1</code></td>
-        </tr>
-        <tr>
-          <td><strong>DNS</strong></td>
-          <td>Domain Name System — система, преобразующая понятные имена в IP-адреса.</td>
-          <td><code>google.com</code> → <code>142.250.74.14</code></td>
-        </tr>
+        <tr><td><strong>IP-адрес</strong></td><td>Уникальный числовой адрес устройства в сети.</td><td><code>192.168.1.10</code></td></tr>
+        <tr><td><strong>Маска подсети</strong></td><td>Определяет, какая часть IP-адреса относится к сети.</td><td><code>255.255.255.0</code> = <code>/24</code></td></tr>
+        <tr><td><strong>Шлюз</strong></td><td>IP устройства, через которое компьютер выходит в другие сети.</td><td><code>192.168.1.1</code></td></tr>
+        <tr><td><strong>DNS</strong></td><td>Система, преобразующая имена в IP-адреса.</td><td><code>google.com</code> → <code>142.250.74.14</code></td></tr>
       </table>
     </div>
 
@@ -628,8 +721,6 @@
     </ul>
 
     <h3>Маска подсети — подробнее</h3>
-    <p><strong>Маска подсети</strong> — это 32-битное число, которое отделяет сетевую часть IP-адреса от хостовой. В двоичном виде единицы идут подряд слева, а нули — справа:</p>
-
     <pre><code>IP:    192.168.1.10   → 11000000.10101000.00000001.00001010
 Маска: 255.255.255.0  → 11111111.11111111.11111111.00000000
                          └──────── сеть ───────┘└─ хост ─┘
@@ -646,15 +737,12 @@ Broadcast:              192.168.1.255
     </ul>
 
     <h4>Маска с подстановочным знаком (Wildcard)</h4>
-    <p>Используется в ACL и OSPF на Cisco. Это <strong>инверсия обычной маски</strong>.</p>
     <div class="os-block">
       <strong>Формула:</strong> <code>wildcard = 255.255.255.255 − маска</code><br>
       <strong>Пример:</strong> <code>255.255.255.0</code> → <code>0.0.0.255</code>
     </div>
 
     <h4>Полная таблица CIDR</h4>
-    <p>Полная таблица со всеми префиксами от <code>/0</code> до <code>/32</code> — в отдельном окне, чтобы не растягивать страницу.</p>
-
     <button class="btn-open-modal" onclick="openCidrModal()">Открыть полную таблицу CIDR</button>
 
     <h4>Быстрые примеры</h4>
@@ -672,7 +760,6 @@ Broadcast:              192.168.1.255
   <section id="diag" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Диагностика сети</h2>
-    <p>Основные команды для проверки соединения и поиска проблем.</p>
 
     <h3>Ping — проверка доступности</h3>
     <div class="os-block"><strong>Windows:</strong> <code>ping 8.8.8.8</code></div>
@@ -682,15 +769,15 @@ Broadcast:              192.168.1.255
     <div class="os-block"><strong>Windows:</strong> <code>tracert google.com</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>traceroute google.com</code></div>
 
-    <h3>NSLookup / Dig — DNS</h3>
+    <h3>NSLookup / Dig</h3>
     <div class="os-block"><strong>Все ОС:</strong> <code>nslookup google.com</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>dig google.com</code></div>
 
-    <h3>Netstat / SS — соединения и порты</h3>
+    <h3>Netstat / SS</h3>
     <div class="os-block"><strong>Windows:</strong> <code>netstat -an</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>netstat -tuln</code> или <code>ss -tuln</code></div>
 
-    <h3>Проверка конкретного порта</h3>
+    <h3>Проверка порта</h3>
     <div class="os-block"><strong>Windows (PowerShell):</strong> <code>Test-NetConnection google.com -Port 443</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>nc -zv google.com 443</code></div>
 
@@ -729,7 +816,7 @@ Broadcast:              192.168.1.255
     <h3>Что даёт HTTPS</h3>
     <ul>
       <li><strong>Шифрование</strong> — данные не видны провайдеру и злоумышленнику.</li>
-      <li><strong>Аутентификацию</strong> — сертификат подтверждает, что вы на настоящем сайте.</li>
+      <li><strong>Аутентификацию</strong> — сертификат подтверждает подлинность сайта.</li>
       <li><strong>Целостность</strong> — данные нельзя подменить по пути.</li>
     </ul>
 
@@ -744,8 +831,8 @@ Broadcast:              192.168.1.255
     <h2>Серверы</h2>
 
     <h3>Что такое сервер</h3>
-    <p><strong>Сервер</strong> — компьютер или программа, предоставляющая ресурсы и сервисы клиентам по сети. Клиент отправляет запрос — сервер обрабатывает и возвращает ответ.</p>
-    <p>Типы: веб-сервер (Nginx, Apache), файловый (SMB, FTP), почтовый, БД (MySQL, PostgreSQL), DNS и т.д.</p>
+    <p><strong>Сервер</strong> — компьютер или программа, предоставляющая ресурсы и сервисы клиентам по сети.</p>
+    <p>Типы: веб-сервер (Nginx, Apache), файловый (SMB, FTP), почтовый, БД (MySQL, PostgreSQL), DNS.</p>
 
     <h3>Основные порты</h3>
     <div class="table-scroll">
@@ -754,9 +841,9 @@ Broadcast:              192.168.1.255
         <tr><td>HTTP</td><td>80</td><td>Веб без шифрования</td></tr>
         <tr><td>HTTPS</td><td>443</td><td>Веб с шифрованием</td></tr>
         <tr><td>SSH</td><td>22</td><td>Управление Linux</td></tr>
-        <tr><td>RDP</td><td>3389</td><td>Удалённый рабочий стол Windows</td></tr>
-        <tr><td>MySQL</td><td>3306</td><td>База данных MySQL</td></tr>
-        <tr><td>PostgreSQL</td><td>5432</td><td>База данных PostgreSQL</td></tr>
+        <tr><td>RDP</td><td>3389</td><td>Удалённый рабочий стол</td></tr>
+        <tr><td>MySQL</td><td>3306</td><td>База MySQL</td></tr>
+        <tr><td>PostgreSQL</td><td>5432</td><td>База PostgreSQL</td></tr>
         <tr><td>DNS</td><td>53</td><td>Разрешение имён</td></tr>
         <tr><td>SMB</td><td>445</td><td>Сетевые папки Windows</td></tr>
       </table>
@@ -764,7 +851,7 @@ Broadcast:              192.168.1.255
 
     <h3>Как подключиться</h3>
     <div class="os-block"><strong>Linux / macOS:</strong> <code>ssh user@server_ip</code></div>
-    <div class="os-block"><strong>Windows:</strong> <code>ssh user@server_ip</code> (PowerShell 10+) или PuTTY</div>
+    <div class="os-block"><strong>Windows:</strong> <code>ssh user@server_ip</code> или PuTTY</div>
     <p>Для Windows-серверов — <code>mstsc</code> (RDP) или Microsoft Remote Desktop на macOS.</p>
 
     <h3>Проверка доступности</h3>
@@ -779,11 +866,10 @@ Broadcast:              192.168.1.255
 
     <h3>Базовые принципы</h3>
     <ul>
-      <li>Не работайте под <code>root</code> постоянно — используйте <code>sudo</code>.</li>
+      <li>Не работайте под <code>root</code> — используйте <code>sudo</code>.</li>
       <li>SSH-ключи безопаснее паролей: <code>ssh-keygen</code> → <code>ssh-copy-id</code>.</li>
-      <li>Обновляйте систему: <code>sudo apt update &amp;&amp; sudo apt upgrade</code> (Debian/Ubuntu) или <code>sudo dnf upgrade</code> (RHEL/Fedora).</li>
+      <li>Обновляйте систему: <code>sudo apt update &amp;&amp; sudo apt upgrade</code>.</li>
       <li>Проверяйте логи: <code>journalctl -xe</code>, <code>tail -f /var/log/syslog</code>.</li>
-      <li>Windows — Event Viewer и <code>Get-EventLog</code> в PowerShell.</li>
     </ul>
   </section>
 
@@ -793,7 +879,7 @@ Broadcast:              192.168.1.255
     <h2>Маршрутизатор</h2>
 
     <h3>Что такое маршрутизатор</h3>
-    <p><strong>Маршрутизатор</strong> — устройство, которое соединяет разные сети и направляет пакеты на основе таблицы маршрутизации. Домашний роутер = маршрутизатор + коммутатор + точка Wi-Fi.</p>
+    <p><strong>Маршрутизатор</strong> — устройство, которое соединяет разные сети и направляет пакеты на основе таблицы маршрутизации.</p>
 
     <h3>Основные команды (Cisco IOS)</h3>
     <div class="table-scroll">
@@ -847,7 +933,7 @@ sudo ip addr add 192.168.10.1/24 dev eth0.10
 sudo ip link set eth0.10 up</code></pre>
 
     <div class="note">
-      Команды VLAN зависят от производителя. Примеры — для Cisco IOS, MikroTik RouterOS и Linux. На домашних роутерах VLAN обычно настраивается через веб-интерфейс.
+      Команды VLAN зависят от производителя. На домашних роутерах VLAN обычно настраивается через веб-интерфейс.
     </div>
   </section>
 
@@ -855,12 +941,12 @@ sudo ip link set eth0.10 up</code></pre>
   <section id="voip" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>IP-телефония (VoIP)</h2>
-    <p>IP-телефония — передача голоса по сетям с протоколом IP. В отличие от PSTN, где на звонок выделяется отдельный канал, здесь голос оцифровывается, разбивается на пакеты и передаётся по общей сети.</p>
+    <p>IP-телефония — передача голоса по сетям с протоколом IP. Голос оцифровывается, разбивается на пакеты и передаётся по общей сети.</p>
 
     <h3>Как это работает</h3>
     <ol>
-      <li><strong>Регистрация:</strong> телефон/софтфон отправляет <code>REGISTER</code> SIP-серверу, тот отвечает <code>200 OK</code>.</li>
-      <li><strong>Установка соединения:</strong> клиент отправляет <code>INVITE</code>, сервер соединяет абонентов.</li>
+      <li><strong>Регистрация:</strong> телефон отправляет <code>REGISTER</code> SIP-серверу.</li>
+      <li><strong>Установка соединения:</strong> клиент отправляет <code>INVITE</code>.</li>
       <li><strong>Передача голоса:</strong> по протоколу <strong>RTP</strong> в UDP-пакетах.</li>
     </ol>
 
@@ -868,7 +954,7 @@ sudo ip link set eth0.10 up</code></pre>
     <div class="table-scroll">
       <table>
         <tr><th>Протокол</th><th>Назначение</th><th>Порт</th></tr>
-        <tr><td><strong>SIP</strong></td><td>Сигнализация: установка/завершение звонка</td><td>UDP/TCP <code>5060</code>, TLS <code>5061</code></td></tr>
+        <tr><td><strong>SIP</strong></td><td>Сигнализация</td><td>UDP/TCP <code>5060</code>, TLS <code>5061</code></td></tr>
         <tr><td><strong>RTP</strong></td><td>Передача голоса и видео</td><td>UDP <code>16384–32768</code></td></tr>
       </table>
     </div>
@@ -877,36 +963,24 @@ sudo ip link set eth0.10 up</code></pre>
     <div class="table-scroll">
       <table>
         <tr><th>Метод</th><th>Назначение</th></tr>
-        <tr><td><code>REGISTER</code></td><td>Регистрация абонента на сервере</td></tr>
+        <tr><td><code>REGISTER</code></td><td>Регистрация абонента</td></tr>
         <tr><td><code>INVITE</code></td><td>Инициирование вызова</td></tr>
-        <tr><td><code>ACK</code></td><td>Подтверждение ответа на INVITE</td></tr>
+        <tr><td><code>ACK</code></td><td>Подтверждение ответа</td></tr>
         <tr><td><code>BYE</code></td><td>Завершение сессии</td></tr>
-        <tr><td><code>OPTIONS</code></td><td>Проверка доступности (SIP-ping)</td></tr>
-        <tr><td><code>CANCEL</code></td><td>Отмена несостоявшегося вызова</td></tr>
+        <tr><td><code>OPTIONS</code></td><td>Проверка доступности</td></tr>
+        <tr><td><code>CANCEL</code></td><td>Отмена вызова</td></tr>
       </table>
     </div>
 
-    <h3>Диагностика SIP с компьютера</h3>
-    <p>Утилита <code>sipsak</code> отправляет запрос <code>OPTIONS</code> и показывает ответ сервера.</p>
-
+    <h3>Диагностика SIP</h3>
     <div class="os-block"><strong>Linux:</strong> <code>sudo apt install sipsak</code></div>
     <div class="os-block"><strong>macOS:</strong> <code>brew install sipsak</code></div>
     <div class="os-block"><strong>Windows:</strong> через WSL, как для Linux</div>
 
-    <h4>Пример</h4>
     <pre><code>sipsak -v -s sip:sip.example.com</code></pre>
     <p>Успех — <code>SIP/2.0 200 OK</code> или <code>200 Keepalive</code>.</p>
 
-    <h4>Если ответа нет</h4>
-    <ul>
-      <li>Порт <code>5060/UDP</code> не блокируется файрволом.</li>
-      <li>Правильное имя SIP-сервера.</li>
-      <li>Проблемы с NAT.</li>
-    </ul>
-
     <h3>IP-телефония на Cisco</h3>
-    <p>Для VoIP используются <strong>dial-peer</strong> — правила обработки вызовов.</p>
-
     <pre><code>enable
 configure terminal
 
@@ -918,105 +992,52 @@ dial-peer voice 10 voip
  codec g711ulaw
  exit</code></pre>
 
-    <p><strong>Параметры:</strong></p>
-    <ul>
-      <li><code>destination-pattern 9T</code> — номер с префиксом 9 (выход на внешнюю линию).</li>
-      <li><code>session target</code> — IP SIP-провайдера.</li>
-      <li><code>codec g711ulaw</code> — кодек G.711 (~64 Кбит/с); G.729 — сжатие (~8 Кбит/с).</li>
-    </ul>
-
     <h3>Особенности через NAT</h3>
-    <p>Если УАТС за NAT, голос может не проходить в одну или обе стороны, хотя вызовы «звонят». SIP в заголовках передаёт внутренние IP, недостижимые снаружи.</p>
     <ul>
       <li>Включите поддержку NAT в УАТС (Asterisk/FreePBX).</li>
-      <li>Пробросьте на роутере порты SIP (<code>5060</code>) и RTP (<code>10000–20000</code> или <code>16384–32768</code>) на внутренний IP УАТС.</li>
-      <li>При смене IP от провайдера обновите его в настройках УАТС.</li>
+      <li>Пробросьте порты SIP (<code>5060</code>) и RTP (<code>10000–20000</code>) на внутренний IP УАТС.</li>
     </ul>
 
     <div class="note">
-      SIP чувствителен к задержкам и потерям пакетов. Для качественной связи используйте QoS — приоритизацию трафика RTP на маршрутизаторе.
-    </div>
-
-    <h3>Полезные команды</h3>
-    <div class="table-scroll">
-      <table>
-        <tr><th>Задача</th><th>Команда</th></tr>
-        <tr><td>Пинг сервера</td><td><code>ping sip.example.com</code></td></tr>
-        <tr><td>Порт 5060</td><td><code>nc -zvu sip.example.com 5060</code></td></tr>
-        <tr><td>SIP-ping</td><td><code>sipsak -s sip:sip.example.com</code></td></tr>
-        <tr><td>Захват SIP</td><td><code>sngrep</code> или <code>tcpdump -i any port 5060 -w sip.pcap</code></td></tr>
-        <tr><td>Порты на УАТС</td><td><code>ss -tuln | grep 5060</code></td></tr>
-      </table>
+      SIP чувствителен к задержкам и потерям пакетов. Для качественной связи используйте QoS.
     </div>
   </section>
 
   <!-- ========== КОМАНДЫ ========== -->
   <section id="commands" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
-    <h2>Команды Windows (PowerShell и CMD)</h2>
-    <p>Основные команды для повседневной работы с Windows: установка программ, удалённое управление, работа с процессами, службами, сетью и файлами.</p>
+    <h2>Команды Windows</h2>
 
     <h3>Установка программ (WinGet)</h3>
-    <p><strong>WinGet</strong> — официальный пакетный менеджер Microsoft, встроенный в Windows 11 и современные версии Windows 10 (1809+). Позволяет устанавливать, обновлять и удалять приложения из командной строки.</p>
-
     <div class="table-scroll">
       <table>
         <tr><th>Задача</th><th>Команда</th></tr>
         <tr><td>Поиск программы</td><td><code>winget search &lt;название&gt;</code></td></tr>
-        <tr><td>Установка программы</td><td><code>winget install &lt;PackageId&gt;</code></td></tr>
-        <tr><td>Установка по точному ID</td><td><code>winget install --id &lt;PackageId&gt; -e</code></td></tr>
+        <tr><td>Установка</td><td><code>winget install &lt;PackageId&gt;</code></td></tr>
         <tr><td>Тихая установка</td><td><code>winget install &lt;PackageId&gt; --silent</code></td></tr>
-        <tr><td>Обновление всех программ</td><td><code>winget upgrade --all</code></td></tr>
-        <tr><td>Удаление программы</td><td><code>winget remove &lt;PackageId&gt;</code></td></tr>
+        <tr><td>Обновление всех</td><td><code>winget upgrade --all</code></td></tr>
+        <tr><td>Удаление</td><td><code>winget remove &lt;PackageId&gt;</code></td></tr>
         <tr><td>Список установленных</td><td><code>winget list</code></td></tr>
       </table>
-    </div>
-
-    <h4>Примеры</h4>
-    <pre><code>:: Поиск и установка VLC
-winget search vlc
-winget install VideoLAN.VLC
-
-:: Установка нескольких программ одной командой
-winget install --id Google.Chrome --id Mozilla.Firefox --id VideoLAN.VLC -e
-
-:: Обновление всего установленного ПО
-winget upgrade --all</code></pre>
-
-    <div class="note">
-      Для установки программ, требующих прав администратора, запускайте PowerShell или CMD от имени администратора. В Windows 11 также можно использовать <code>sudo</code>.
     </div>
 
     <h3>Удалённое управление</h3>
     <div class="table-scroll">
       <table>
         <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
-        <tr><td>Удалённый рабочий стол</td><td><code>mstsc /v:&lt;IP&gt;</code></td><td><code>mstsc /v:&lt;IP&gt;</code></td></tr>
-        <tr><td>SSH-подключение</td><td><code>ssh user@&lt;IP&gt;</code></td><td><code>ssh user@&lt;IP&gt;</code></td></tr>
+        <tr><td>RDP</td><td><code>mstsc /v:&lt;IP&gt;</code></td><td><code>mstsc /v:&lt;IP&gt;</code></td></tr>
+        <tr><td>SSH</td><td><code>ssh user@&lt;IP&gt;</code></td><td><code>ssh user@&lt;IP&gt;</code></td></tr>
         <tr><td>Перезагрузка удалённого ПК</td><td><code>Restart-Computer -ComputerName &lt;IP&gt;</code></td><td><code>shutdown /r /m \\&lt;IP&gt; /t 0</code></td></tr>
         <tr><td>Выключение удалённого ПК</td><td><code>Stop-Computer -ComputerName &lt;IP&gt;</code></td><td><code>shutdown /s /m \\&lt;IP&gt; /t 0</code></td></tr>
-        <tr><td>Выполнение команды на удалённом ПК</td><td><code>Invoke-Command -ComputerName &lt;IP&gt; -ScriptBlock { &lt;команда&gt; }</code></td><td>—</td></tr>
       </table>
     </div>
-
-    <h4>Примеры</h4>
-    <pre><code># Подключение по RDP
-mstsc /v:192.168.1.100
-
-# Перезагрузка удалённого компьютера (нужны права)
-Restart-Computer -ComputerName 192.168.1.100 -Force
-
-# Выполнить команду на удалённом ПК
-Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></pre>
 
     <h3>Процессы</h3>
     <div class="table-scroll">
       <table>
         <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
         <tr><td>Список процессов</td><td><code>Get-Process</code></td><td><code>tasklist</code></td></tr>
-        <tr><td>Подробный список</td><td><code>Get-Process | Format-Table -AutoSize</code></td><td><code>tasklist /v</code></td></tr>
-        <tr><td>Найти процесс по имени</td><td><code>Get-Process -Name &lt;имя&gt;</code></td><td><code>tasklist | findstr &lt;имя&gt;</code></td></tr>
-        <tr><td>Завершить процесс по имени</td><td><code>Stop-Process -Name &lt;имя&gt;</code></td><td><code>taskkill /IM &lt;имя&gt;.exe /F</code></td></tr>
+        <tr><td>Завершить по имени</td><td><code>Stop-Process -Name &lt;имя&gt;</code></td><td><code>taskkill /IM &lt;имя&gt;.exe /F</code></td></tr>
         <tr><td>Завершить по PID</td><td><code>Stop-Process -Id &lt;PID&gt;</code></td><td><code>taskkill /PID &lt;PID&gt; /F</code></td></tr>
       </table>
     </div>
@@ -1026,7 +1047,6 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
       <table>
         <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
         <tr><td>Список служб</td><td><code>Get-Service</code></td><td><code>sc query</code></td></tr>
-        <tr><td>Запущенные службы</td><td><code>Get-Service | Where-Object Status -eq Running</code></td><td><code>sc query | findstr RUNNING</code></td></tr>
         <tr><td>Запустить службу</td><td><code>Start-Service -Name &lt;имя&gt;</code></td><td><code>net start &lt;имя&gt;</code></td></tr>
         <tr><td>Остановить службу</td><td><code>Stop-Service -Name &lt;имя&gt;</code></td><td><code>net stop &lt;имя&gt;</code></td></tr>
         <tr><td>Перезапустить службу</td><td><code>Restart-Service -Name &lt;имя&gt;</code></td><td><code>net stop &lt;имя&gt; &amp;&amp; net start &lt;имя&gt;</code></td></tr>
@@ -1038,10 +1058,9 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
       <table>
         <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
         <tr><td>IP-конфигурация</td><td><code>Get-NetIPConfiguration</code></td><td><code>ipconfig /all</code></td></tr>
-        <tr><td>Проверка связи (ping)</td><td><code>Test-Connection &lt;адрес&gt;</code></td><td><code>ping &lt;адрес&gt;</code></td></tr>
+        <tr><td>Ping</td><td><code>Test-Connection &lt;адрес&gt;</code></td><td><code>ping &lt;адрес&gt;</code></td></tr>
         <tr><td>Проверка порта</td><td><code>Test-NetConnection &lt;адрес&gt; -Port &lt;порт&gt;</code></td><td><code>telnet &lt;адрес&gt; &lt;порт&gt;</code></td></tr>
         <tr><td>DNS-запрос</td><td><code>Resolve-DnsName &lt;домен&gt;</code></td><td><code>nslookup &lt;домен&gt;</code></td></tr>
-        <tr><td>Сетевые подключения</td><td><code>Get-NetTCPConnection</code></td><td><code>netstat -an</code></td></tr>
         <tr><td>Очистка DNS</td><td><code>Clear-DnsClientCache</code></td><td><code>ipconfig /flushdns</code></td></tr>
       </table>
     </div>
@@ -1054,22 +1073,7 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
         <tr><td>Сменить папку</td><td><code>Set-Location &lt;путь&gt;</code></td><td><code>cd /d &lt;путь&gt;</code></td></tr>
         <tr><td>Создать папку</td><td><code>New-Item -ItemType Directory &lt;имя&gt;</code></td><td><code>mkdir &lt;имя&gt;</code></td></tr>
         <tr><td>Копировать</td><td><code>Copy-Item &lt;откуда&gt; &lt;куда&gt;</code></td><td><code>copy &lt;откуда&gt; &lt;куда&gt;</code></td></tr>
-        <tr><td>Переместить</td><td><code>Move-Item &lt;откуда&gt; &lt;куда&gt;</code></td><td><code>move &lt;откуда&gt; &lt;куда&gt;</code></td></tr>
-        <tr><td>Удалить файл</td><td><code>Remove-Item &lt;файл&gt;</code></td><td><code>del &lt;файл&gt;</code></td></tr>
-        <tr><td>Удалить папку рекурсивно</td><td><code>Remove-Item &lt;папка&gt; -Recurse</code></td><td><code>rmdir /s /q &lt;папка&gt;</code></td></tr>
-      </table>
-    </div>
-
-    <h3>Системная информация и обслуживание</h3>
-    <div class="table-scroll">
-      <table>
-        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
-        <tr><td>Информация о системе</td><td><code>Get-ComputerInfo</code></td><td><code>systeminfo</code></td></tr>
-        <tr><td>Имя компьютера</td><td><code>$env:COMPUTERNAME</code></td><td><code>hostname</code></td></tr>
-        <tr><td>Версия PowerShell</td><td><code>$PSVersionTable</code></td><td>—</td></tr>
-        <tr><td>Проверка целостности системы</td><td>—</td><td><code>sfc /scannow</code></td></tr>
-        <tr><td>Проверка диска</td><td>—</td><td><code>chkdsk C: /f</code></td></tr>
-        <tr><td>Очистить экран</td><td><code>Clear-Host</code></td><td><code>cls</code></td></tr>
+        <tr><td>Удалить папку</td><td><code>Remove-Item &lt;папка&gt; -Recurse</code></td><td><code>rmdir /s /q &lt;папка&gt;</code></td></tr>
       </table>
     </div>
 
@@ -1079,13 +1083,8 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
         <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
         <tr><td>Выключить</td><td><code>Stop-Computer</code></td><td><code>shutdown /s /t 0</code></td></tr>
         <tr><td>Перезагрузить</td><td><code>Restart-Computer</code></td><td><code>shutdown /r /t 0</code></td></tr>
-        <tr><td>Отменить запланированное выключение</td><td>—</td><td><code>shutdown /a</code></td></tr>
-        <tr><td>Выключить через 10 минут</td><td>—</td><td><code>shutdown /s /t 600</code></td></tr>
+        <tr><td>Отменить выключение</td><td>—</td><td><code>shutdown /a</code></td></tr>
       </table>
-    </div>
-
-    <div class="note">
-      <strong>Совет:</strong> в PowerShell многие классические команды CMD работают как алиасы: <code>dir</code> → <code>Get-ChildItem</code>, <code>cd</code> → <code>Set-Location</code>, <code>ping</code> → <code>Test-Connection</code>. Узнать все алиасы: <code>Get-Alias</code>.
     </div>
   </section>
 
@@ -1095,19 +1094,17 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
     <h2>Создать батник</h2>
     <p>Опишите задачу обычными словами — сайт сам соберёт команды, либо отредактируйте текст вручную.</p>
 
-    <!-- === AI-генератор по описанию === -->
     <div class="ai-box">
       <h4>🪄 Опишите, что должен делать батник</h4>
       <textarea id="aiPrompt" placeholder="Например: почисти dns и пропингуй гугл&#10;Или: установи хром и блокнот плюс плюс&#10;Или: перезагрузи компьютер через 60 секунд" spellcheck="false"></textarea>
       <button class="btn-ai" onclick="generateFromDescription()">🪄 Создать по описанию</button>
-      <p class="ai-hint">Понимает фразы вроде: ping, tracert, nslookup, dns, ipconfig, install/winget + названия программ, shutdown/reboot, sfc, chkdsk, tasklist, taskkill, systeminfo, dir, md, del, copy, backup, netsh, echo. Если что-то не распознано — просто дополните текст вручную.</p>
+      <p class="ai-hint">Понимает фразы вроде: ping, tracert, nslookup, dns, ipconfig, install/winget + названия программ, shutdown/reboot, sfc, chkdsk, tasklist, taskkill, systeminfo, dir, md, del, copy, backup, netsh, echo.</p>
       <div class="ai-examples">
         <span class="ai-example" onclick="setPrompt('почисти dns и проверь гугл пингом')">почисти dns и ping гугл</span>
         <span class="ai-example" onclick="setPrompt('установи chrome, firefox и vlc')">установи chrome, firefox, vlc</span>
         <span class="ai-example" onclick="setPrompt('перезагрузи компьютер через 60 секунд')">перезагрузка через 60 сек</span>
         <span class="ai-example" onclick="setPrompt('выключи компьютер через 10 минут')">выключение через 10 мин</span>
         <span class="ai-example" onclick="setPrompt('покажи ip адрес и информацию о системе')">ip и systeminfo</span>
-        <span class="ai-example" onclick="setPrompt('проверь целостность системы и почисти dns')">sfc + dns</span>
         <span class="ai-example" onclick="setPrompt('сделай бэкап папки документы')">бэкап документов</span>
         <span class="ai-example" onclick="setPrompt('отключи и включи сетевой адаптер')">сеть выкл/вкл</span>
       </div>
@@ -1116,16 +1113,15 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
     <div class="form-row">
       <label for="batName">Имя файла</label>
       <input type="text" id="batName" value="script" placeholder="Например: diag" autocomplete="off">
-      <p class="form-hint">Расширение <code>.bat</code> добавится автоматически. Без пробелов и спецсимволов — лучше латиницей.</p>
+      <p class="form-hint">Расширение <code>.bat</code> добавится автоматически.</p>
     </div>
 
     <div class="form-row">
       <label for="batEncoding">Кодировка</label>
       <select id="batEncoding">
         <option value="utf-8">UTF-8 (современный Windows)</option>
-        <option value="windows-1251" selected>Windows-1251 (кириллица в CMD, старые Windows)</option>
+        <option value="windows-1251" selected>Windows-1251 (кириллица в CMD)</option>
       </select>
-      <p class="form-hint">Если в батнике кириллица и при запуске видны «кракозябры» — попробуйте Windows-1251.</p>
     </div>
 
     <div class="form-row">
@@ -1143,12 +1139,11 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
 
     <div class="form-row">
       <label for="batBody">Текст батника</label>
-      <textarea id="batBody" spellcheck="false" placeholder="Введите команды CMD, например:&#10;@echo off&#10;echo Привет!&#10;pause">@echo off
+      <textarea id="batBody" spellcheck="false">@echo off
 chcp 65001 >nul
 title Мой скрипт
 echo Привет! Это мой батник.
 pause</textarea>
-      <p class="form-hint">Каждая строка — отдельная команда CMD. <code>@echo off</code> отключает вывод команд, <code>pause</code> оставляет окно открытым.</p>
     </div>
 
     <label class="checkbox-row">
@@ -1166,13 +1161,16 @@ pause</textarea>
     </div>
 
     <div class="note" style="margin-top:20px;">
-      <strong>Безопасность:</strong> батник — это исполняемый файл. Не запускайте скрипты из непроверенных источников. Сайт лишь формирует текст файла — он ничего не выполняет у вас на компьютере.
+      <strong>Безопасность:</strong> батник — это исполняемый файл. Сайт лишь формирует текст файла — он ничего не выполняет у вас на компьютере.
     </div>
   </section>
 
 </main>
 
-<!-- ========== МОДАЛЬНОЕ ОКНО: ПОЛНАЯ ТАБЛИЦА CIDR ========== -->
+<!-- ===== Плавающая кнопка «Установить» ===== -->
+<button class="fab-install" id="fabInstall" onclick="openInstallModal()">Установить</button>
+
+<!-- ===== Модалка: полная таблица CIDR ===== -->
 <div class="modal-overlay" id="cidrModal" onclick="closeCidrModalOnBackdrop(event)">
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="cidrModalTitle">
     <div class="modal-header">
@@ -1237,9 +1235,28 @@ pause</textarea>
   </div>
 </div>
 
+<!-- ===== Модалка: установка на телефон ===== -->
+<div class="modal-overlay" id="installModal" onclick="closeInstallModalOnBackdrop(event)">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="installModalTitle">
+    <div class="modal-header">
+      <h3 id="installModalTitle">📲 Установить на главный экран</h3>
+      <button class="modal-close" onclick="closeInstallModal()" aria-label="Закрыть">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="install-steps" id="installSteps">
+        <!-- содержимое заполняется JS -->
+      </div>
+    </div>
+    <div class="install-actions" id="installActions">
+      <button class="btn-install-native" id="btnInstallNative" onclick="triggerNativeInstall()" style="display:none;">Установить</button>
+    </div>
+  </div>
+</div>
+
 <footer>Сетевая шпаргалка · Статический сайт для GitHub Pages</footer>
 
 <script>
+  // ===== Навигация =====
   function navigateTo(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const home = document.getElementById('home');
@@ -1264,14 +1281,14 @@ pause</textarea>
 
   function handleInitialRoute() {
     const hash = location.hash.replace('#', '');
-    if (hash) navigateTo(hash); else navigateTo('home');
+    if (hash && hash !== 'install') navigateTo(hash); else navigateTo('home');
   }
 
   window.addEventListener('popstate', function () {
     const hash = location.hash.replace('#', '');
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const home = document.getElementById('home');
-    if (hash) {
+    if (hash && hash !== 'install') {
       home.classList.add('hidden');
       const page = document.getElementById(hash);
       if (page) page.classList.add('active');
@@ -1281,12 +1298,11 @@ pause</textarea>
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+  // ===== Модалка CIDR =====
   function openCidrModal() {
     const modal = document.getElementById('cidrModal');
     modal.classList.add('open');
     document.body.classList.add('modal-lock');
-    const body = modal.querySelector('.modal-body');
-    if (body) body.scrollTop = 0;
   }
   function closeCidrModal() {
     const modal = document.getElementById('cidrModal');
@@ -1296,10 +1312,205 @@ pause</textarea>
   function closeCidrModalOnBackdrop(event) {
     if (event.target === event.currentTarget) closeCidrModal();
   }
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeCidrModal();
+
+  // ===== Модалка установки =====
+  let deferredPrompt = null;
+
+  function detectPlatform() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    if (/android/i.test(ua)) return 'android';
+    if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
+    return 'desktop';
+  }
+
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.navigator.standalone === true;
+  }
+
+  function renderInstallSteps() {
+    const platform = detectPlatform();
+    const stepsEl = document.getElementById('installSteps');
+    const actionsEl = document.getElementById('installActions');
+    const nativeBtn = document.getElementById('btnInstallNative');
+
+    let html = '';
+    let showNative = false;
+
+    if (isStandalone()) {
+      html = `
+        <div class="install-step">
+          <div class="install-step-num">✓</div>
+          <div class="install-step-text">
+            <strong>Сайт уже установлен!</strong><br>
+            Вы открыли его как приложение. Ярлык «Сетевая шпаргалка» уже на главном экране.
+          </div>
+        </div>`;
+    } else if (platform === 'android') {
+      if (deferredPrompt) {
+        html = `
+          <div class="install-step">
+            <div class="install-step-num">1</div>
+            <div class="install-step-text">
+              Нажмите кнопку <strong>«Установить»</strong> ниже — браузер откроет системный диалог установки.
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">2</div>
+            <div class="install-step-text">
+              Подтвердите установку — иконка появится на главном экране.
+            </div>
+          </div>`;
+        showNative = true;
+      } else {
+        html = `
+          <div class="install-step">
+            <div class="install-step-num">1</div>
+            <div class="install-step-text">
+              Откройте меню браузера <strong>⋮</strong> (три точки в правом верхнем углу).
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">2</div>
+            <div class="install-step-text">
+              Выберите <strong>«Установить приложение»</strong> или <strong>«Добавить на главный экран»</strong>.
+            </div>
+          </div>
+          <div class="install-step">
+            <div class="install-step-num">3</div>
+            <div class="install-step-text">
+              Подтвердите — иконка «Сетевая шпаргалка» появится на главном экране.
+            </div>
+          </div>`;
+      }
+    } else if (platform === 'ios') {
+      html = `
+        <div class="install-step">
+          <div class="install-step-num">1</div>
+          <div class="install-step-text">
+            Откройте этот сайт в <strong>Safari</strong> (не в Chrome или другом браузере).
+          </div>
+        </div>
+        <div class="install-step">
+          <div class="install-step-num">2</div>
+          <div class="install-step-text">
+            Нажмите кнопку <strong>«Поделиться»</strong> внизу экрана (квадрат со стрелкой ↑).
+          </div>
+        </div>
+        <div class="install-step">
+          <div class="install-step-num">3</div>
+          <div class="install-step-text">
+            Прокрутите вниз и выберите <strong>«На экран «Домой»»</strong>.
+          </div>
+        </div>
+        <div class="install-step">
+          <div class="install-step-num">4</div>
+          <div class="install-step-text">
+            Нажмите <strong>«Добавить»</strong> в правом верхнем углу. Готово!
+          </div>
+        </div>`;
+    } else {
+      html = `
+        <div class="install-step">
+          <div class="install-step-num">💻</div>
+          <div class="install-step-text">
+            Вы на компьютере. Установка на главный экран доступна <strong>на смартфонах</strong>.
+          </div>
+        </div>
+        <div class="install-step">
+          <div class="install-step-num">i</div>
+          <div class="install-step-text">
+            В Chrome или Edge найдите в адресной строке иконку <strong>установки</strong> (монитор со стрелкой) и нажмите её, чтобы создать ярлык на рабочем столе.
+          </div>
+        </div>`;
+    }
+
+    stepsEl.innerHTML = html;
+    nativeBtn.style.display = showNative ? 'inline-block' : 'none';
+  }
+
+  function openInstallModal() {
+    renderInstallSteps();
+    const modal = document.getElementById('installModal');
+    modal.classList.add('open');
+    document.body.classList.add('modal-lock');
+    // Убираем баннер, раз пользователь сам открыл установку
+    dismissInstallBanner();
+  }
+
+  function closeInstallModal() {
+    const modal = document.getElementById('installModal');
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-lock');
+  }
+
+  function closeInstallModalOnBackdrop(event) {
+    if (event.target === event.currentTarget) closeInstallModal();
+  }
+
+  async function triggerNativeInstall() {
+    if (!deferredPrompt) {
+      // fallback
+      alert('Системный диалог недоступен. Откройте меню браузера ⋮ → «Установить приложение» или «Добавить на главный экран».');
+      return;
+    }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      closeInstallModal();
+      document.getElementById('fabInstall').classList.remove('show');
+    }
+    deferredPrompt = null;
+  }
+
+  // Перехват beforeinstallprompt — Android / Chrome
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Показать плавающую кнопку и баннер, если ещё не установлено
+    if (!isStandalone()) {
+      document.getElementById('fabInstall').classList.add('show');
+      maybeShowBanner();
+    }
   });
 
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    document.getElementById('fabInstall').classList.remove('show');
+    dismissInstallBanner();
+  });
+
+  // Баннер с задержкой и запоминанием отказа
+  const BANNER_KEY = 'installBannerDismissedAt';
+  const BANNER_TTL = 7 * 24 * 60 * 60 * 1000; // 7 дней
+
+  function maybeShowBanner() {
+    if (isStandalone()) return;
+    const last = parseInt(localStorage.getItem(BANNER_KEY) || '0', 10);
+    if (last && Date.now() - last < BANNER_TTL) return;
+    // Показываем только на мобильных
+    const platform = detectPlatform();
+    if (platform === 'android' || platform === 'ios') {
+      setTimeout(() => {
+        document.getElementById('installBanner').classList.add('show');
+      }, 1500);
+    }
+  }
+
+  function dismissInstallBanner() {
+    document.getElementById('installBanner').classList.remove('show');
+    localStorage.setItem(BANNER_KEY, String(Date.now()));
+  }
+
+  // Esc закрывает обе модалки
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      closeCidrModal();
+      closeInstallModal();
+    }
+  });
+
+  // ===== Шаблоны батника =====
   const templates = {
     hello: {
       name: 'hello',
@@ -1462,14 +1673,11 @@ pause`
     return new TextEncoder().encode(text);
   }
 
-  // ===== ЛОКАЛЬНЫЙ ПАРСЕР ОПИСАНИЯ =====
-  // Возвращает { body: string, name: string|null, admin: boolean, matched: string[] }
   function buildBatFromDescription(description) {
     const text = (description || '').toLowerCase();
     const lines = [];
     const matched = [];
 
-    // --- Утилиты ---
     const extractHost = () => {
       const m = text.match(/([a-z0-9-]+\.)+[a-z]{2,}/i);
       if (m) return m[0];
@@ -1487,13 +1695,12 @@ pause`
       return null;
     };
 
-    // --- Пакеты ПО ---
     const appMap = [
       { keys: ['chrome', 'хром', 'гугл хром'], id: 'Google.Chrome', label: 'Google Chrome' },
       { keys: ['firefox', 'фаерфокс', 'файрфокс', 'мозилла'], id: 'Mozilla.Firefox', label: 'Mozilla Firefox' },
       { keys: ['vlc', 'влс'], id: 'VideoLAN.VLC', label: 'VLC' },
       { keys: ['notepad', 'нотепад', 'блокнот плюс', 'блокнот++', 'np++'], id: 'Notepad++.Notepad++', label: 'Notepad++' },
-      { keys: ['7zip', '7-zip', '7zip', '7 зип'], id: '7zip.7zip', label: '7-Zip' },
+      { keys: ['7zip', '7-zip', '7 зип'], id: '7zip.7zip', label: '7-Zip' },
       { keys: ['telegram', 'телеграм', 'телега'], id: 'Telegram.TelegramDesktop', label: 'Telegram' },
       { keys: ['discord', 'дискорд'], id: 'Discord.Discord', label: 'Discord' },
       { keys: ['obs'], id: 'OBSProject.OBSStudio', label: 'OBS Studio' },
@@ -1504,7 +1711,6 @@ pause`
     ];
     const appsToInstall = appMap.filter(a => a.keys.some(k => text.includes(k)));
 
-    // --- Ping ---
     if (/\b(ping|пинг|пропинг|проверь.*доступ|доступен ли)\b/.test(text)) {
       const host = extractHost() || '8.8.8.8';
       lines.push(`echo Проверяем доступность ${host}...`);
@@ -1512,7 +1718,6 @@ pause`
       matched.push('ping');
     }
 
-    // --- Tracert ---
     if (/\b(tracert|tracet?route|трасер|маршрут)\b/.test(text)) {
       const host = extractHost() || 'google.com';
       lines.push(`echo Трассировка до ${host}...`);
@@ -1520,22 +1725,19 @@ pause`
       matched.push('tracert');
     }
 
-    // --- nslookup ---
-    if (/\b(nslookup|nslookup|dns.*запрос|разреши.*имя)\b/.test(text)) {
+    if (/\b(nslookup|dns.*запрос|разреши.*имя)\b/.test(text)) {
       const host = extractHost() || 'google.com';
       lines.push(`echo Проверяем DNS для ${host}...`);
       lines.push(`nslookup ${host}`);
       matched.push('nslookup');
     }
 
-    // --- Очистка DNS ---
     if (/(очист|сброс|flush).*(dns|днс)|dns.*(очист|сброс|flush)|почисти.*dns|сбрось.*dns|flushdns/.test(text)) {
       lines.push('echo Очищаем DNS-кэш...');
       lines.push('ipconfig /flushdns');
       matched.push('flushdns');
     }
 
-    // --- release/renew ---
     if (/(обнови|обновить|renew|release).*(ip|айпи)|ipconfig\s*\/\s*renew|смени.*ip|получи.*ip/.test(text)) {
       lines.push('echo Обновляем IP-адрес...');
       lines.push('ipconfig /release');
@@ -1543,14 +1745,12 @@ pause`
       matched.push('ipconfig renew');
     }
 
-    // --- ipconfig /all ---
     if (/(покажи|показать|выведи|посмотри|show).*(ip|айпи|конфиг|сетев)|ipconfig\s*\/\s*all|мой ip/.test(text)) {
       lines.push('echo Информация о сети:');
       lines.push('ipconfig /all');
       matched.push('ipconfig /all');
     }
 
-    // --- winget install ---
     if (appsToInstall.length > 0 || /\b(установи|поставь|install|winget)\b/.test(text)) {
       if (appsToInstall.length > 0) {
         lines.push('echo Устанавливаем программы через winget...');
@@ -1565,14 +1765,12 @@ pause`
       }
     }
 
-    // --- winget upgrade ---
     if (/(обнови|обновить|upgrade|апгрейд).*(программ|приложен|по|winget|все)/.test(text)) {
       lines.push('echo Обновляем все установленные программы...');
       lines.push('winget upgrade --all --silent --accept-package-agreements --accept-source-agreements');
       matched.push('winget upgrade --all');
     }
 
-    // --- shutdown: таймер ---
     const sec = extractSeconds();
     const wantsShutdown = /(выключ|отключ.*пк|shutdown|poweroff)/.test(text) && !/отключ.*сеть|сетевой адаптер/.test(text);
     const wantsReboot = /(перезагруз|перезапусти.*комп|reboot|restart.*(комп|пк))/.test(text);
@@ -1602,28 +1800,24 @@ pause`
       matched.push(sec ? `shutdown через ${sec} сек` : 'shutdown');
     }
 
-    // --- SFC ---
     if (/(проверь|проверить|scan|sfc|целостн).*(систем|sfc)|sfc\s*\/\s*scannow/.test(text)) {
       lines.push('echo Проверяем целостность системных файлов (может занять время)...');
       lines.push('sfc /scannow');
       matched.push('sfc /scannow');
     }
 
-    // --- chkdsk ---
     if (/(проверь|проверить|chkdsk).*(диск|chkdsk)|chkdsk/.test(text)) {
       lines.push('echo Проверяем диск C: ...');
       lines.push('chkdsk C: /f');
       matched.push('chkdsk');
     }
 
-    // --- tasklist ---
     if (/(список|покажи|выведи|list).*(процесс|process|tasklist)|tasklist|какие процессы/.test(text)) {
       lines.push('echo Список процессов:');
       lines.push('tasklist');
       matched.push('tasklist');
     }
 
-    // --- taskkill ---
     const killMatch = text.match(/(убей|заверши|kill|taskkill)\s+([a-z0-9_.-]+)/i);
     if (killMatch) {
       const proc = killMatch[2].replace(/\.exe$/i, '');
@@ -1632,28 +1826,24 @@ pause`
       matched.push(`taskkill ${proc}`);
     }
 
-    // --- systeminfo ---
     if (/(информац|сведен|systeminfo|покажи.*систем|систем.*инфо)/.test(text)) {
       lines.push('echo Информация о системе:');
       lines.push('systeminfo');
       matched.push('systeminfo');
     }
 
-    // --- hostname ---
     if (/(имя|name|hostname).*(комп|пк|машин)|hostname/.test(text)) {
       lines.push('echo Имя компьютера:');
       lines.push('hostname');
       matched.push('hostname');
     }
 
-    // --- dir ---
     if (/(список|покажи|выведи|list).*(файл|папк|каталог|dir)|^dir$/.test(text)) {
       lines.push('echo Содержимое текущей папки:');
       lines.push('dir');
       matched.push('dir');
     }
 
-    // --- mkdir ---
     const mdMatch = text.match(/(созда|сделай).*(папк|каталог|директор)\s+([a-z0-9_.\-\\/]+)/i);
     if (mdMatch) {
       const folder = mdMatch[3];
@@ -1662,7 +1852,6 @@ pause`
       matched.push(`mkdir ${folder}`);
     }
 
-    // --- del ---
     const delMatch = text.match(/(удали|сотри|delete|del)\s+([a-z0-9_.\-\\/]+)/i);
     if (delMatch) {
       const file = delMatch[2];
@@ -1671,7 +1860,6 @@ pause`
       matched.push(`del ${file}`);
     }
 
-    // --- copy ---
     const copyMatch = text.match(/(скопиру|копируй|copy)\s+([a-z0-9_.\-\\/]+)\s+(в|to)\s+([a-z0-9_.\-\\/]+)/i);
     if (copyMatch) {
       lines.push(`echo Копируем ${copyMatch[2]} в ${copyMatch[4]}...`);
@@ -1679,7 +1867,6 @@ pause`
       matched.push('copy');
     }
 
-    // --- backup ---
     if (/(бэкап|бек?ап|резервн|backup|копи.*документ)/.test(text)) {
       const srcMatch = text.match(/(документ|рабоч|desktop|загрузк|downloads|фото|picture)/);
       let source = 'C:\\Users\\%username%\\Documents';
@@ -1698,10 +1885,9 @@ pause`
       matched.push('backup');
     }
 
-    // --- netsh: отключение/включение сети ---
     if (/(отключ|выключ|disable).*(сеть|адаптер|интернет|wifi|wi-fi)/.test(text) ||
         /(включ|enable).*(сеть|адаптер|интернет|wifi|wi-fi)/.test(text)) {
-      const ifaceMatch = text.match(/(wifi|wi-fi|вайфай|ethernet|эзернет|ethernet|локалк)/);
+      const ifaceMatch = text.match(/(wifi|wi-fi|вайфай|ethernet|эзернет|локалк)/);
       let iface = 'Ethernet';
       if (ifaceMatch) {
         if (/wifi|wi-fi|вайфай/.test(ifaceMatch[0])) iface = 'Wi-Fi';
@@ -1715,27 +1901,23 @@ pause`
       matched.push(`netsh ${iface} toggle`);
     }
 
-    // --- echo / приветствие ---
-    if (/(привет|здравств|hello|echo).*(мир|мир|пользовател|пк|комп)/.test(text) || /^привет/.test(text)) {
+    if (/(привет|здравств|hello|echo).*(мир|пользовател|пк|комп)/.test(text) || /^привет/.test(text)) {
       lines.push('echo Привет! Скрипт запущен.');
       lines.push('echo Дата: %date%  Время: %time%');
       lines.push('echo Пользователь: %username%  Компьютер: %computername%');
       matched.push('echo');
     }
 
-    // --- netstat ---
     if (/(netstat|соединен|подключен|порты|ports)/.test(text)) {
       lines.push('echo Активные сетевые подключения:');
       lines.push('netstat -an');
       matched.push('netstat');
     }
 
-    // --- Если ничего не распознали ---
     if (lines.length === 0) {
       return { body: null, matched: [], name: null, admin: false };
     }
 
-    // --- Собираем итоговый текст ---
     const needAdmin = /(sfc|chkdsk|netsh|shutdown|перезагруз|выключ|winget install|systeminfo)/.test(text);
     const body = '@echo off\nchcp 65001 >nul\n\n' + lines.join('\n') + '\n\necho.\necho Готово!\npause';
     return { body, matched, name: 'custom', admin: needAdmin };
@@ -1747,22 +1929,18 @@ pause`
       showStatus('❌ Сначала опишите, что должен делать батник.', 'err');
       return;
     }
-
     const result = buildBatFromDescription(prompt);
     if (!result.body) {
       showStatus('⚠️ Не удалось распознать команды. Попробуйте перефразировать: «ping google.com», «почисти dns», «установи chrome», «перезагрузи через 60 секунд», «сделай бэкап документов». Или напишите команды вручную ниже.', 'err');
       return;
     }
-
     document.getElementById('batBody').value = result.body;
     document.getElementById('batName').value = result.name || 'custom';
     document.getElementById('batAdmin').checked = result.admin;
     document.getElementById('batPreviewWrap').classList.remove('show');
     document.getElementById('batStatus').classList.remove('show');
-
     const list = result.matched.length ? result.matched.join(', ') : 'общий скрипт';
     showStatus('✅ Распознано: ' + list + '. Проверьте текст ниже и нажмите «Скачать .bat».', 'ok');
-
     document.getElementById('batBody').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
@@ -1832,7 +2010,18 @@ if %errorLevel% neq 0 (
     }
   }
 
+  // ===== Инициализация =====
   handleInitialRoute();
+
+  // Показываем плавающую кнопку сразу, если это мобильный и сайт не установлен
+  (function() {
+    if (isStandalone()) return;
+    const platform = detectPlatform();
+    if (platform === 'android' || platform === 'ios') {
+      document.getElementById('fabInstall').classList.add('show');
+      maybeShowBanner();
+    }
+  })();
 </script>
 
 </body>
