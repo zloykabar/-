@@ -30,7 +30,6 @@
   header h1 { margin: 0 0 6px; font-size: 24px; }
   header p { margin: 0; opacity: 0.9; font-size: 13px; }
 
-  /* ===== Навигация ===== */
   nav {
     display: flex;
     flex-wrap: nowrap;
@@ -67,7 +66,6 @@
   nav button.active { background: #2563eb; color: #fff; }
   nav button:active { transform: scale(0.97); }
 
-  /* ===== Контент ===== */
   main {
     max-width: 1080px;
     margin: 16px auto;
@@ -100,7 +98,6 @@
   ul, ol { padding-left: 20px; }
   li { margin-bottom: 6px; }
 
-  /* ===== Таблицы (прокрутка на мобильных) ===== */
   .table-scroll {
     width: 100%;
     overflow-x: auto;
@@ -169,7 +166,6 @@
     padding: 20px 12px calc(20px + env(safe-area-inset-bottom));
   }
 
-  /* ===== Таблица CIDR ===== */
   .cidr-wrap {
     max-height: 60vh;
     overflow: auto;
@@ -213,7 +209,6 @@
   .cidr-table tr:nth-child(even) td { background: #fafbfd; }
   .cidr-hint { font-size: 12px; color: #64748b; margin: 0 0 6px; }
 
-  /* ===== Планшет ===== */
   @media (min-width: 700px) {
     header h1 { font-size: 28px; }
     header p { font-size: 14px; }
@@ -228,7 +223,6 @@
     .os-block, .note { font-size: 14px; }
   }
 
-  /* ===== Десктоп ===== */
   @media (min-width: 1000px) {
     nav { flex-wrap: wrap; justify-content: center; }
     header h1 { font-size: 30px; }
@@ -240,7 +234,7 @@
 
 <header>
   <h1>Сетевая шпаргалка</h1>
-  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония</p>
+  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды</p>
 </header>
 
 <nav id="nav">
@@ -250,6 +244,7 @@
   <button onclick="showTab('servers', this)">Серверы</button>
   <button onclick="showTab('router', this)">Маршрутизатор</button>
   <button onclick="showTab('voip', this)">IP-телефония</button>
+  <button onclick="showTab('commands', this)">Команды</button>
 </nav>
 
 <main>
@@ -667,6 +662,144 @@ dial-peer voice 10 voip
     </div>
   </section>
 
+  <!-- ========== КОМАНДЫ ========== -->
+  <section id="commands" class="tab">
+    <h2>Команды Windows (PowerShell и CMD)</h2>
+    <p>Основные команды для повседневной работы с Windows: установка программ, удалённое управление, работа с процессами, службами, сетью и файлами.</p>
+
+    <h3>Установка программ (WinGet)</h3>
+    <p><strong>WinGet</strong> — официальный пакетный менеджер Microsoft, встроенный в Windows 11 и современные версии Windows 10 (1809+). Позволяет устанавливать, обновлять и удалять приложения из командной строки [citation:2][citation:6].</p>
+
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>Команда</th></tr>
+        <tr><td>Поиск программы</td><td><code>winget search &lt;название&gt;</code></td></tr>
+        <tr><td>Установка программы</td><td><code>winget install &lt;PackageId&gt;</code></td></tr>
+        <tr><td>Установка по точному ID</td><td><code>winget install --id &lt;PackageId&gt; -e</code></td></tr>
+        <tr><td>Тихая установка</td><td><code>winget install &lt;PackageId&gt; --silent</code></td></tr>
+        <tr><td>Обновление всех программ</td><td><code>winget upgrade --all</code></td></tr>
+        <tr><td>Удаление программы</td><td><code>winget remove &lt;PackageId&gt;</code></td></tr>
+        <tr><td>Список установленных</td><td><code>winget list</code></td></tr>
+      </table>
+    </div>
+
+    <h4>Примеры</h4>
+    <pre><code>:: Поиск и установка VLC
+winget search vlc
+winget install VideoLAN.VLC
+
+:: Установка нескольких программ одной командой
+winget install --id Google.Chrome --id Mozilla.Firefox --id VideoLAN.VLC -e
+
+:: Обновление всего установленного ПО
+winget upgrade --all</code></pre>
+
+    <div class="note">
+      Для установки программ, требующих прав администратора, запускайте PowerShell или CMD от имени администратора. В Windows 11 также можно использовать <code>sudo</code>.
+    </div>
+
+    <h3>Удалённое управление</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
+        <tr><td>Удалённый рабочий стол</td><td><code>mstsc /v:&lt;IP&gt;</code></td><td><code>mstsc /v:&lt;IP&gt;</code></td></tr>
+        <tr><td>SSH-подключение</td><td><code>ssh user@&lt;IP&gt;</code></td><td><code>ssh user@&lt;IP&gt;</code></td></tr>
+        <tr><td>Перезагрузка удалённого ПК</td><td><code>Restart-Computer -ComputerName &lt;IP&gt;</code></td><td><code>shutdown /r /m \\&lt;IP&gt; /t 0</code></td></tr>
+        <tr><td>Выключение удалённого ПК</td><td><code>Stop-Computer -ComputerName &lt;IP&gt;</code></td><td><code>shutdown /s /m \\&lt;IP&gt; /t 0</code></td></tr>
+        <tr><td>Выполнение команды на удалённом ПК</td><td><code>Invoke-Command -ComputerName &lt;IP&gt; -ScriptBlock { &lt;команда&gt; }</code></td><td>—</td></tr>
+      </table>
+    </div>
+
+    <h4>Примеры</h4>
+    <pre><code># Подключение по RDP
+mstsc /v:192.168.1.100
+
+# Перезагрузка удалённого компьютера (нужны права)
+Restart-Computer -ComputerName 192.168.1.100 -Force
+
+# Выполнить команду на удалённом ПК
+Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></pre>
+
+    <h3>Процессы</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
+        <tr><td>Список процессов</td><td><code>Get-Process</code></td><td><code>tasklist</code></td></tr>
+        <tr><td>Подробный список</td><td><code>Get-Process | Format-Table -AutoSize</code></td><td><code>tasklist /v</code></td></tr>
+        <tr><td>Найти процесс по имени</td><td><code>Get-Process -Name &lt;имя&gt;</code></td><td><code>tasklist | findstr &lt;имя&gt;</code></td></tr>
+        <tr><td>Завершить процесс по имени</td><td><code>Stop-Process -Name &lt;имя&gt;</code></td><td><code>taskkill /IM &lt;имя&gt;.exe /F</code></td></tr>
+        <tr><td>Завершить по PID</td><td><code>Stop-Process -Id &lt;PID&gt;</code></td><td><code>taskkill /PID &lt;PID&gt; /F</code></td></tr>
+      </table>
+    </div>
+
+    <h3>Службы</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
+        <tr><td>Список служб</td><td><code>Get-Service</code></td><td><code>sc query</code></td></tr>
+        <tr><td>Запущенные службы</td><td><code>Get-Service | Where-Object Status -eq Running</code></td><td><code>sc query | findstr RUNNING</code></td></tr>
+        <tr><td>Запустить службу</td><td><code>Start-Service -Name &lt;имя&gt;</code></td><td><code>net start &lt;имя&gt;</code></td></tr>
+        <tr><td>Остановить службу</td><td><code>Stop-Service -Name &lt;имя&gt;</code></td><td><code>net stop &lt;имя&gt;</code></td></tr>
+        <tr><td>Перезапустить службу</td><td><code>Restart-Service -Name &lt;имя&gt;</code></td><td><code>net stop &lt;имя&gt; &amp;&amp; net start &lt;имя&gt;</code></td></tr>
+      </table>
+    </div>
+
+    <h3>Сеть</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
+        <tr><td>IP-конфигурация</td><td><code>Get-NetIPConfiguration</code></td><td><code>ipconfig /all</code></td></tr>
+        <tr><td>Проверка связи (ping)</td><td><code>Test-Connection &lt;адрес&gt;</code></td><td><code>ping &lt;адрес&gt;</code></td></tr>
+        <tr><td>Проверка порта</td><td><code>Test-NetConnection &lt;адрес&gt; -Port &lt;порт&gt;</code></td><td><code>telnet &lt;адрес&gt; &lt;порт&gt;</code></td></tr>
+        <tr><td>DNS-запрос</td><td><code>Resolve-DnsName &lt;домен&gt;</code></td><td><code>nslookup &lt;домен&gt;</code></td></tr>
+        <tr><td>Сетевые подключения</td><td><code>Get-NetTCPConnection</code></td><td><code>netstat -an</code></td></tr>
+        <tr><td>Очистка DNS</td><td><code>Clear-DnsClientCache</code></td><td><code>ipconfig /flushdns</code></td></tr>
+      </table>
+    </div>
+
+    <h3>Файлы и папки</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
+        <tr><td>Список файлов</td><td><code>Get-ChildItem</code></td><td><code>dir</code></td></tr>
+        <tr><td>Сменить папку</td><td><code>Set-Location &lt;путь&gt;</code></td><td><code>cd /d &lt;путь&gt;</code></td></tr>
+        <tr><td>Создать папку</td><td><code>New-Item -ItemType Directory &lt;имя&gt;</code></td><td><code>mkdir &lt;имя&gt;</code></td></tr>
+        <tr><td>Копировать</td><td><code>Copy-Item &lt;откуда&gt; &lt;куда&gt;</code></td><td><code>copy &lt;откуда&gt; &lt;куда&gt;</code></td></tr>
+        <tr><td>Переместить</td><td><code>Move-Item &lt;откуда&gt; &lt;куда&gt;</code></td><td><code>move &lt;откуда&gt; &lt;куда&gt;</code></td></tr>
+        <tr><td>Удалить файл</td><td><code>Remove-Item &lt;файл&gt;</code></td><td><code>del &lt;файл&gt;</code></td></tr>
+        <tr><td>Удалить папку рекурсивно</td><td><code>Remove-Item &lt;папка&gt; -Recurse</code></td><td><code>rmdir /s /q &lt;папка&gt;</code></td></tr>
+      </table>
+    </div>
+
+    <h3>Системная информация и обслуживание</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
+        <tr><td>Информация о системе</td><td><code>Get-ComputerInfo</code></td><td><code>systeminfo</code></td></tr>
+        <tr><td>Имя компьютера</td><td><code>$env:COMPUTERNAME</code></td><td><code>hostname</code></td></tr>
+        <tr><td>Версия PowerShell</td><td><code>$PSVersionTable</code></td><td>—</td></tr>
+        <tr><td>Проверка целостности системы</td><td>—</td><td><code>sfc /scannow</code></td></tr>
+        <tr><td>Проверка диска</td><td>—</td><td><code>chkdsk C: /f</code></td></tr>
+        <tr><td>Очистить экран</td><td><code>Clear-Host</code></td><td><code>cls</code></td></tr>
+      </table>
+    </div>
+
+    <h3>Питание</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>PowerShell</th><th>CMD</th></tr>
+        <tr><td>Выключить</td><td><code>Stop-Computer</code></td><td><code>shutdown /s /t 0</code></td></tr>
+        <tr><td>Перезагрузить</td><td><code>Restart-Computer</code></td><td><code>shutdown /r /t 0</code></td></tr>
+        <tr><td>Отменить запланированное выключение</td><td>—</td><td><code>shutdown /a</code></td></tr>
+        <tr><td>Выключить через 10 минут</td><td>—</td><td><code>shutdown /s /t 600</code></td></tr>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Совет:</strong> в PowerShell многие классические команды CMD работают как алиасы: <code>dir</code> → <code>Get-ChildItem</code>, <code>cd</code> → <code>Set-Location</code>, <code>ping</code> → <code>Test-Connection</code>. Узнать все алиасы: <code>Get-Alias</code>.
+    </div>
+  </section>
+
 </main>
 
 <footer>Сетевая шпаргалка · Статический сайт для GitHub Pages</footer>
@@ -677,11 +810,9 @@ dial-peer voice 10 voip
     document.getElementById(id).classList.add('active');
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    // Прокрутить активную кнопку в зону видимости на мобильных
     if (btn.scrollIntoView) {
       btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
-    // Плавно наверх
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
