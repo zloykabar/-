@@ -30,49 +30,27 @@
   header h1 { margin: 0 0 6px; font-size: 24px; }
   header p { margin: 0; opacity: 0.9; font-size: 13px; }
 
-  main {
-    max-width: 1080px;
-    margin: 16px auto;
-    padding: 0 12px 40px;
-  }
+  main { max-width: 1080px; margin: 16px auto; padding: 0 12px 40px; }
 
   .home-screen { display: block; animation: fade 0.25s ease; }
   .home-screen.hidden { display: none; }
   .home-title { text-align: center; color: #1e3a8a; margin: 8px 0 4px; font-size: 20px; }
   .home-subtitle { text-align: center; color: #64748b; font-size: 13px; margin: 0 0 20px; }
-  .cards-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+  .cards-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 18px 18px;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    border: 2px solid transparent;
-    cursor: pointer;
-    text-decoration: none;
-    color: #1f2933;
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 18px; background: #fff; border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06); border: 2px solid transparent;
+    cursor: pointer; text-decoration: none; color: #1f2933;
     transition: transform 0.12s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    min-height: 78px;
-    touch-action: manipulation;
+    min-height: 78px; touch-action: manipulation;
   }
   .card:hover { border-color: #2563eb; box-shadow: 0 6px 18px rgba(37,99,235,0.15); transform: translateY(-2px); }
   .card:active { transform: scale(0.985); }
   .card-icon {
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
+    flex-shrink: 0; width: 52px; height: 52px; border-radius: 12px;
     background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
   }
   .card-body { flex: 1; min-width: 0; }
   .card-title { font-weight: 700; font-size: 16px; color: #1e3a8a; margin-bottom: 3px; }
@@ -80,47 +58,24 @@
   .card-arrow { flex-shrink: 0; color: #94a3b8; font-size: 22px; font-weight: 700; }
 
   .page {
-    display: none;
-    background: #fff;
-    border-radius: 12px;
-    padding: 18px 16px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    animation: fade 0.25s ease;
+    display: none; background: #fff; border-radius: 12px; padding: 18px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06); animation: fade 0.25s ease;
     overflow-wrap: break-word;
   }
   .page.active { display: block; }
-  @keyframes fade {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
   .page-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 16px;
-    min-height: 44px;
-    background: #eff6ff;
-    color: #1e3a8a;
-    border: 2px solid #dbeafe;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 14px;
-    transition: background 0.15s ease, border-color 0.15s ease;
-    touch-action: manipulation;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 16px; min-height: 44px; background: #eff6ff;
+    color: #1e3a8a; border: 2px solid #dbeafe; border-radius: 10px;
+    font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 14px;
+    transition: background 0.15s ease, border-color 0.15s ease; touch-action: manipulation;
   }
   .page-back:hover { background: #dbeafe; border-color: #bfdbfe; }
   .page-back:active { transform: scale(0.97); }
 
-  h2 {
-    margin-top: 0;
-    color: #1e3a8a;
-    border-bottom: 2px solid #e0ecff;
-    padding-bottom: 8px;
-    font-size: 20px;
-  }
+  h2 { margin-top: 0; color: #1e3a8a; border-bottom: 2px solid #e0ecff; padding-bottom: 8px; font-size: 20px; }
   h3 { color: #1e40af; margin-bottom: 6px; margin-top: 20px; font-size: 17px; }
   h4 { color: #1e40af; margin: 14px 0 4px; font-size: 15px; }
   p, li { font-size: 14px; }
@@ -128,88 +83,42 @@
   li { margin-bottom: 6px; }
 
   .table-scroll {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 12px 0 20px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    margin: 12px 0 20px; border-radius: 8px; border: 1px solid #e2e8f0;
   }
   .table-scroll > table { margin: 0; min-width: 100%; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  th, td {
-    border: 1px solid #e2e8f0;
-    padding: 8px 10px;
-    text-align: left;
-    vertical-align: top;
-  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; vertical-align: top; }
   th { background: #eff6ff; color: #1e3a8a; white-space: nowrap; }
   tr:nth-child(even) td { background: #fafbfd; }
 
   code {
-    background: #eef2f7;
-    padding: 2px 6px;
-    border-radius: 4px;
+    background: #eef2f7; padding: 2px 6px; border-radius: 4px;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: 12.5px;
-    color: #b91c1c;
-    word-break: break-word;
+    font-size: 12.5px; color: #b91c1c; word-break: break-word;
   }
   pre {
-    background: #0f172a;
-    color: #e2e8f0;
-    padding: 14px 16px;
-    border-radius: 8px;
-    overflow-x: auto;
-    font-size: 12px;
-    -webkit-overflow-scrolling: touch;
-    line-height: 1.5;
+    background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: 8px;
+    overflow-x: auto; font-size: 12px; -webkit-overflow-scrolling: touch; line-height: 1.5;
   }
   pre code { background: none; color: inherit; padding: 0; white-space: pre; }
 
   .os-block {
-    background: #f8fafc;
-    border-left: 4px solid #2563eb;
-    padding: 10px 12px;
-    margin: 10px 0;
-    border-radius: 6px;
-    font-size: 13px;
+    background: #f8fafc; border-left: 4px solid #2563eb;
+    padding: 10px 12px; margin: 10px 0; border-radius: 6px; font-size: 13px;
   }
   .os-block strong { color: #1e3a8a; }
   .note {
-    background: #fff7ed;
-    border-left: 4px solid #f59e0b;
-    padding: 10px 12px;
-    border-radius: 6px;
-    margin: 16px 0;
-    font-size: 13px;
+    background: #fff7ed; border-left: 4px solid #f59e0b;
+    padding: 10px 12px; border-radius: 6px; margin: 16px 0; font-size: 13px;
   }
-  footer {
-    text-align: center;
-    color: #64748b;
-    font-size: 12px;
-    padding: 20px 12px calc(20px + env(safe-area-inset-bottom));
-  }
+  footer { text-align: center; color: #64748b; font-size: 12px; padding: 20px 12px calc(20px + env(safe-area-inset-bottom)); }
 
   .btn-open-modal {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    min-height: 44px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 8px 0 16px;
-    transition: background 0.15s ease, transform 0.1s ease;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; min-height: 44px; background: #2563eb; color: #fff;
+    border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
+    cursor: pointer; margin: 8px 0 16px; transition: background 0.15s ease, transform 0.1s ease;
     touch-action: manipulation;
   }
   .btn-open-modal:hover { background: #1e40af; }
@@ -218,118 +127,57 @@
 
   /* ===== МОДАЛЬНОЕ ОКНО ===== */
   .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.65);
-    z-index: 100;
-    padding: 16px;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
+    display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65);
+    z-index: 100; padding: 16px; align-items: center; justify-content: center;
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
     animation: modalFade 0.2s ease;
   }
   .modal-overlay.open { display: flex; }
   @keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
   .modal-content {
-    background: #fff;
-    border-radius: 14px;
-    width: 100%;
-    max-width: 900px;
-    max-height: calc(100vh - 32px);
-    max-height: calc(100dvh - 32px);
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-    animation: modalSlide 0.25s ease;
-    overflow: hidden;
+    background: #fff; border-radius: 14px; width: 100%; max-width: 900px;
+    max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px);
+    display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    animation: modalSlide 0.25s ease; overflow: hidden;
   }
-  @keyframes modalSlide {
-    from { transform: translateY(20px); opacity: 0.6; }
-    to { transform: translateY(0); opacity: 1; }
-  }
+  @keyframes modalSlide { from { transform: translateY(20px); opacity: 0.6; } to { transform: translateY(0); opacity: 1; } }
   .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 14px 18px;
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: #fff;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 18px; background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: #fff; flex-shrink: 0;
   }
   .modal-header h3 { margin: 0; color: #fff; font-size: 17px; }
   .modal-close {
-    width: 38px;
-    height: 38px;
-    border: none;
-    background: rgba(255,255,255,0.18);
-    color: #fff;
-    border-radius: 8px;
-    font-size: 22px;
-    line-height: 1;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s ease;
-    touch-action: manipulation;
+    width: 38px; height: 38px; border: none; background: rgba(255,255,255,0.18);
+    color: #fff; border-radius: 8px; font-size: 22px; line-height: 1;
+    cursor: pointer; flex-shrink: 0; display: flex; align-items: center;
+    justify-content: center; transition: background 0.15s ease; touch-action: manipulation;
   }
   .modal-close:hover { background: rgba(255,255,255,0.32); }
   .modal-close:active { transform: scale(0.94); }
-  .modal-body {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 0;
-    flex: 1;
-    min-height: 0;
-  }
+  .modal-body { overflow: auto; -webkit-overflow-scrolling: touch; padding: 0; flex: 1; min-height: 0; }
   .modal-hint {
-    font-size: 12.5px;
-    color: #64748b;
-    padding: 10px 18px 6px;
-    margin: 0;
-    background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
+    font-size: 12.5px; color: #64748b; padding: 10px 18px 6px; margin: 0;
+    background: #f8fafc; border-bottom: 1px solid #e2e8f0;
   }
   .modal-footer-note {
-    font-size: 12px;
-    color: #64748b;
-    padding: 10px 18px;
-    background: #f8fafc;
-    border-top: 1px solid #e2e8f0;
-    margin: 0;
-    flex-shrink: 0;
+    font-size: 12px; color: #64748b; padding: 10px 18px;
+    background: #f8fafc; border-top: 1px solid #e2e8f0; margin: 0; flex-shrink: 0;
   }
   .cidr-wrap { overflow: auto; -webkit-overflow-scrolling: touch; max-height: none; }
   .cidr-table {
-    margin: 0;
-    font-size: 13px;
+    margin: 0; font-size: 13px;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    min-width: 580px;
-    width: 100%;
+    min-width: 580px; width: 100%;
   }
   .cidr-table th {
-    position: sticky;
-    top: 0;
-    background: #1e3a8a;
-    color: #fff;
-    z-index: 2;
-    font-weight: 600;
-    text-align: center;
-    white-space: nowrap;
-    padding: 10px 8px;
+    position: sticky; top: 0; background: #1e3a8a; color: #fff; z-index: 2;
+    font-weight: 600; text-align: center; white-space: nowrap; padding: 10px 8px;
   }
   .cidr-table td { text-align: center; white-space: nowrap; padding: 7px 8px; }
   .cidr-table td:first-child {
-    font-weight: 700;
-    color: #1e40af;
-    background: #eff6ff;
-    position: sticky;
-    left: 0;
-    z-index: 1;
+    font-weight: 700; color: #1e40af; background: #eff6ff;
+    position: sticky; left: 0; z-index: 1;
   }
   .cidr-table th:first-child { position: sticky; left: 0; z-index: 3; background: #1e3a8a; }
   .cidr-table tr:nth-child(even) td { background: #fafbfd; }
@@ -338,134 +186,81 @@
 
   /* ===== ФОРМА БАТНИКА ===== */
   .form-row { margin-bottom: 16px; }
-  .form-row label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: #1e3a8a;
-    margin-bottom: 6px;
+  .form-row label { display: block; font-size: 14px; font-weight: 600; color: #1e3a8a; margin-bottom: 6px; }
+  .form-row input[type="text"], .form-row select, .form-row textarea {
+    width: 100%; padding: 11px 12px; font-size: 14px; font-family: inherit;
+    border: 2px solid #e2e8f0; border-radius: 8px; background: #fff;
+    color: #1f2933; transition: border-color 0.15s ease;
   }
-  .form-row input[type="text"],
-  .form-row select,
-  .form-row textarea {
-    width: 100%;
-    padding: 11px 12px;
-    font-size: 14px;
-    font-family: inherit;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    background: #fff;
-    color: #1f2933;
-    transition: border-color 0.15s ease;
-  }
-  .form-row input[type="text"]:focus,
-  .form-row select:focus,
-  .form-row textarea:focus {
-    outline: none;
-    border-color: #2563eb;
+  .form-row input[type="text"]:focus, .form-row select:focus, .form-row textarea:focus {
+    outline: none; border-color: #2563eb;
   }
   .form-row textarea {
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: 13px;
-    line-height: 1.5;
-    resize: vertical;
-    min-height: 220px;
-    white-space: pre;
-    overflow-wrap: normal;
-    overflow-x: auto;
+    font-size: 13px; line-height: 1.5; resize: vertical; min-height: 220px;
+    white-space: pre; overflow-wrap: normal; overflow-x: auto;
   }
-  .form-hint {
-    font-size: 12px;
-    color: #64748b;
-    margin: 4px 0 0;
-  }
+  .form-hint { font-size: 12px; color: #64748b; margin: 4px 0 0; }
   .checkbox-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13.5px;
-    margin-bottom: 14px;
-    cursor: pointer;
-    user-select: none;
+    display: flex; align-items: center; gap: 8px; font-size: 13.5px;
+    margin-bottom: 14px; cursor: pointer; user-select: none;
   }
   .checkbox-row input { width: 18px; height: 18px; accent-color: #2563eb; cursor: pointer; }
-
-  .templates {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 6px 0 16px;
-  }
+  .templates { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 16px; }
   .tmpl-btn {
-    padding: 8px 12px;
-    min-height: 40px;
-    background: #eff6ff;
-    border: 2px solid #dbeafe;
-    color: #1e3a8a;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    touch-action: manipulation;
+    padding: 8px 12px; min-height: 40px; background: #eff6ff;
+    border: 2px solid #dbeafe; color: #1e3a8a; border-radius: 8px;
+    font-size: 13px; font-weight: 600; cursor: pointer; touch-action: manipulation;
     transition: background 0.15s ease;
   }
   .tmpl-btn:hover { background: #dbeafe; }
   .tmpl-btn:active { transform: scale(0.97); }
-
   .btn-generate {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 22px;
-    min-height: 52px;
-    background: #16a34a;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 4px;
-    touch-action: manipulation;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 22px; min-height: 52px; background: #16a34a; color: #fff;
+    border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; width: 100%; margin-top: 4px; touch-action: manipulation;
     transition: background 0.15s ease, transform 0.1s ease;
   }
   .btn-generate:hover { background: #15803d; }
   .btn-generate:active { transform: scale(0.98); }
   .btn-generate::before { content: "💾"; font-size: 18px; }
-
-  .preview-wrap {
-    margin-top: 20px;
-    display: none;
-  }
+  .preview-wrap { margin-top: 20px; display: none; }
   .preview-wrap.show { display: block; }
   .preview-wrap h4 { margin-top: 0; }
   .preview {
-    background: #0f172a;
-    color: #e2e8f0;
-    padding: 14px 16px;
-    border-radius: 8px;
+    background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: 8px;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: 12.5px;
-    line-height: 1.5;
-    max-height: 320px;
-    overflow: auto;
-    white-space: pre;
-    -webkit-overflow-scrolling: touch;
+    font-size: 12.5px; line-height: 1.5; max-height: 320px; overflow: auto;
+    white-space: pre; -webkit-overflow-scrolling: touch;
   }
-
   .status {
-    display: none;
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin-top: 14px;
-    font-size: 13.5px;
-    font-weight: 600;
+    display: none; padding: 12px 14px; border-radius: 8px; margin-top: 14px;
+    font-size: 13.5px; font-weight: 600;
   }
   .status.show { display: block; }
   .status.ok { background: #dcfce7; color: #166534; border-left: 4px solid #16a34a; }
   .status.err { background: #fee2e2; color: #991b1b; border-left: 4px solid #dc2626; }
+
+  /* ===== OSI ===== */
+  .osi-layer {
+    background: #f8fafc; border-left: 4px solid #2563eb;
+    padding: 12px 14px; margin: 10px 0; border-radius: 6px;
+  }
+  .osi-layer .layer-num {
+    display: inline-block; background: #2563eb; color: #fff;
+    font-weight: 700; font-size: 12px; padding: 2px 8px;
+    border-radius: 10px; margin-right: 8px;
+  }
+  .osi-layer .layer-name { font-weight: 700; color: #1e3a8a; font-size: 15px; }
+  .osi-layer p { margin: 6px 0 4px; font-size: 13.5px; }
+  .osi-layer .layer-meta { font-size: 12.5px; color: #475569; }
+  .osi-layer .layer-meta code { font-size: 11.5px; }
+  .osi-highlight {
+    background: #eff6ff; border-left: 4px solid #1e40af;
+    padding: 12px 14px; border-radius: 6px; margin: 14px 0;
+  }
+  .osi-highlight h4 { margin: 0 0 6px; }
 
   /* ===== АДАПТИВ ===== */
   @media (min-width: 600px) {
@@ -490,6 +285,7 @@
     .card-desc { font-size: 13px; }
     .modal-content { max-height: calc(100vh - 64px); }
     .modal-header h3 { font-size: 19px; }
+    .osi-layer p { font-size: 14.5px; }
   }
   @media (min-width: 1000px) {
     .cards-grid { grid-template-columns: 1fr 1fr 1fr; }
@@ -499,8 +295,7 @@
   @media (max-width: 480px) {
     .modal-overlay { padding: 8px; }
     .modal-content {
-      max-height: calc(100vh - 16px);
-      max-height: calc(100dvh - 16px);
+      max-height: calc(100vh - 16px); max-height: calc(100dvh - 16px);
       border-radius: 10px;
     }
     .modal-header { padding: 12px 14px; }
@@ -516,7 +311,7 @@
 
 <header>
   <h1>Сетевая шпаргалка</h1>
-  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды · Батник</p>
+  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды · Батник · OSI</p>
 </header>
 
 <main>
@@ -532,6 +327,15 @@
         <div class="card-body">
           <div class="card-title">Общая информация</div>
           <div class="card-desc">IP, маска, шлюз, DNS, таблица CIDR</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#osi" onclick="navigateTo('osi'); return false;">
+        <div class="card-icon">📚</div>
+        <div class="card-body">
+          <div class="card-title">Модель OSI</div>
+          <div class="card-desc">7 уровней, протоколы, устройства, PDU</div>
         </div>
         <div class="card-arrow">›</div>
       </a>
@@ -600,6 +404,118 @@
       </a>
     </div>
   </div>
+
+  <!-- ========== МОДЕЛЬ OSI ========== -->
+  <section id="osi" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
+    <h2>Модель OSI</h2>
+    <p><strong>OSI</strong> (Open Systems Interconnection) — эталонная сетевая модель, описывающая, как данные передаются от приложения одного устройства к приложению другого. Модель разбивает процесс на 7 уровней, каждый из которых отвечает за свою часть работы [citation:1][citation:4].</p>
+
+    <div class="osi-highlight">
+      <h4>Зачем нужна модель OSI</h4>
+      <p>Разделение на уровни позволяет:</p>
+      <ul>
+        <li>Независимо разрабатывать и заменять протоколы на каждом уровне.</li>
+        <li>Понимать, на каком уровне возникает проблема (например, «не работает DNS» — это прикладной уровень, «не проходит пакет» — сетевой).</li>
+        <li>Стандартизировать оборудование и ПО от разных производителей.</li>
+      </ul>
+    </div>
+
+    <h3>7 уровней модели OSI</h3>
+
+    <div class="osi-layer">
+      <div><span class="layer-num">7</span><span class="layer-name">Прикладной (Application)</span></div>
+      <p>Обеспечивает взаимодействие сети и пользователя. Предоставляет интерфейс для приложений: браузер, почтовый клиент, мессенджер [citation:1].</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>HTTP</code>, <code>HTTPS</code>, <code>FTP</code>, <code>DNS</code>, <code>SMTP</code>, <code>DHCP</code>, <code>SSH</code> [citation:2]<br><strong>Устройства:</strong> Gateway, Proxy, Content-Switch [citation:2]</div>
+    </div>
+
+    <div class="osi-layer">
+      <div><span class="layer-num">6</span><span class="layer-name">Представления (Presentation)</span></div>
+      <p>Преобразует данные в формат, понятный приложению: кодировка, сжатие, шифрование. Например, перевод текста в ASCII или UTF-8, сжатие в JPEG/MPEG, шифрование TLS [citation:1][citation:4].</p>
+      <div class="layer-meta"><strong>Примеры:</strong> <code>SSL/TLS</code>, <code>JPEG</code>, <code>MPEG</code>, <code>ASCII</code>, <code>Unicode</code> [citation:4][citation:14]</div>
+    </div>
+
+    <div class="osi-layer">
+      <div><span class="layer-num">5</span><span class="layer-name">Сеансовый (Session)</span></div>
+      <p>Устанавливает, поддерживает и завершает сеанс связи между двумя приложениями. Синхронизирует диалог, определяет право на передачу данных [citation:1][citation:4].</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>RPC</code>, <code>NetBIOS</code>, <code>SIP</code>, <code>L2TP</code>, <code>PPTP</code> [citation:4][citation:14]</div>
+    </div>
+
+    <div class="osi-layer">
+      <div><span class="layer-num">4</span><span class="layer-name">Транспортный (Transport)</span></div>
+      <p>Обеспечивает надёжную (или быструю) доставку данных от отправителя к получателю. Разбивает данные на сегменты, управляет потоком, исправляет ошибки, использует порты для адресации приложений [citation:1][citation:4].</p>
+      <div class="layer-meta">
+        <strong>Протоколы:</strong> <code>TCP</code> (надёжный, с соединением), <code>UDP</code> (быстрый, без соединения), <code>SCTP</code> [citation:2]<br>
+        <strong>PDU:</strong> сегменты (TCP) / датаграммы (UDP) [citation:1][citation:2]
+      </div>
+    </div>
+
+    <div class="osi-layer">
+      <div><span class="layer-num">3</span><span class="layer-name">Сетевой (Network)</span></div>
+      <p>Определяет путь передачи данных между разными сетями. Отвечает за логическую адресацию (IP-адреса) и маршрутизацию пакетов [citation:1][citation:4].</p>
+      <div class="layer-meta">
+        <strong>Протоколы:</strong> <code>IP</code> (IPv4/IPv6), <code>ICMP</code>, <code>IPsec</code>, <code>OSPF</code>, <code>BGP</code> [citation:2]<br>
+        <strong>PDU:</strong> пакет (packet) [citation:1][citation:4]<br>
+        <strong>Устройства:</strong> маршрутизатор (router), Layer-3 Switch [citation:2][citation:4]
+      </div>
+    </div>
+
+    <div class="osi-layer">
+      <div><span class="layer-num">2</span><span class="layer-name">Канальный (Data Link)</span></div>
+      <p>Обеспечивает передачу данных между соседними устройствами в одной сети. Упаковывает пакеты в кадры, использует MAC-адреса для идентификации устройств, контролирует ошибки [citation:1][citation:11].</p>
+      <div class="layer-meta">
+        <strong>Протоколы:</strong> <code>Ethernet</code> (IEEE 802.3), <code>Wi-Fi</code> (IEEE 802.11), <code>PPP</code>, <code>VLAN</code> [citation:2]<br>
+        <strong>PDU:</strong> кадр (frame) [citation:1][citation:4]<br>
+        <strong>Устройства:</strong> коммутатор (switch), мост (bridge), точка доступа [citation:2][citation:4]
+      </div>
+    </div>
+
+    <div class="osi-layer">
+      <div><span class="layer-num">1</span><span class="layer-name">Физический (Physical)</span></div>
+      <p>Передаёт биты (0 и 1) по физической среде: кабелю, оптоволокну, радиоволнам. Определяет электрические и механические параметры сигнала [citation:1][citation:4].</p>
+      <div class="layer-meta">
+        <strong>Среда:</strong> витая пара, оптоволокно, коаксиал, радиоволны [citation:4]<br>
+        <strong>PDU:</strong> биты (bits) [citation:1][citation:4]<br>
+        <strong>Устройства:</strong> концентратор (hub), репитер, кабель, разъёмы [citation:1][citation:2]
+      </div>
+    </div>
+
+    <h3>Соответствие OSI и TCP/IP</h3>
+    <p>Стек TCP/IP, на котором работает интернет, использует 4 уровня. Три верхних уровня OSI (прикладной, представления, сеансовый) объединены в один — прикладной, а два нижних (канальный и физический) — в уровень доступа к сети [citation:1][citation:8].</p>
+
+    <div class="table-scroll">
+      <table>
+        <tr><th>OSI</th><th>TCP/IP</th><th>Примеры протоколов</th><th>PDU</th></tr>
+        <tr><td>7. Прикладной<br>6. Представления<br>5. Сеансовый</td><td>Прикладной</td><td>HTTP, DNS, FTP, SMTP, SSH</td><td>Данные / Сообщение</td></tr>
+        <tr><td>4. Транспортный</td><td>Транспортный</td><td>TCP, UDP, SCTP</td><td>Сегмент / Датаграмма</td></tr>
+        <tr><td>3. Сетевой</td><td>Межсетевой (Internet)</td><td>IP, ICMP, OSPF, BGP</td><td>Пакет</td></tr>
+        <tr><td>2. Канальный<br>1. Физический</td><td>Доступ к сети</td><td>Ethernet, Wi-Fi, PPP</td><td>Кадр / Биты</td></tr>
+      </table>
+    </div>
+
+    <h3>Инкапсуляция данных</h3>
+    <p>При передаче данные спускаются по уровням сверху вниз, и каждый уровень добавляет свой заголовок (header). Это называется <strong>инкапсуляцией</strong> [citation:1][citation:9].</p>
+
+    <pre><code>Прикладной (7)      [Данные]
+Представления (6)   [Данные]
+Сеансовый (5)       [Данные]
+Транспортный (4)    [TCP-заголовок][Данные]        → Сегмент
+Сетевой (3)         [IP-заголовок][Сегмент]          → Пакет
+Канальный (2)       [Ethernet-заголовок][Пакет][FCS] → Кадр
+Физический (1)      101101001011010010110100...       → Биты</code></pre>
+
+    <p>На принимающей стороне происходит обратный процесс — <strong>декапсуляция</strong>: каждый уровень снимает свой заголовок и передаёт данные выше [citation:1].</p>
+
+    <h3>Как запомнить порядок уровней</h3>
+    <div class="os-block">
+      <strong>Сверху вниз (7→1):</strong> «<strong>П</strong>рикладной, <strong>П</strong>редставления, <strong>С</strong>еансовый, <strong>Т</strong>ранспортный, <strong>С</strong>етевой, <strong>К</strong>анальный, <strong>Ф</strong>изический»<br>
+      <strong>Мнемоника:</strong> «<em>П</em>рилежный <em>П</em>рограммист <em>С</em>делал <em>Т</em>естовую <em>С</em>еть <em>К</em>рутой <em>Ф</em>ишкой»
+    </div>
+
+    <div class="note">
+      <strong>Практическая польза:</strong> если у вас «не открывается сайт», начните с <strong>физического</strong> уровня (кабель, Wi-Fi), затем <strong>канального</strong> (MAC, коммутатор), <strong>сетевого</strong> (ping, IP, маршрут), <strong>транспортного</strong> (порт), и только потом <strong>прикладного</strong> (DNS, HTTP). Это и есть системный подход к диагностике.
+    </div>
+  </section>
 
   <!-- ========== ОБЩАЯ ИНФОРМАЦИЯ ========== -->
   <section id="info" class="page">
@@ -1240,7 +1156,6 @@ pause</textarea>
 <footer>Сетевая шпаргалка · Статический сайт для GitHub Pages</footer>
 
 <script>
-  // ===== Навигация =====
   function navigateTo(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const home = document.getElementById('home');
@@ -1282,7 +1197,6 @@ pause</textarea>
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // ===== Модальное окно CIDR =====
   function openCidrModal() {
     const modal = document.getElementById('cidrModal');
     modal.classList.add('open');
@@ -1302,7 +1216,6 @@ pause</textarea>
     if (e.key === 'Escape') closeCidrModal();
   });
 
-  // ===== ГЕНЕРАТОР БАТНИКА =====
   const templates = {
     hello: {
       name: 'hello',
@@ -1421,7 +1334,6 @@ pause`
   }
 
   function sanitizeFileName(name) {
-    // Убираем опасные символы, оставляем буквы, цифры, дефис, подчёркивание
     let clean = (name || 'script').trim();
     clean = clean.replace(/\.bat$/i, '');
     clean = clean.replace(/[\\/:*?"<>|\s]+/g, '_');
@@ -1431,8 +1343,6 @@ pause`
 
   function encodeToBytes(text, encoding) {
     if (encoding === 'windows-1251') {
-      // Кодируем в Windows-1251 вручную через карту символов
-      // Браузерный TextEncoder поддерживает только utf-8, поэтому делаем таблицу для кириллицы.
       const cp1251 = {
         0x0402:0x80,0x0403:0x81,0x201A:0x82,0x0453:0x83,0x201E:0x84,0x2026:0x85,0x2020:0x86,0x2021:0x87,
         0x20AC:0x88,0x2030:0x89,0x0409:0x8A,0x2039:0x8B,0x040A:0x8C,0x040C:0x8D,0x040B:0x8E,0x040F:0x8F,
@@ -1454,17 +1364,12 @@ pause`
       const bytes = [];
       for (let i = 0; i < text.length; i++) {
         const code = text.charCodeAt(i);
-        if (code < 0x80) {
-          bytes.push(code);
-        } else if (cp1251[code] !== undefined) {
-          bytes.push(cp1251[code]);
-        } else {
-          bytes.push(0x3F); // '?'
-        }
+        if (code < 0x80) bytes.push(code);
+        else if (cp1251[code] !== undefined) bytes.push(cp1251[code]);
+        else bytes.push(0x3F);
       }
       return new Uint8Array(bytes);
     }
-    // UTF-8
     return new TextEncoder().encode(text);
   }
 
@@ -1481,13 +1386,9 @@ pause`
     }
 
     const fileName = sanitizeFileName(nameInput.value);
-
-    // Формируем финальный текст
     let content = '';
-    // BOM для UTF-8, чтобы CMD корректно читал кириллицу (только для UTF-8)
     const bom = encoding === 'utf-8' ? '\uFEFF' : '';
 
-    // Шапка запроса прав администратора
     let adminHeader = '';
     if (needAdmin) {
       adminHeader = `@echo off
@@ -1500,7 +1401,6 @@ if %errorLevel% neq 0 (
 )
 :: --- Конец блока UAC ---
 `;
-      // Если пользователь уже начал с @echo off, не дублируем
       if (/^\s*@echo off/i.test(body)) {
         adminHeader = `:: --- Автозапрос прав администратора ---
 net session >nul 2>&1
@@ -1517,12 +1417,10 @@ if %errorLevel% neq 0 (
     content = bom + adminHeader + body;
     if (!content.endsWith('\n')) content += '\n';
 
-    // Предпросмотр
     const previewEl = document.getElementById('batPreview');
     previewEl.textContent = content.replace(/^\uFEFF/, '');
     document.getElementById('batPreviewWrap').classList.add('show');
 
-    // Формируем и скачиваем файл
     try {
       const bytes = encodeToBytes(content, encoding);
       const blob = new Blob([bytes], { type: 'application/x-bat' });
@@ -1541,7 +1439,6 @@ if %errorLevel% neq 0 (
     }
   }
 
-  // Инициализация
   handleInitialRoute();
 </script>
 
