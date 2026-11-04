@@ -13,18 +13,12 @@
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    margin: 0;
-    background: #f4f6f9;
-    color: #1f2933;
-    line-height: 1.55;
-    overflow-x: hidden;
-    padding-bottom: env(safe-area-inset-bottom);
+    margin: 0; background: #f4f6f9; color: #1f2933; line-height: 1.55;
+    overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom);
   }
   header {
     background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: #fff;
-    padding: 24px 16px 20px;
-    text-align: center;
+    color: #fff; padding: 24px 16px 20px; text-align: center;
     padding-top: calc(24px + env(safe-area-inset-top));
   }
   header h1 { margin: 0 0 6px; font-size: 24px; }
@@ -38,10 +32,9 @@
   .home-subtitle { text-align: center; color: #64748b; font-size: 13px; margin: 0 0 20px; }
   .cards-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .card {
-    display: flex; align-items: center; gap: 14px;
-    padding: 18px 18px; background: #fff; border-radius: 14px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06); border: 2px solid transparent;
-    cursor: pointer; text-decoration: none; color: #1f2933;
+    display: flex; align-items: center; gap: 14px; padding: 18px 18px;
+    background: #fff; border-radius: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border: 2px solid transparent; cursor: pointer; text-decoration: none; color: #1f2933;
     transition: transform 0.12s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     min-height: 78px; touch-action: manipulation;
   }
@@ -66,11 +59,11 @@
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
   .page-back {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 16px; min-height: 44px; background: #eff6ff;
-    color: #1e3a8a; border: 2px solid #dbeafe; border-radius: 10px;
-    font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 14px;
-    transition: background 0.15s ease, border-color 0.15s ease; touch-action: manipulation;
+    display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px;
+    min-height: 44px; background: #eff6ff; color: #1e3a8a; border: 2px solid #dbeafe;
+    border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+    margin-bottom: 14px; transition: background 0.15s ease, border-color 0.15s ease;
+    touch-action: manipulation;
   }
   .page-back:hover { background: #dbeafe; border-color: #bfdbfe; }
   .page-back:active { transform: scale(0.97); }
@@ -115,17 +108,16 @@
   footer { text-align: center; color: #64748b; font-size: 12px; padding: 20px 12px calc(20px + env(safe-area-inset-bottom)); }
 
   .btn-open-modal {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 20px; min-height: 44px; background: #2563eb; color: #fff;
-    border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
-    cursor: pointer; margin: 8px 0 16px; transition: background 0.15s ease, transform 0.1s ease;
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px;
+    min-height: 44px; background: #2563eb; color: #fff; border: none;
+    border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+    margin: 8px 0 16px; transition: background 0.15s ease, transform 0.1s ease;
     touch-action: manipulation;
   }
   .btn-open-modal:hover { background: #1e40af; }
   .btn-open-modal:active { transform: scale(0.97); }
   .btn-open-modal::before { content: "📊"; font-size: 16px; }
 
-  /* ===== МОДАЛЬНОЕ ОКНО ===== */
   .modal-overlay {
     display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65);
     z-index: 100; padding: 16px; align-items: center; justify-content: center;
@@ -241,6 +233,81 @@
   .status.show { display: block; }
   .status.ok { background: #dcfce7; color: #166534; border-left: 4px solid #16a34a; }
   .status.err { background: #fee2e2; color: #991b1b; border-left: 4px solid #dc2626; }
+  .status.info { background: #dbeafe; color: #1e40af; border-left: 4px solid #2563eb; }
+
+  /* ===== AI-генератор по описанию ===== */
+  .ai-box {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border: 2px solid #bae6fd;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .ai-box h4 {
+    margin: 0 0 8px;
+    color: #075985;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ai-box textarea {
+    width: 100%;
+    padding: 11px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 2px solid #bae6fd;
+    border-radius: 8px;
+    background: #fff;
+    color: #1f2933;
+    min-height: 70px;
+    resize: vertical;
+  }
+  .ai-box textarea:focus { outline: none; border-color: #0284c7; }
+  .btn-ai {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 22px;
+    min-height: 48px;
+    background: #0284c7;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    touch-action: manipulation;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .btn-ai:hover { background: #0369a1; }
+  .btn-ai:active { transform: scale(0.98); }
+  .ai-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .ai-example {
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid #bae6fd;
+    color: #075985;
+    border-radius: 14px;
+    font-size: 12px;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.15s ease;
+  }
+  .ai-example:hover { background: #e0f2fe; }
+  .ai-hint {
+    font-size: 12px;
+    color: #475569;
+    margin: 6px 0 0;
+  }
 
   /* ===== OSI ===== */
   .osi-layer {
@@ -262,7 +329,6 @@
   }
   .osi-highlight h4 { margin: 0 0 6px; }
 
-  /* ===== АДАПТИВ ===== */
   @media (min-width: 600px) {
     .cards-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
     .home-title { font-size: 24px; }
@@ -398,7 +464,7 @@
         <div class="card-icon">📄</div>
         <div class="card-body">
           <div class="card-title">Создать батник</div>
-          <div class="card-desc">Введите команды — получите .bat-файл</div>
+          <div class="card-desc">Опишите задачу — получите .bat-файл</div>
         </div>
         <div class="card-arrow">›</div>
       </a>
@@ -409,7 +475,7 @@
   <section id="osi" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Модель OSI</h2>
-    <p><strong>OSI</strong> (Open Systems Interconnection) — эталонная сетевая модель, описывающая, как данные передаются от приложения одного устройства к приложению другого. Модель разбивает процесс на 7 уровней, каждый из которых отвечает за свою часть работы [citation:1][citation:4].</p>
+    <p><strong>OSI</strong> (Open Systems Interconnection) — эталонная сетевая модель, описывающая, как данные передаются от приложения одного устройства к приложению другого. Модель разбивает процесс на 7 уровней, каждый из которых отвечает за свою часть работы .</p>
 
     <div class="osi-highlight">
       <h4>Зачем нужна модель OSI</h4>
@@ -425,63 +491,63 @@
 
     <div class="osi-layer">
       <div><span class="layer-num">7</span><span class="layer-name">Прикладной (Application)</span></div>
-      <p>Обеспечивает взаимодействие сети и пользователя. Предоставляет интерфейс для приложений: браузер, почтовый клиент, мессенджер [citation:1].</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>HTTP</code>, <code>HTTPS</code>, <code>FTP</code>, <code>DNS</code>, <code>SMTP</code>, <code>DHCP</code>, <code>SSH</code> [citation:2]<br><strong>Устройства:</strong> Gateway, Proxy, Content-Switch [citation:2]</div>
+      <p>Обеспечивает взаимодействие сети и пользователя. Предоставляет интерфейс для приложений: браузер, почтовый клиент, мессенджер .</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>HTTP</code>, <code>HTTPS</code>, <code>FTP</code>, <code>DNS</code>, <code>SMTP</code>, <code>DHCP</code>, <code>SSH</code> <br><strong>Устройства:</strong> Gateway, Proxy, Content-Switch </div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">6</span><span class="layer-name">Представления (Presentation)</span></div>
-      <p>Преобразует данные в формат, понятный приложению: кодировка, сжатие, шифрование. Например, перевод текста в ASCII или UTF-8, сжатие в JPEG/MPEG, шифрование TLS [citation:1][citation:4].</p>
-      <div class="layer-meta"><strong>Примеры:</strong> <code>SSL/TLS</code>, <code>JPEG</code>, <code>MPEG</code>, <code>ASCII</code>, <code>Unicode</code> [citation:4][citation:14]</div>
+      <p>Преобразует данные в формат, понятный приложению: кодировка, сжатие, шифрование. Например, перевод текста в ASCII или UTF-8, сжатие в JPEG/MPEG, шифрование TLS .</p>
+      <div class="layer-meta"><strong>Примеры:</strong> <code>SSL/TLS</code>, <code>JPEG</code>, <code>MPEG</code>, <code>ASCII</code>, <code>Unicode</code> </div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">5</span><span class="layer-name">Сеансовый (Session)</span></div>
-      <p>Устанавливает, поддерживает и завершает сеанс связи между двумя приложениями. Синхронизирует диалог, определяет право на передачу данных [citation:1][citation:4].</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>RPC</code>, <code>NetBIOS</code>, <code>SIP</code>, <code>L2TP</code>, <code>PPTP</code> [citation:4][citation:14]</div>
+      <p>Устанавливает, поддерживает и завершает сеанс связи между двумя приложениями. Синхронизирует диалог, определяет право на передачу данных .</p>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>RPC</code>, <code>NetBIOS</code>, <code>SIP</code>, <code>L2TP</code>, <code>PPTP</code> </div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">4</span><span class="layer-name">Транспортный (Transport)</span></div>
-      <p>Обеспечивает надёжную (или быструю) доставку данных от отправителя к получателю. Разбивает данные на сегменты, управляет потоком, исправляет ошибки, использует порты для адресации приложений [citation:1][citation:4].</p>
+      <p>Обеспечивает надёжную (или быструю) доставку данных от отправителя к получателю. Разбивает данные на сегменты, управляет потоком, исправляет ошибки, использует порты для адресации приложений .</p>
       <div class="layer-meta">
-        <strong>Протоколы:</strong> <code>TCP</code> (надёжный, с соединением), <code>UDP</code> (быстрый, без соединения), <code>SCTP</code> [citation:2]<br>
-        <strong>PDU:</strong> сегменты (TCP) / датаграммы (UDP) [citation:1][citation:2]
+        <strong>Протоколы:</strong> <code>TCP</code> (надёжный, с соединением), <code>UDP</code> (быстрый, без соединения), <code>SCTP</code> <br>
+        <strong>PDU:</strong> сегменты (TCP) / датаграммы (UDP) 
       </div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">3</span><span class="layer-name">Сетевой (Network)</span></div>
-      <p>Определяет путь передачи данных между разными сетями. Отвечает за логическую адресацию (IP-адреса) и маршрутизацию пакетов [citation:1][citation:4].</p>
+      <p>Определяет путь передачи данных между разными сетями. Отвечает за логическую адресацию (IP-адреса) и маршрутизацию пакетов .</p>
       <div class="layer-meta">
-        <strong>Протоколы:</strong> <code>IP</code> (IPv4/IPv6), <code>ICMP</code>, <code>IPsec</code>, <code>OSPF</code>, <code>BGP</code> [citation:2]<br>
-        <strong>PDU:</strong> пакет (packet) [citation:1][citation:4]<br>
-        <strong>Устройства:</strong> маршрутизатор (router), Layer-3 Switch [citation:2][citation:4]
+        <strong>Протоколы:</strong> <code>IP</code> (IPv4/IPv6), <code>ICMP</code>, <code>IPsec</code>, <code>OSPF</code>, <code>BGP</code> <br>
+        <strong>PDU:</strong> пакет (packet) <br>
+        <strong>Устройства:</strong> маршрутизатор (router), Layer-3 Switch 
       </div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">2</span><span class="layer-name">Канальный (Data Link)</span></div>
-      <p>Обеспечивает передачу данных между соседними устройствами в одной сети. Упаковывает пакеты в кадры, использует MAC-адреса для идентификации устройств, контролирует ошибки [citation:1][citation:11].</p>
+      <p>Обеспечивает передачу данных между соседними устройствами в одной сети. Упаковывает пакеты в кадры, использует MAC-адреса для идентификации устройств, контролирует ошибки .</p>
       <div class="layer-meta">
-        <strong>Протоколы:</strong> <code>Ethernet</code> (IEEE 802.3), <code>Wi-Fi</code> (IEEE 802.11), <code>PPP</code>, <code>VLAN</code> [citation:2]<br>
-        <strong>PDU:</strong> кадр (frame) [citation:1][citation:4]<br>
-        <strong>Устройства:</strong> коммутатор (switch), мост (bridge), точка доступа [citation:2][citation:4]
+        <strong>Протоколы:</strong> <code>Ethernet</code> (IEEE 802.3), <code>Wi-Fi</code> (IEEE 802.11), <code>PPP</code>, <code>VLAN</code> <br>
+        <strong>PDU:</strong> кадр (frame) <br>
+        <strong>Устройства:</strong> коммутатор (switch), мост (bridge), точка доступа 
       </div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">1</span><span class="layer-name">Физический (Physical)</span></div>
-      <p>Передаёт биты (0 и 1) по физической среде: кабелю, оптоволокну, радиоволнам. Определяет электрические и механические параметры сигнала [citation:1][citation:4].</p>
+      <p>Передаёт биты (0 и 1) по физической среде: кабелю, оптоволокну, радиоволнам. Определяет электрические и механические параметры сигнала .</p>
       <div class="layer-meta">
-        <strong>Среда:</strong> витая пара, оптоволокно, коаксиал, радиоволны [citation:4]<br>
-        <strong>PDU:</strong> биты (bits) [citation:1][citation:4]<br>
-        <strong>Устройства:</strong> концентратор (hub), репитер, кабель, разъёмы [citation:1][citation:2]
+        <strong>Среда:</strong> витая пара, оптоволокно, коаксиал, радиоволны <br>
+        <strong>PDU:</strong> биты (bits) <br>
+        <strong>Устройства:</strong> концентратор (hub), репитер, кабель, разъёмы 
       </div>
     </div>
 
     <h3>Соответствие OSI и TCP/IP</h3>
-    <p>Стек TCP/IP, на котором работает интернет, использует 4 уровня. Три верхних уровня OSI (прикладной, представления, сеансовый) объединены в один — прикладной, а два нижних (канальный и физический) — в уровень доступа к сети [citation:1][citation:8].</p>
+    <p>Стек TCP/IP, на котором работает интернет, использует 4 уровня. Три верхних уровня OSI (прикладной, представления, сеансовый) объединены в один — прикладной, а два нижних (канальный и физический) — в уровень доступа к сети .</p>
 
     <div class="table-scroll">
       <table>
@@ -494,7 +560,7 @@
     </div>
 
     <h3>Инкапсуляция данных</h3>
-    <p>При передаче данные спускаются по уровням сверху вниз, и каждый уровень добавляет свой заголовок (header). Это называется <strong>инкапсуляцией</strong> [citation:1][citation:9].</p>
+    <p>При передаче данные спускаются по уровням сверху вниз, и каждый уровень добавляет свой заголовок (header). Это называется <strong>инкапсуляцией</strong> .</p>
 
     <pre><code>Прикладной (7)      [Данные]
 Представления (6)   [Данные]
@@ -504,7 +570,7 @@
 Канальный (2)       [Ethernet-заголовок][Пакет][FCS] → Кадр
 Физический (1)      101101001011010010110100...       → Биты</code></pre>
 
-    <p>На принимающей стороне происходит обратный процесс — <strong>декапсуляция</strong>: каждый уровень снимает свой заголовок и передаёт данные выше [citation:1].</p>
+    <p>На принимающей стороне происходит обратный процесс — <strong>декапсуляция</strong>: каждый уровень снимает свой заголовок и передаёт данные выше .</p>
 
     <h3>Как запомнить порядок уровней</h3>
     <div class="os-block">
@@ -1027,7 +1093,25 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
   <section id="batmaker" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Создать батник</h2>
-    <p>Напишите текст того, что должен делать <code>.bat</code>-файл, и нажмите «Скачать .bat». Файл будет сохранён на ваш компьютер.</p>
+    <p>Опишите задачу обычными словами — сайт сам соберёт команды, либо отредактируйте текст вручную.</p>
+
+    <!-- === AI-генератор по описанию === -->
+    <div class="ai-box">
+      <h4>🪄 Опишите, что должен делать батник</h4>
+      <textarea id="aiPrompt" placeholder="Например: почисти dns и пропингуй гугл&#10;Или: установи хром и блокнот плюс плюс&#10;Или: перезагрузи компьютер через 60 секунд" spellcheck="false"></textarea>
+      <button class="btn-ai" onclick="generateFromDescription()">🪄 Создать по описанию</button>
+      <p class="ai-hint">Понимает фразы вроде: ping, tracert, nslookup, dns, ipconfig, install/winget + названия программ, shutdown/reboot, sfc, chkdsk, tasklist, taskkill, systeminfo, dir, md, del, copy, backup, netsh, echo. Если что-то не распознано — просто дополните текст вручную.</p>
+      <div class="ai-examples">
+        <span class="ai-example" onclick="setPrompt('почисти dns и проверь гугл пингом')">почисти dns и ping гугл</span>
+        <span class="ai-example" onclick="setPrompt('установи chrome, firefox и vlc')">установи chrome, firefox, vlc</span>
+        <span class="ai-example" onclick="setPrompt('перезагрузи компьютер через 60 секунд')">перезагрузка через 60 сек</span>
+        <span class="ai-example" onclick="setPrompt('выключи компьютер через 10 минут')">выключение через 10 мин</span>
+        <span class="ai-example" onclick="setPrompt('покажи ip адрес и информацию о системе')">ip и systeminfo</span>
+        <span class="ai-example" onclick="setPrompt('проверь целостность системы и почисти dns')">sfc + dns</span>
+        <span class="ai-example" onclick="setPrompt('сделай бэкап папки документы')">бэкап документов</span>
+        <span class="ai-example" onclick="setPrompt('отключи и включи сетевой адаптер')">сеть выкл/вкл</span>
+      </div>
+    </div>
 
     <div class="form-row">
       <label for="batName">Имя файла</label>
@@ -1038,10 +1122,10 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
     <div class="form-row">
       <label for="batEncoding">Кодировка</label>
       <select id="batEncoding">
-        <option value="utf-8">UTF-8 (универсальная, современный Windows)</option>
+        <option value="utf-8">UTF-8 (современный Windows)</option>
         <option value="windows-1251" selected>Windows-1251 (кириллица в CMD, старые Windows)</option>
       </select>
-      <p class="form-hint">Если в батнике кириллица и при запуске видны «кракозябры» — попробуйте Windows-1251. UTF-8 обычно работает в Windows 10/11.</p>
+      <p class="form-hint">Если в батнике кириллица и при запуске видны «кракозябры» — попробуйте Windows-1251.</p>
     </div>
 
     <div class="form-row">
@@ -1082,7 +1166,7 @@ pause</textarea>
     </div>
 
     <div class="note" style="margin-top:20px;">
-      <strong>Безопасность:</strong> батник — это исполняемый файл. Не запускайте скрипты из непроверенных источников: они могут удалять файлы, менять настройки системы и устанавливать программы. Сайт лишь формирует текст файла — он ничего не выполняет у вас на компьютере.
+      <strong>Безопасность:</strong> батник — это исполняемый файл. Не запускайте скрипты из непроверенных источников. Сайт лишь формирует текст файла — он ничего не выполняет у вас на компьютере.
     </div>
   </section>
 
@@ -1327,6 +1411,11 @@ pause`
     document.getElementById('batBody').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
+  function setPrompt(text) {
+    document.getElementById('aiPrompt').value = text;
+    document.getElementById('aiPrompt').focus();
+  }
+
   function showStatus(msg, type) {
     const el = document.getElementById('batStatus');
     el.textContent = msg;
@@ -1371,6 +1460,310 @@ pause`
       return new Uint8Array(bytes);
     }
     return new TextEncoder().encode(text);
+  }
+
+  // ===== ЛОКАЛЬНЫЙ ПАРСЕР ОПИСАНИЯ =====
+  // Возвращает { body: string, name: string|null, admin: boolean, matched: string[] }
+  function buildBatFromDescription(description) {
+    const text = (description || '').toLowerCase();
+    const lines = [];
+    const matched = [];
+
+    // --- Утилиты ---
+    const extractHost = () => {
+      const m = text.match(/([a-z0-9-]+\.)+[a-z]{2,}/i);
+      if (m) return m[0];
+      const ip = text.match(/\b\d{1,3}(\.\d{1,3}){3}\b/);
+      if (ip) return ip[0];
+      return null;
+    };
+    const extractSeconds = () => {
+      const m = text.match(/(\d+)\s*(сек|sec|s\b)/i);
+      if (m) return parseInt(m[1], 10);
+      const mm = text.match(/(\d+)\s*(мин|min|m\b)/i);
+      if (mm) return parseInt(mm[1], 10) * 60;
+      const hh = text.match(/(\d+)\s*(час|hour|h\b)/i);
+      if (hh) return parseInt(hh[1], 10) * 3600;
+      return null;
+    };
+
+    // --- Пакеты ПО ---
+    const appMap = [
+      { keys: ['chrome', 'хром', 'гугл хром'], id: 'Google.Chrome', label: 'Google Chrome' },
+      { keys: ['firefox', 'фаерфокс', 'файрфокс', 'мозилла'], id: 'Mozilla.Firefox', label: 'Mozilla Firefox' },
+      { keys: ['vlc', 'влс'], id: 'VideoLAN.VLC', label: 'VLC' },
+      { keys: ['notepad', 'нотепад', 'блокнот плюс', 'блокнот++', 'np++'], id: 'Notepad++.Notepad++', label: 'Notepad++' },
+      { keys: ['7zip', '7-zip', '7zip', '7 зип'], id: '7zip.7zip', label: '7-Zip' },
+      { keys: ['telegram', 'телеграм', 'телега'], id: 'Telegram.TelegramDesktop', label: 'Telegram' },
+      { keys: ['discord', 'дискорд'], id: 'Discord.Discord', label: 'Discord' },
+      { keys: ['obs'], id: 'OBSProject.OBSStudio', label: 'OBS Studio' },
+      { keys: ['steam', 'стим'], id: 'Valve.Steam', label: 'Steam' },
+      { keys: ['zoom', 'зум'], id: 'Zoom.Zoom', label: 'Zoom' },
+      { keys: ['anydesk', 'анидеск'], id: 'AnyDesk.AnyDesk', label: 'AnyDesk' },
+      { keys: ['winrar', 'винрар'], id: 'RARLab.WinRAR', label: 'WinRAR' }
+    ];
+    const appsToInstall = appMap.filter(a => a.keys.some(k => text.includes(k)));
+
+    // --- Ping ---
+    if (/\b(ping|пинг|пропинг|проверь.*доступ|доступен ли)\b/.test(text)) {
+      const host = extractHost() || '8.8.8.8';
+      lines.push(`echo Проверяем доступность ${host}...`);
+      lines.push(`ping -n 4 ${host}`);
+      matched.push('ping');
+    }
+
+    // --- Tracert ---
+    if (/\b(tracert|tracet?route|трасер|маршрут)\b/.test(text)) {
+      const host = extractHost() || 'google.com';
+      lines.push(`echo Трассировка до ${host}...`);
+      lines.push(`tracert ${host}`);
+      matched.push('tracert');
+    }
+
+    // --- nslookup ---
+    if (/\b(nslookup|nslookup|dns.*запрос|разреши.*имя)\b/.test(text)) {
+      const host = extractHost() || 'google.com';
+      lines.push(`echo Проверяем DNS для ${host}...`);
+      lines.push(`nslookup ${host}`);
+      matched.push('nslookup');
+    }
+
+    // --- Очистка DNS ---
+    if (/(очист|сброс|flush).*(dns|днс)|dns.*(очист|сброс|flush)|почисти.*dns|сбрось.*dns|flushdns/.test(text)) {
+      lines.push('echo Очищаем DNS-кэш...');
+      lines.push('ipconfig /flushdns');
+      matched.push('flushdns');
+    }
+
+    // --- release/renew ---
+    if (/(обнови|обновить|renew|release).*(ip|айпи)|ipconfig\s*\/\s*renew|смени.*ip|получи.*ip/.test(text)) {
+      lines.push('echo Обновляем IP-адрес...');
+      lines.push('ipconfig /release');
+      lines.push('ipconfig /renew');
+      matched.push('ipconfig renew');
+    }
+
+    // --- ipconfig /all ---
+    if (/(покажи|показать|выведи|посмотри|show).*(ip|айпи|конфиг|сетев)|ipconfig\s*\/\s*all|мой ip/.test(text)) {
+      lines.push('echo Информация о сети:');
+      lines.push('ipconfig /all');
+      matched.push('ipconfig /all');
+    }
+
+    // --- winget install ---
+    if (appsToInstall.length > 0 || /\b(установи|поставь|install|winget)\b/.test(text)) {
+      if (appsToInstall.length > 0) {
+        lines.push('echo Устанавливаем программы через winget...');
+        for (const a of appsToInstall) {
+          lines.push(`winget install --id ${a.id} -e --silent --accept-package-agreements --accept-source-agreements`);
+        }
+        matched.push('winget: ' + appsToInstall.map(a => a.label).join(', '));
+      } else {
+        lines.push('echo Устанавливаем программы через winget (замените ID на нужные)...');
+        lines.push('winget install --id Google.Chrome -e --silent --accept-package-agreements --accept-source-agreements');
+        matched.push('winget (пример)');
+      }
+    }
+
+    // --- winget upgrade ---
+    if (/(обнови|обновить|upgrade|апгрейд).*(программ|приложен|по|winget|все)/.test(text)) {
+      lines.push('echo Обновляем все установленные программы...');
+      lines.push('winget upgrade --all --silent --accept-package-agreements --accept-source-agreements');
+      matched.push('winget upgrade --all');
+    }
+
+    // --- shutdown: таймер ---
+    const sec = extractSeconds();
+    const wantsShutdown = /(выключ|отключ.*пк|shutdown|poweroff)/.test(text) && !/отключ.*сеть|сетевой адаптер/.test(text);
+    const wantsReboot = /(перезагруз|перезапусти.*комп|reboot|restart.*(комп|пк))/.test(text);
+    const wantsCancel = /(отмен|отмена|cancel).*(выключ|перезагруз|shutdown)/.test(text);
+
+    if (wantsCancel) {
+      lines.push('echo Отменяем запланированное выключение...');
+      lines.push('shutdown /a');
+      matched.push('shutdown /a');
+    } else if (wantsReboot) {
+      if (sec) {
+        lines.push(`echo Перезагрузка через ${sec} секунд...`);
+        lines.push(`shutdown /r /t ${sec}`);
+      } else {
+        lines.push('echo Перезагрузка через 10 секунд...');
+        lines.push('shutdown /r /t 10');
+      }
+      matched.push(sec ? `reboot через ${sec} сек` : 'reboot');
+    } else if (wantsShutdown) {
+      if (sec) {
+        lines.push(`echo Выключение через ${sec} секунд...`);
+        lines.push(`shutdown /s /t ${sec}`);
+      } else {
+        lines.push('echo Выключение через 10 секунд...');
+        lines.push('shutdown /s /t 10');
+      }
+      matched.push(sec ? `shutdown через ${sec} сек` : 'shutdown');
+    }
+
+    // --- SFC ---
+    if (/(проверь|проверить|scan|sfc|целостн).*(систем|sfc)|sfc\s*\/\s*scannow/.test(text)) {
+      lines.push('echo Проверяем целостность системных файлов (может занять время)...');
+      lines.push('sfc /scannow');
+      matched.push('sfc /scannow');
+    }
+
+    // --- chkdsk ---
+    if (/(проверь|проверить|chkdsk).*(диск|chkdsk)|chkdsk/.test(text)) {
+      lines.push('echo Проверяем диск C: ...');
+      lines.push('chkdsk C: /f');
+      matched.push('chkdsk');
+    }
+
+    // --- tasklist ---
+    if (/(список|покажи|выведи|list).*(процесс|process|tasklist)|tasklist|какие процессы/.test(text)) {
+      lines.push('echo Список процессов:');
+      lines.push('tasklist');
+      matched.push('tasklist');
+    }
+
+    // --- taskkill ---
+    const killMatch = text.match(/(убей|заверши|kill|taskkill)\s+([a-z0-9_.-]+)/i);
+    if (killMatch) {
+      const proc = killMatch[2].replace(/\.exe$/i, '');
+      lines.push(`echo Завершаем процесс ${proc}...`);
+      lines.push(`taskkill /IM ${proc}.exe /F`);
+      matched.push(`taskkill ${proc}`);
+    }
+
+    // --- systeminfo ---
+    if (/(информац|сведен|systeminfo|покажи.*систем|систем.*инфо)/.test(text)) {
+      lines.push('echo Информация о системе:');
+      lines.push('systeminfo');
+      matched.push('systeminfo');
+    }
+
+    // --- hostname ---
+    if (/(имя|name|hostname).*(комп|пк|машин)|hostname/.test(text)) {
+      lines.push('echo Имя компьютера:');
+      lines.push('hostname');
+      matched.push('hostname');
+    }
+
+    // --- dir ---
+    if (/(список|покажи|выведи|list).*(файл|папк|каталог|dir)|^dir$/.test(text)) {
+      lines.push('echo Содержимое текущей папки:');
+      lines.push('dir');
+      matched.push('dir');
+    }
+
+    // --- mkdir ---
+    const mdMatch = text.match(/(созда|сделай).*(папк|каталог|директор)\s+([a-z0-9_.\-\\/]+)/i);
+    if (mdMatch) {
+      const folder = mdMatch[3];
+      lines.push(`echo Создаём папку ${folder}...`);
+      lines.push(`mkdir "${folder}"`);
+      matched.push(`mkdir ${folder}`);
+    }
+
+    // --- del ---
+    const delMatch = text.match(/(удали|сотри|delete|del)\s+([a-z0-9_.\-\\/]+)/i);
+    if (delMatch) {
+      const file = delMatch[2];
+      lines.push(`echo Удаляем ${file}...`);
+      lines.push(`del /f /q "${file}"`);
+      matched.push(`del ${file}`);
+    }
+
+    // --- copy ---
+    const copyMatch = text.match(/(скопиру|копируй|copy)\s+([a-z0-9_.\-\\/]+)\s+(в|to)\s+([a-z0-9_.\-\\/]+)/i);
+    if (copyMatch) {
+      lines.push(`echo Копируем ${copyMatch[2]} в ${copyMatch[4]}...`);
+      lines.push(`copy /Y "${copyMatch[2]}" "${copyMatch[4]}"`);
+      matched.push('copy');
+    }
+
+    // --- backup ---
+    if (/(бэкап|бек?ап|резервн|backup|копи.*документ)/.test(text)) {
+      const srcMatch = text.match(/(документ|рабоч|desktop|загрузк|downloads|фото|picture)/);
+      let source = 'C:\\Users\\%username%\\Documents';
+      let sourceLabel = 'Документы';
+      if (srcMatch) {
+        const s = srcMatch[1];
+        if (s === 'desktop') { source = 'C:\\Users\\%username%\\Desktop'; sourceLabel = 'Рабочий стол'; }
+        else if (s === 'загрузк' || s === 'downloads') { source = 'C:\\Users\\%username%\\Downloads'; sourceLabel = 'Загрузки'; }
+        else if (s === 'фото' || s === 'picture') { source = 'C:\\Users\\%username%\\Pictures'; sourceLabel = 'Изображения'; }
+      }
+      lines.push(`echo Резервное копирование папки "${sourceLabel}"...`);
+      lines.push('set SOURCE=' + source);
+      lines.push('set DEST=D:\\Backup\\%date:~-4%-%date:~3,2%-%date:~0,2%');
+      lines.push('if not exist "%DEST%" mkdir "%DEST%"');
+      lines.push('xcopy "%SOURCE%" "%DEST%" /E /I /H /Y');
+      matched.push('backup');
+    }
+
+    // --- netsh: отключение/включение сети ---
+    if (/(отключ|выключ|disable).*(сеть|адаптер|интернет|wifi|wi-fi)/.test(text) ||
+        /(включ|enable).*(сеть|адаптер|интернет|wifi|wi-fi)/.test(text)) {
+      const ifaceMatch = text.match(/(wifi|wi-fi|вайфай|ethernet|эзернет|ethernet|локалк)/);
+      let iface = 'Ethernet';
+      if (ifaceMatch) {
+        if (/wifi|wi-fi|вайфай/.test(ifaceMatch[0])) iface = 'Wi-Fi';
+        else if (/ethernet|эзернет|локалк/.test(ifaceMatch[0])) iface = 'Ethernet';
+      }
+      lines.push(`echo Отключаем сетевой адаптер "${iface}" на 5 секунд...`);
+      lines.push(`netsh interface set interface "${iface}" admin=disable`);
+      lines.push('timeout /t 5 /nobreak >nul');
+      lines.push(`echo Включаем обратно "${iface}"...`);
+      lines.push(`netsh interface set interface "${iface}" admin=enable`);
+      matched.push(`netsh ${iface} toggle`);
+    }
+
+    // --- echo / приветствие ---
+    if (/(привет|здравств|hello|echo).*(мир|мир|пользовател|пк|комп)/.test(text) || /^привет/.test(text)) {
+      lines.push('echo Привет! Скрипт запущен.');
+      lines.push('echo Дата: %date%  Время: %time%');
+      lines.push('echo Пользователь: %username%  Компьютер: %computername%');
+      matched.push('echo');
+    }
+
+    // --- netstat ---
+    if (/(netstat|соединен|подключен|порты|ports)/.test(text)) {
+      lines.push('echo Активные сетевые подключения:');
+      lines.push('netstat -an');
+      matched.push('netstat');
+    }
+
+    // --- Если ничего не распознали ---
+    if (lines.length === 0) {
+      return { body: null, matched: [], name: null, admin: false };
+    }
+
+    // --- Собираем итоговый текст ---
+    const needAdmin = /(sfc|chkdsk|netsh|shutdown|перезагруз|выключ|winget install|systeminfo)/.test(text);
+    const body = '@echo off\nchcp 65001 >nul\n\n' + lines.join('\n') + '\n\necho.\necho Готово!\npause';
+    return { body, matched, name: 'custom', admin: needAdmin };
+  }
+
+  function generateFromDescription() {
+    const prompt = document.getElementById('aiPrompt').value.trim();
+    if (!prompt) {
+      showStatus('❌ Сначала опишите, что должен делать батник.', 'err');
+      return;
+    }
+
+    const result = buildBatFromDescription(prompt);
+    if (!result.body) {
+      showStatus('⚠️ Не удалось распознать команды. Попробуйте перефразировать: «ping google.com», «почисти dns», «установи chrome», «перезагрузи через 60 секунд», «сделай бэкап документов». Или напишите команды вручную ниже.', 'err');
+      return;
+    }
+
+    document.getElementById('batBody').value = result.body;
+    document.getElementById('batName').value = result.name || 'custom';
+    document.getElementById('batAdmin').checked = result.admin;
+    document.getElementById('batPreviewWrap').classList.remove('show');
+    document.getElementById('batStatus').classList.remove('show');
+
+    const list = result.matched.length ? result.matched.join(', ') : 'общий скрипт';
+    showStatus('✅ Распознано: ' + list + '. Проверьте текст ниже и нажмите «Скачать .bat».', 'ok');
+
+    document.getElementById('batBody').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   function generateBat() {
