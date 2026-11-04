@@ -162,23 +162,13 @@
   .cidr-table tr:nth-child(even) td:first-child { background: #dbeafe; }
   .cidr-table tr:nth-child(even) td { background: #fafbfd; }
   .cidr-hint { font-size: 13px; color: #64748b; margin: 0 0 6px; }
-  .badge {
-    display: inline-block;
-    background: #dbeafe;
-    color: #1e40af;
-    padding: 1px 7px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-left: 6px;
-  }
 </style>
 </head>
 <body>
 
 <header>
   <h1>Сетевая шпаргалка</h1>
-  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы (Windows · macOS · Linux)</p>
+  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония</p>
 </header>
 
 <nav>
@@ -187,6 +177,7 @@
   <button onclick="showTab('http', this)">HTTP vs HTTPS</button>
   <button onclick="showTab('servers', this)">Серверы</button>
   <button onclick="showTab('router', this)">Маршрутизатор</button>
+  <button onclick="showTab('voip', this)">IP-телефония</button>
 </nav>
 
 <main>
@@ -512,6 +503,108 @@ sudo ip link set eth0.10 up</code></pre>
     <div class="note">
       <strong>Важно:</strong> команды VLAN сильно зависят от производителя. Указанные примеры — для Cisco IOS (учебный стандарт), MikroTik RouterOS и Linux-роутеров. На домашних роутерах (TP-Link, ASUS, Keenetic) VLAN обычно настраивается через веб-интерфейс, а не через CLI.
     </div>
+  </section>
+
+  <!-- ========== IP-ТЕЛЕФОНИЯ ========== -->
+  <section id="voip" class="tab">
+    <h2>IP-телефония (VoIP)</h2>
+    <p>IP-телефония — это технология передачи голоса по сетям с протоколом IP. В отличие от традиционной телефонии (PSTN), где для каждого звонка выделяется отдельный канал, здесь голос оцифровывается, разбивается на пакеты и передаётся по той же сети, что и обычные данные [citation:1][citation:13].</p>
+
+    <h3>Как это работает (кратко)</h3>
+    <ol>
+      <li><strong>Регистрация:</strong> IP-телефон или софтфон подключается к серверу (SIP-провайдеру или УАТС) и сообщает, что он онлайн, через запрос <code>REGISTER</code>. Сервер отвечает <code>200 OK</code> [citation:2][citation:8].</li>
+      <li><strong>Установка соединения:</strong> при звонке клиент отправляет запрос <code>INVITE</code>. Сервер находит вызываемого абонента и соединяет их [citation:2].</li>
+      <li><strong>Передача голоса:</strong> после установки соединения голос передаётся по протоколу <strong>RTP</strong> (Real-time Transport Protocol) в виде UDP-пакетов [citation:1][citation:9].</li>
+    </ol>
+
+    <h3>Ключевые протоколы</h3>
+    <table>
+      <tr><th>Протокол</th><th>Назначение</th><th>Транспорт / порт</th></tr>
+      <tr>
+        <td><strong>SIP</strong> (Session Initiation Protocol)</td>
+        <td>Установка, управление и завершение сессии (звонка). Сигнализация.</td>
+        <td>UDP/TCP <code>5060</code> (незащищённый), TCP/TLS <code>5061</code> (защищённый) [citation:3][citation:9]</td>
+      </tr>
+      <tr>
+        <td><strong>RTP</strong> (Real-time Transport Protocol)</td>
+        <td>Передача самого голоса и видео в реальном времени.</td>
+        <td>UDP, обычно диапазон <code>16384–32768</code> (зависит от вендора) [citation:9]</td>
+      </tr>
+    </table>
+
+    <h3>Основные SIP-запросы (методы)</h3>
+    <table>
+      <tr><th>Метод</th><th>Что делает</th></tr>
+      <tr><td><code>REGISTER</code></td><td>Регистрирует абонента на сервере (сообщает: «я онлайн, вот мой IP»)</td></tr>
+      <tr><td><code>INVITE</code></td><td>Инициирует вызов (приглашает абонента к разговору)</td></tr>
+      <tr><td><code>ACK</code></td><td>Подтверждает получение финального ответа на INVITE</td></tr>
+      <tr><td><code>BYE</code></td><td>Завершает сессию (кладём трубку)</td></tr>
+      <tr><td><code>OPTIONS</code></td><td>Проверка доступности сервера/абонента (SIP-ping)</td></tr>
+      <tr><td><code>CANCEL</code></td><td>Отмена ещё не установленного вызова</td></tr>
+    </table>
+
+    <h3>Диагностика SIP с компьютера</h3>
+    <p>Для проверки доступности SIP-сервера используется утилита <code>sipsak</code>. Она отправляет запрос <code>OPTIONS</code> и показывает ответ сервера [citation:4][citation:10].</p>
+
+    <div class="os-block"><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install sipsak</code></div>
+    <div class="os-block"><strong>macOS (Homebrew):</strong> <code>brew install sipsak</code></div>
+    <div class="os-block"><strong>Windows:</strong> используйте WSL (Windows Subsystem for Linux) и устанавливайте как для Linux [citation:4].</div>
+
+    <h4>Пример проверки SIP-сервера</h4>
+    <pre><code>sipsak -v -s sip:sip.example.com</code></pre>
+    <p>Успешный ответ выглядит как <code>SIP/2.0 200 Keepalive</code> или <code>200 OK</code> — это значит, что двусторонняя UDP-связь с сервером работает [citation:4].</p>
+
+    <h4>Если ответа нет — что проверять</h4>
+    <ul>
+      <li>Порт <code>5060/UDP</code> не блокируется файрволом или провайдером.</li>
+      <li>Правильно ли указано имя SIP-сервера (домен).</li>
+      <li>Нет ли проблем с NAT (особенно если сервер за роутером).</li>
+    </ul>
+
+    <h3>IP-телефония на маршрутизаторах (Cisco)</h3>
+    <p>На Cisco IOS для настройки VoIP используются <strong>dial-peer</strong> — правила, которые определяют, как обрабатывать вызовы [citation:5].</p>
+
+    <pre><code>! Вход в режим конфигурации
+enable
+configure terminal
+
+! Создание VoIP dial-peer для исходящих вызовов
+dial-peer voice 10 voip
+ description To-SIP-Provider
+ destination-pattern 9T
+ session protocol sipv2
+ session target ipv4:203.0.113.50
+ codec g711ulaw
+ exit</code></pre>
+
+    <p><strong>Что означают параметры:</strong></p>
+    <ul>
+      <li><code>destination-pattern 9T</code> — набор номера, начинающийся с 9 (префикс выхода на внешнюю линию).</li>
+      <li><code>session target ipv4:...</code> — IP-адрес SIP-провайдера или УАТС.</li>
+      <li><code>codec g711ulaw</code> — аудиокодек (G.711 — стандарт качества, ~64 Кбит/с; G.729 — сжатие, ~8 Кбит/с) [citation:5].</li>
+    </ul>
+
+    <h3>Особенности работы через NAT</h3>
+    <p>Если IP-телефон или УАТС (например, Asterisk) находится за NAT, а SIP-провайдер — в интернете, голос может не проходить в одну или обе стороны, хотя вызовы «звонят». Причина — SIP в заголовках передаёт внутренние IP-адреса, которые снаружи недостижимы.</p>
+    <ul>
+      <li>В настройках УАТС (Asterisk/FreePBX) нужно включить поддержку NAT.</li>
+      <li>На роутере должны быть проброшены порты SIP (<code>5060</code>) и диапазон RTP (обычно <code>10000–20000</code> или <code>16384–32768</code>) на внутренний IP УАТС.</li>
+      <li>Если провайдер сменил тип подключения (например, с L2TP на IPoE), может измениться IP-адрес — его нужно обновить в настройках УАТС [citation:12].</li>
+    </ul>
+
+    <div class="note">
+      <strong>Важно:</strong> SIP-телефония очень чувствительна к задержкам и потерям пакетов. Если в сети есть перегрузки, голос будет «рваться». Для качественной связи рекомендуется использовать QoS (приоритизацию трафика RTP) на маршрутизаторе.
+    </div>
+
+    <h3>Полезные команды для диагностики (сводка)</h3>
+    <table>
+      <tr><th>Задача</th><th>Команда</th></tr>
+      <tr><td>Проверить доступность сервера (ICMP)</td><td><code>ping sip.example.com</code></td></tr>
+      <tr><td>Проверить, слушается ли порт 5060</td><td><code>nc -zvu sip.example.com 5060</code> (Linux/macOS)</td></tr>
+      <tr><td>SIP-ping (проверка отклика)</td><td><code>sipsak -s sip:sip.example.com</code></td></tr>
+      <tr><td>Захват SIP-трафика</td><td><code>sngrep</code> (Linux) или <code>tcpdump -i any port 5060 -w sip.pcap</code></td></tr>
+      <tr><td>Просмотр открытых портов на УАТС</td><td><code>ss -tuln | grep 5060</code> (Linux)</td></tr>
+    </table>
   </section>
 
 </main>
