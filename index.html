@@ -2,65 +2,85 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1e3a8a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
 <title>Сетевая шпаргалка</title>
 <style>
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     margin: 0;
     background: #f4f6f9;
     color: #1f2933;
     line-height: 1.55;
+    overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom);
   }
   header {
     background: linear-gradient(135deg, #1e3a8a, #2563eb);
     color: #fff;
-    padding: 28px 20px;
+    padding: 24px 16px 20px;
     text-align: center;
+    padding-top: calc(24px + env(safe-area-inset-top));
   }
-  header h1 { margin: 0 0 6px; font-size: 26px; }
-  header p { margin: 0; opacity: 0.9; font-size: 14px; }
+  header h1 { margin: 0 0 6px; font-size: 24px; }
+  header p { margin: 0; opacity: 0.9; font-size: 13px; }
+
+  /* ===== Навигация ===== */
   nav {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
-    justify-content: center;
-    padding: 18px 12px;
+    padding: 12px 12px;
     background: #fff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     position: sticky;
     top: 0;
     z-index: 10;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
   }
+  nav::-webkit-scrollbar { display: none; }
   nav button {
-    padding: 10px 16px;
+    flex: 0 0 auto;
+    padding: 12px 18px;
+    min-height: 44px;
     border: 2px solid #2563eb;
     background: #fff;
     color: #2563eb;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s ease;
+    white-space: nowrap;
+    touch-action: manipulation;
   }
   nav button:hover { background: #e0ecff; }
-  nav button.active {
-    background: #2563eb;
-    color: #fff;
-  }
+  nav button.active { background: #2563eb; color: #fff; }
+  nav button:active { transform: scale(0.97); }
+
+  /* ===== Контент ===== */
   main {
     max-width: 1080px;
-    margin: 24px auto;
-    padding: 0 16px 60px;
+    margin: 16px auto;
+    padding: 0 12px 40px;
   }
   .tab {
     display: none;
     background: #fff;
     border-radius: 12px;
-    padding: 24px;
+    padding: 18px 16px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     animation: fade 0.25s ease;
+    overflow-wrap: break-word;
   }
   .tab.active { display: block; }
   @keyframes fade {
@@ -72,13 +92,28 @@
     color: #1e3a8a;
     border-bottom: 2px solid #e0ecff;
     padding-bottom: 8px;
+    font-size: 20px;
   }
-  h3 { color: #1e40af; margin-bottom: 6px; margin-top: 22px; }
+  h3 { color: #1e40af; margin-bottom: 6px; margin-top: 20px; font-size: 17px; }
+  h4 { color: #1e40af; margin: 14px 0 4px; font-size: 15px; }
+  p, li { font-size: 14px; }
+  ul, ol { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+
+  /* ===== Таблицы (прокрутка на мобильных) ===== */
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 12px 0 20px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+  .table-scroll > table { margin: 0; min-width: 100%; }
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 12px 0 20px;
-    font-size: 14px;
+    font-size: 13px;
   }
   th, td {
     border: 1px solid #e2e8f0;
@@ -86,15 +121,17 @@
     text-align: left;
     vertical-align: top;
   }
-  th { background: #eff6ff; color: #1e3a8a; }
+  th { background: #eff6ff; color: #1e3a8a; white-space: nowrap; }
   tr:nth-child(even) td { background: #fafbfd; }
+
   code {
     background: #eef2f7;
     padding: 2px 6px;
     border-radius: 4px;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: 13px;
+    font-size: 12.5px;
     color: #b91c1c;
+    word-break: break-word;
   }
   pre {
     background: #0f172a;
@@ -102,47 +139,50 @@
     padding: 14px 16px;
     border-radius: 8px;
     overflow-x: auto;
-    font-size: 13px;
+    font-size: 12px;
+    -webkit-overflow-scrolling: touch;
+    line-height: 1.5;
   }
-  pre code { background: none; color: inherit; padding: 0; }
+  pre code { background: none; color: inherit; padding: 0; white-space: pre; }
+
   .os-block {
     background: #f8fafc;
     border-left: 4px solid #2563eb;
-    padding: 10px 14px;
+    padding: 10px 12px;
     margin: 10px 0;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: 13px;
   }
   .os-block strong { color: #1e3a8a; }
   .note {
     background: #fff7ed;
     border-left: 4px solid #f59e0b;
-    padding: 10px 14px;
+    padding: 10px 12px;
     border-radius: 6px;
     margin: 16px 0;
-    font-size: 14px;
+    font-size: 13px;
   }
-  ul { padding-left: 22px; }
-  li { margin-bottom: 6px; }
   footer {
     text-align: center;
     color: #64748b;
     font-size: 12px;
-    padding: 20px;
+    padding: 20px 12px calc(20px + env(safe-area-inset-bottom));
   }
 
-  /* Таблица CIDR */
+  /* ===== Таблица CIDR ===== */
   .cidr-wrap {
-    max-height: 620px;
-    overflow-y: auto;
+    max-height: 60vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     margin: 12px 0 8px;
   }
   .cidr-table {
     margin: 0;
-    font-size: 13px;
+    font-size: 12.5px;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    min-width: 560px;
   }
   .cidr-table th {
     position: sticky;
@@ -152,16 +192,48 @@
     z-index: 1;
     font-weight: 600;
     text-align: center;
+    white-space: nowrap;
   }
   .cidr-table td { text-align: center; white-space: nowrap; }
   .cidr-table td:first-child {
     font-weight: 700;
     color: #1e40af;
     background: #eff6ff;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+  .cidr-table th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background: #1e3a8a;
   }
   .cidr-table tr:nth-child(even) td:first-child { background: #dbeafe; }
   .cidr-table tr:nth-child(even) td { background: #fafbfd; }
-  .cidr-hint { font-size: 13px; color: #64748b; margin: 0 0 6px; }
+  .cidr-hint { font-size: 12px; color: #64748b; margin: 0 0 6px; }
+
+  /* ===== Планшет ===== */
+  @media (min-width: 700px) {
+    header h1 { font-size: 28px; }
+    header p { font-size: 14px; }
+    main { padding: 0 20px 50px; }
+    .tab { padding: 24px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; }
+    table { font-size: 14px; }
+    p, li { font-size: 15px; }
+    code { font-size: 13px; }
+    pre { font-size: 13px; }
+    .os-block, .note { font-size: 14px; }
+  }
+
+  /* ===== Десктоп ===== */
+  @media (min-width: 1000px) {
+    nav { flex-wrap: wrap; justify-content: center; }
+    header h1 { font-size: 30px; }
+    header p { font-size: 15px; }
+  }
 </style>
 </head>
 <body>
@@ -171,7 +243,7 @@
   <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония</p>
 </header>
 
-<nav>
+<nav id="nav">
   <button class="active" onclick="showTab('info', this)">Общая информация</button>
   <button onclick="showTab('diag', this)">Диагностика сети</button>
   <button onclick="showTab('http', this)">HTTP vs HTTPS</button>
@@ -187,80 +259,81 @@
     <h2>Общая информация</h2>
     <p>Базовые понятия, которые нужны для понимания любой сети — от домашней до корпоративной.</p>
 
-    <table>
-      <tr><th>Понятие</th><th>Определение</th><th>Пример</th></tr>
-      <tr>
-        <td><strong>IP-адрес</strong></td>
-        <td>Уникальный числовой адрес устройства в сети. Бывает IPv4 (32 бита) и IPv6 (128 бит).</td>
-        <td><code>192.168.1.10</code></td>
-      </tr>
-      <tr>
-        <td><strong>Маска подсети</strong></td>
-        <td>Определяет, какая часть IP-адреса относится к сети, а какая — к хосту. Часто записывается как префикс <code>/24</code>.</td>
-        <td><code>255.255.255.0</code> = <code>/24</code></td>
-      </tr>
-      <tr>
-        <td><strong>Шлюз (Default Gateway)</strong></td>
-        <td>IP-адрес устройства (обычно роутера), через которое компьютер выходит в другие сети, включая интернет.</td>
-        <td><code>192.168.1.1</code></td>
-      </tr>
-      <tr>
-        <td><strong>DNS</strong></td>
-        <td>Domain Name System — система, преобразующая понятные имена в IP-адреса.</td>
-        <td><code>google.com</code> → <code>142.250.74.14</code></td>
-      </tr>
-    </table>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Понятие</th><th>Определение</th><th>Пример</th></tr>
+        <tr>
+          <td><strong>IP-адрес</strong></td>
+          <td>Уникальный числовой адрес устройства в сети. Бывает IPv4 (32 бита) и IPv6 (128 бит).</td>
+          <td><code>192.168.1.10</code></td>
+        </tr>
+        <tr>
+          <td><strong>Маска подсети</strong></td>
+          <td>Определяет, какая часть IP-адреса относится к сети, а какая — к хосту.</td>
+          <td><code>255.255.255.0</code> = <code>/24</code></td>
+        </tr>
+        <tr>
+          <td><strong>Шлюз</strong></td>
+          <td>IP-адрес устройства (обычно роутера), через которое компьютер выходит в другие сети.</td>
+          <td><code>192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><strong>DNS</strong></td>
+          <td>Domain Name System — система, преобразующая понятные имена в IP-адреса.</td>
+          <td><code>google.com</code> → <code>142.250.74.14</code></td>
+        </tr>
+      </table>
+    </div>
 
     <h3>Как посмотреть свои параметры</h3>
     <div class="os-block"><strong>Windows:</strong> <code>ipconfig /all</code></div>
     <div class="os-block"><strong>macOS:</strong> <code>ifconfig</code> или <code>ipconfig getifaddr en0</code></div>
     <div class="os-block"><strong>Linux:</strong> <code>ip addr</code> или <code>ifconfig -a</code></div>
 
-    <h3>Диапазоны частных (локальных) адресов</h3>
+    <h3>Диапазоны частных адресов</h3>
     <ul>
       <li><code>10.0.0.0/8</code> — крупные корпоративные сети</li>
       <li><code>172.16.0.0/12</code> — средние сети</li>
       <li><code>192.168.0.0/16</code> — домашние и офисные сети</li>
     </ul>
 
-    <!-- ===== МАСКА ПОДСЕТИ ===== -->
     <h3>Маска подсети — подробнее</h3>
-    <p><strong>Маска подсети</strong> — это 32-битное число, которое «накладывается» на IP-адрес и отделяет сетевую часть от хостовой. В двоичном виде единицы идут подряд слева, а нули — справа:</p>
+    <p><strong>Маска подсети</strong> — это 32-битное число, которое отделяет сетевую часть IP-адреса от хостовой. В двоичном виде единицы идут подряд слева, а нули — справа:</p>
 
     <pre><code>IP:    192.168.1.10   → 11000000.10101000.00000001.00001010
 Маска: 255.255.255.0  → 11111111.11111111.11111111.00000000
                          └──────── сеть ───────┘└─ хост ─┘
-Результат (сеть):       192.168.1.0   — адрес самой сети
-Broadcast:              192.168.1.255 — широковещательный
+Сеть:                   192.168.1.0
+Broadcast:              192.168.1.255
 Хосты:                  192.168.1.1 … 192.168.1.254 (254 шт.)</code></pre>
 
     <h4>Как считать в уме</h4>
     <ul>
-      <li>Количество адресов в подсети = <strong>2<sup>(32 − префикс)</sup></strong>.</li>
-      <li>Количество <em>используемых</em> хостов = <strong>2<sup>(32 − префикс)</sup> − 2</strong> (адрес сети и broadcast нельзя назначить хостам).</li>
-      <li>Префикс <code>/24</code> → 2<sup>8</sup> = 256 адресов → 254 хоста.</li>
-      <li>Префикс <code>/30</code> → 2<sup>2</sup> = 4 адреса → 2 хоста (типично для линков «точка-точка»).</li>
+      <li>Количество адресов = <strong>2<sup>(32 − префикс)</sup></strong></li>
+      <li>Используемых хостов = <strong>2<sup>(32 − префикс)</sup> − 2</strong></li>
+      <li><code>/24</code> → 256 адресов → 254 хоста</li>
+      <li><code>/30</code> → 4 адреса → 2 хоста</li>
     </ul>
 
-    <h4>Маска с подстановочным знаком (Wildcard Mask)</h4>
-    <p>Используется в ACL и OSPF на оборудовании Cisco. Это <strong>инверсия обычной маски</strong>: где в маске <code>1</code> — в wildcard <code>0</code>, и наоборот.</p>
+    <h4>Маска с подстановочным знаком (Wildcard)</h4>
+    <p>Используется в ACL и OSPF на Cisco. Это <strong>инверсия обычной маски</strong>.</p>
     <div class="os-block">
-      <strong>Пример:</strong> маска <code>255.255.255.0</code> → wildcard <code>0.0.0.255</code><br>
-      <strong>Формула:</strong> <code>wildcard = 255.255.255.255 − маска</code>
+      <strong>Формула:</strong> <code>wildcard = 255.255.255.255 − маска</code><br>
+      <strong>Пример:</strong> <code>255.255.255.0</code> → <code>0.0.0.255</code>
     </div>
 
     <h4>Полная таблица CIDR</h4>
-    <p class="cidr-hint">Прокрутите таблицу внутри блока. Значения приведены для IPv4.</p>
+    <p class="cidr-hint">Прокрутите таблицу по горизонтали и вертикали. Значения для IPv4.</p>
 
     <div class="cidr-wrap">
       <table class="cidr-table">
         <thead>
           <tr>
             <th>CIDR</th>
-            <th>Маска подсети</th>
-            <th>Маска с подстановочным знаком</th>
-            <th>Всего IP-адресов</th>
-            <th>Используемых IP-адресов</th>
+            <th>Маска</th>
+            <th>Wildcard</th>
+            <th>Всего IP</th>
+            <th>Хостов</th>
           </tr>
         </thead>
         <tbody>
@@ -302,55 +375,53 @@ Broadcast:              192.168.1.255 — широковещательный
     </div>
 
     <div class="note">
-      <strong>* /31</strong> — особый случай: по RFC 3021 такая подсеть используется на линках «точка-точка», и <em>оба</em> адреса назначаемы (адрес сети и broadcast не резервируются).<br>
-      <strong>/32</strong> — маска для одного конкретного хоста (host route), например, в статических маршрутах или NAT.
+      <strong>* /31</strong> — по RFC 3021 используется на линках «точка-точка», оба адреса назначаемы.<br>
+      <strong>/32</strong> — маска для одного конкретного хоста (host route).
     </div>
 
     <h4>Быстрые примеры</h4>
-    <table>
-      <tr><th>Запись</th><th>Сеть</th><th>Первый хост</th><th>Последний хост</th><th>Broadcast</th></tr>
-      <tr><td><code>192.168.1.10/24</code></td><td>192.168.1.0</td><td>192.168.1.1</td><td>192.168.1.254</td><td>192.168.1.255</td></tr>
-      <tr><td><code>10.0.0.5/30</code></td><td>10.0.0.4</td><td>10.0.0.5</td><td>10.0.0.6</td><td>10.0.0.7</td></tr>
-      <tr><td><code>172.16.32.1/20</code></td><td>172.16.32.0</td><td>172.16.32.1</td><td>172.16.47.254</td><td>172.16.47.255</td></tr>
-    </table>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Запись</th><th>Сеть</th><th>Первый</th><th>Последний</th><th>Broadcast</th></tr>
+        <tr><td><code>192.168.1.10/24</code></td><td>192.168.1.0</td><td>192.168.1.1</td><td>192.168.1.254</td><td>192.168.1.255</td></tr>
+        <tr><td><code>10.0.0.5/30</code></td><td>10.0.0.4</td><td>10.0.0.5</td><td>10.0.0.6</td><td>10.0.0.7</td></tr>
+        <tr><td><code>172.16.32.1/20</code></td><td>172.16.32.0</td><td>172.16.32.1</td><td>172.16.47.254</td><td>172.16.47.255</td></tr>
+      </table>
+    </div>
   </section>
 
   <!-- ========== ДИАГНОСТИКА СЕТИ ========== -->
   <section id="diag" class="tab">
     <h2>Диагностика сети</h2>
-    <p>Основные команды для проверки соединения и поиска проблем. Приведены для Windows, macOS и Linux.</p>
+    <p>Основные команды для проверки соединения и поиска проблем.</p>
 
-    <h3>Ping — проверка доступности узла</h3>
-    <div class="os-block"><strong>Windows:</strong> <code>ping 8.8.8.8</code> (по умолчанию 4 пакета)</div>
-    <div class="os-block"><strong>macOS / Linux:</strong> <code>ping 8.8.8.8</code> (бесконечно, остановить <code>Ctrl+C</code>)</div>
-    <p>Показывает, отвечает ли узел, и время отклика (RTT).</p>
+    <h3>Ping — проверка доступности</h3>
+    <div class="os-block"><strong>Windows:</strong> <code>ping 8.8.8.8</code></div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>ping 8.8.8.8</code> (остановить <code>Ctrl+C</code>)</div>
 
-    <h3>Traceroute / Tracert — маршрут до узла</h3>
+    <h3>Traceroute / Tracert</h3>
     <div class="os-block"><strong>Windows:</strong> <code>tracert google.com</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>traceroute google.com</code></div>
-    <p>Показывает все промежуточные маршрутизаторы (хопы) на пути к цели.</p>
 
-    <h3>NSLookup / Dig — проверка DNS</h3>
-    <div class="os-block"><strong>Windows / macOS / Linux:</strong> <code>nslookup google.com</code></div>
-    <div class="os-block"><strong>macOS / Linux (расширенно):</strong> <code>dig google.com</code></div>
-    <p>Проверяет, правильно ли имя домена преобразуется в IP.</p>
+    <h3>NSLookup / Dig — DNS</h3>
+    <div class="os-block"><strong>Все ОС:</strong> <code>nslookup google.com</code></div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>dig google.com</code></div>
 
     <h3>Netstat / SS — соединения и порты</h3>
     <div class="os-block"><strong>Windows:</strong> <code>netstat -an</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>netstat -tuln</code> или <code>ss -tuln</code></div>
-    <p>Показывает открытые порты и активные подключения.</p>
 
     <h3>Проверка конкретного порта</h3>
     <div class="os-block"><strong>Windows (PowerShell):</strong> <code>Test-NetConnection google.com -Port 443</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>nc -zv google.com 443</code></div>
 
-    <h3>Сброс сетевых настроек (если ничего не помогает)</h3>
+    <h3>Сброс сетевых настроек</h3>
     <div class="os-block"><strong>Windows:</strong> <code>ipconfig /flushdns</code>, <code>ipconfig /release</code> + <code>ipconfig /renew</code></div>
     <div class="os-block"><strong>macOS:</strong> <code>sudo dscacheutil -flushcache</code></div>
     <div class="os-block"><strong>Linux:</strong> <code>sudo systemctl restart NetworkManager</code></div>
 
     <div class="note">
-      <strong>Совет:</strong> если <code>ping 8.8.8.8</code> работает, а сайты не открываются — проблема почти наверняка в DNS.
+      Если <code>ping 8.8.8.8</code> работает, а сайты не открываются — проблема почти наверняка в DNS.
     </div>
   </section>
 
@@ -359,39 +430,32 @@ Broadcast:              192.168.1.255 — широковещательный
     <h2>HTTP vs HTTPS</h2>
 
     <h3>Определения</h3>
-    <p><strong>HTTP</strong> (HyperText Transfer Protocol) — протокол передачи гипертекста. Передаёт данные между браузером и сервером <em>в открытом виде</em>.</p>
-    <p><strong>HTTPS</strong> (HTTP Secure) — тот же HTTP, но работающий поверх шифрования TLS/SSL. Данные передаются зашифрованными.</p>
+    <p><strong>HTTP</strong> — протокол передачи гипертекста, данные передаются в открытом виде.</p>
+    <p><strong>HTTPS</strong> — тот же HTTP, но поверх шифрования TLS/SSL.</p>
 
     <h3>Ключевые отличия</h3>
-    <table>
-      <tr>
-        <th>Параметр</th>
-        <th>HTTP</th>
-        <th>HTTPS</th>
-      </tr>
-      <tr><td>Порт по умолчанию</td><td>80</td><td>443</td></tr>
-      <tr><td>Шифрование</td><td>Нет, открытый текст</td><td>Да, TLS/SSL</td></tr>
-      <tr><td>Защита от перехвата</td><td>Уязвим (MITM, сниффинг)</td><td>Защищён</td></tr>
-      <tr><td>Аутентификация сервера</td><td>Нет</td><td>Да, через сертификат</td></tr>
-      <tr><td>Целостность данных</td><td>Не гарантируется</td><td>Контролируется</td></tr>
-      <tr><td>Скорость</td><td>Чуть быстрее (нет шифрования)</td><td>Незначительно медленнее</td></tr>
-      <tr><td>Современный статус</td><td>Устаревший</td><td>Стандарт де-факто</td></tr>
-    </table>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Параметр</th><th>HTTP</th><th>HTTPS</th></tr>
+        <tr><td>Порт по умолчанию</td><td>80</td><td>443</td></tr>
+        <tr><td>Шифрование</td><td>Нет</td><td>Да, TLS/SSL</td></tr>
+        <tr><td>Защита от перехвата</td><td>Уязвим</td><td>Защищён</td></tr>
+        <tr><td>Аутентификация сервера</td><td>Нет</td><td>Да, через сертификат</td></tr>
+        <tr><td>Целостность данных</td><td>Не гарантируется</td><td>Контролируется</td></tr>
+        <tr><td>Современный статус</td><td>Устаревший</td><td>Стандарт</td></tr>
+      </table>
+    </div>
 
     <h3>Что даёт HTTPS</h3>
     <ul>
-      <li><strong>Шифрование</strong> — пароли, карты, переписка не видны провайдеру и злоумышленнику.</li>
-      <li><strong>Аутентификацию</strong> — сертификат подтверждает, что вы на настоящем сайте, а не на фишинговой копии.</li>
-      <li><strong>Целостность</strong> — данные нельзя незаметно подменить по пути.</li>
+      <li><strong>Шифрование</strong> — данные не видны провайдеру и злоумышленнику.</li>
+      <li><strong>Аутентификацию</strong> — сертификат подтверждает, что вы на настоящем сайте.</li>
+      <li><strong>Целостность</strong> — данные нельзя подменить по пути.</li>
     </ul>
 
-    <h3>Проверка сертификата в терминале</h3>
-    <div class="os-block"><strong>Windows / macOS / Linux:</strong> <code>curl -v https://example.com</code></div>
-    <div class="os-block"><strong>Открыть сертификат:</strong> <code>openssl s_client -connect example.com:443 -servername example.com</code></div>
-
-    <div class="note">
-      HTTPS — это не «отдельный протокол», а HTTP поверх TLS. Порт 443 и «замочек» в браузере — просто внешние признаки.
-    </div>
+    <h3>Проверка сертификата</h3>
+    <div class="os-block"><strong>Все ОС:</strong> <code>curl -v https://example.com</code></div>
+    <div class="os-block"><strong>OpenSSL:</strong> <code>openssl s_client -connect example.com:443 -servername example.com</code></div>
   </section>
 
   <!-- ========== СЕРВЕРЫ ========== -->
@@ -399,45 +463,46 @@ Broadcast:              192.168.1.255 — широковещательный
     <h2>Серверы</h2>
 
     <h3>Что такое сервер</h3>
-    <p><strong>Сервер</strong> — это компьютер (или программа), который предоставляет ресурсы, данные или сервисы другим устройствам — <em>клиентам</em> — по сети. Клиент отправляет запрос, сервер его обрабатывает и возвращает ответ.</p>
-    <p>Типы серверов: веб-сервер (Apache, Nginx), файловый (SMB, FTP), почтовый, базы данных (MySQL, PostgreSQL), DNS, игровой и т.д.</p>
+    <p><strong>Сервер</strong> — компьютер или программа, предоставляющая ресурсы и сервисы клиентам по сети. Клиент отправляет запрос — сервер обрабатывает и возвращает ответ.</p>
+    <p>Типы: веб-сервер (Nginx, Apache), файловый (SMB, FTP), почтовый, БД (MySQL, PostgreSQL), DNS и т.д.</p>
 
-    <h3>Основные порты серверных сервисов</h3>
-    <table>
-      <tr><th>Сервис</th><th>Порт</th><th>Назначение</th></tr>
-      <tr><td>HTTP</td><td>80</td><td>Веб без шифрования</td></tr>
-      <tr><td>HTTPS</td><td>443</td><td>Веб с шифрованием</td></tr>
-      <tr><td>SSH</td><td>22</td><td>Удалённое управление Linux</td></tr>
-      <tr><td>RDP</td><td>3389</td><td>Удалённый рабочий стол Windows</td></tr>
-      <tr><td>MySQL</td><td>3306</td><td>База данных MySQL</td></tr>
-      <tr><td>PostgreSQL</td><td>5432</td><td>База данных PostgreSQL</td></tr>
-      <tr><td>DNS</td><td>53</td><td>Разрешение имён</td></tr>
-      <tr><td>SMB</td><td>445</td><td>Сетевые папки Windows</td></tr>
-    </table>
+    <h3>Основные порты</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Сервис</th><th>Порт</th><th>Назначение</th></tr>
+        <tr><td>HTTP</td><td>80</td><td>Веб без шифрования</td></tr>
+        <tr><td>HTTPS</td><td>443</td><td>Веб с шифрованием</td></tr>
+        <tr><td>SSH</td><td>22</td><td>Управление Linux</td></tr>
+        <tr><td>RDP</td><td>3389</td><td>Удалённый рабочий стол Windows</td></tr>
+        <tr><td>MySQL</td><td>3306</td><td>База данных MySQL</td></tr>
+        <tr><td>PostgreSQL</td><td>5432</td><td>База данных PostgreSQL</td></tr>
+        <tr><td>DNS</td><td>53</td><td>Разрешение имён</td></tr>
+        <tr><td>SMB</td><td>445</td><td>Сетевые папки Windows</td></tr>
+      </table>
+    </div>
 
-    <h3>Как подключиться к серверу</h3>
+    <h3>Как подключиться</h3>
     <div class="os-block"><strong>Linux / macOS:</strong> <code>ssh user@server_ip</code></div>
-    <div class="os-block"><strong>Windows (PowerShell 10+):</strong> <code>ssh user@server_ip</code></div>
-    <div class="os-block"><strong>Windows (GUI):</strong> PuTTY, MobaXterm или WinSCP</div>
-    <p>Для Windows-серверов — RDP-клиент <code>mstsc</code> (встроен в Windows) или Microsoft Remote Desktop на macOS.</p>
+    <div class="os-block"><strong>Windows:</strong> <code>ssh user@server_ip</code> (PowerShell 10+) или PuTTY</div>
+    <p>Для Windows-серверов — <code>mstsc</code> (RDP) или Microsoft Remote Desktop на macOS.</p>
 
-    <h3>Как проверить доступность сервера и порта</h3>
+    <h3>Проверка доступности</h3>
     <div class="os-block"><strong>Пинг:</strong> <code>ping server_ip</code></div>
     <div class="os-block"><strong>Порт (macOS / Linux):</strong> <code>nc -zv server_ip 443</code></div>
-    <div class="os-block"><strong>Порт (Windows PowerShell):</strong> <code>Test-NetConnection server_ip -Port 443</code></div>
-    <div class="os-block"><strong>HTTP-ответ:</strong> <code>curl -I https://server_ip</code></div>
+    <div class="os-block"><strong>Порт (Windows):</strong> <code>Test-NetConnection server_ip -Port 443</code></div>
+    <div class="os-block"><strong>HTTP:</strong> <code>curl -I https://server_ip</code></div>
 
-    <h3>Просмотр открытых портов на самом сервере</h3>
-    <div class="os-block"><strong>Linux:</strong> <code>ss -tuln</code> или <code>netstat -tuln</code></div>
+    <h3>Просмотр портов на сервере</h3>
+    <div class="os-block"><strong>Linux:</strong> <code>ss -tuln</code> / <code>netstat -tuln</code></div>
     <div class="os-block"><strong>Windows:</strong> <code>netstat -an</code></div>
 
-    <h3>Базовые принципы работы с сервером</h3>
+    <h3>Базовые принципы</h3>
     <ul>
-      <li>Никогда не работайте под <code>root</code> постоянно — используйте <code>sudo</code> и отдельного пользователя.</li>
-      <li>SSH-ключи безопаснее паролей: <code>ssh-keygen</code> → <code>ssh-copy-id user@server</code>.</li>
+      <li>Не работайте под <code>root</code> постоянно — используйте <code>sudo</code>.</li>
+      <li>SSH-ключи безопаснее паролей: <code>ssh-keygen</code> → <code>ssh-copy-id</code>.</li>
       <li>Обновляйте систему: <code>sudo apt update &amp;&amp; sudo apt upgrade</code> (Debian/Ubuntu) или <code>sudo dnf upgrade</code> (RHEL/Fedora).</li>
       <li>Проверяйте логи: <code>journalctl -xe</code>, <code>tail -f /var/log/syslog</code>.</li>
-      <li>Для Windows — Event Viewer и <code>Get-EventLog</code> в PowerShell.</li>
+      <li>Windows — Event Viewer и <code>Get-EventLog</code> в PowerShell.</li>
     </ul>
   </section>
 
@@ -446,43 +511,42 @@ Broadcast:              192.168.1.255 — широковещательный
     <h2>Маршрутизатор</h2>
 
     <h3>Что такое маршрутизатор</h3>
-    <p><strong>Маршрутизатор (router)</strong> — устройство, которое соединяет разные сети и направляет пакеты между ними на основе <em>таблицы маршрутизации</em>. Домашний роутер — это маршрутизатор + коммутатор + точка доступа Wi-Fi в одном корпусе.</p>
+    <p><strong>Маршрутизатор</strong> — устройство, которое соединяет разные сети и направляет пакеты на основе таблицы маршрутизации. Домашний роутер = маршрутизатор + коммутатор + точка Wi-Fi.</p>
 
-    <h3>Основные команды (на примере Cisco IOS)</h3>
-    <table>
-      <tr><th>Задача</th><th>Команда</th></tr>
-      <tr><td>Вход в привилегированный режим</td><td><code>enable</code></td></tr>
-      <tr><td>Режим конфигурации</td><td><code>configure terminal</code></td></tr>
-      <tr><td>Просмотр таблицы маршрутизации</td><td><code>show ip route</code></td></tr>
-      <tr><td>Добавить статический маршрут</td><td><code>ip route &lt;сеть&gt; &lt;маска&gt; &lt;шлюз&gt;</code></td></tr>
-      <tr><td>Сохранить конфигурацию</td><td><code>copy running-config startup-config</code></td></tr>
-      <tr><td>Просмотр интерфейсов</td><td><code>show ip interface brief</code></td></tr>
-      <tr><td>Список VLAN</td><td><code>show vlan brief</code></td></tr>
-    </table>
+    <h3>Основные команды (Cisco IOS)</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>Команда</th></tr>
+        <tr><td>Привилегированный режим</td><td><code>enable</code></td></tr>
+        <tr><td>Режим конфигурации</td><td><code>configure terminal</code></td></tr>
+        <tr><td>Таблица маршрутизации</td><td><code>show ip route</code></td></tr>
+        <tr><td>Статический маршрут</td><td><code>ip route &lt;сеть&gt; &lt;маска&gt; &lt;шлюз&gt;</code></td></tr>
+        <tr><td>Сохранить конфиг</td><td><code>copy running-config startup-config</code></td></tr>
+        <tr><td>Интерфейсы</td><td><code>show ip interface brief</code></td></tr>
+        <tr><td>VLAN</td><td><code>show vlan brief</code></td></tr>
+      </table>
+    </div>
 
-    <h3>Просмотр портов и интерфейсов</h3>
+    <h3>Порты и интерфейсы</h3>
     <div class="os-block"><strong>Cisco:</strong> <code>show interfaces status</code>, <code>show ip interface brief</code></div>
     <div class="os-block"><strong>MikroTik:</strong> <code>/interface print</code>, <code>/ip address print</code></div>
-    <div class="os-block"><strong>Linux-роутер:</strong> <code>ip link show</code>, <code>ip addr</code>, <code>ss -tuln</code></div>
-    <div class="os-block"><strong>Windows-роутер (RRAS):</strong> <code>Get-NetAdapter</code>, <code>Get-NetIPAddress</code>, <code>netstat -an</code></div>
+    <div class="os-block"><strong>Linux:</strong> <code>ip link show</code>, <code>ip addr</code>, <code>ss -tuln</code></div>
+    <div class="os-block"><strong>Windows (RRAS):</strong> <code>Get-NetAdapter</code>, <code>Get-NetIPAddress</code></div>
 
-    <h3>Настройка VLAN (пример на Cisco)</h3>
-    <pre><code>! Создаём VLAN 10
-vlan 10
+    <h3>Настройка VLAN (Cisco)</h3>
+    <pre><code>vlan 10
  name Office
  exit
 
-! Назначаем порт в VLAN
 interface FastEthernet0/1
  switchport mode access
  switchport access vlan 10
  exit
 
-! Проверка
 show vlan brief
 show interfaces status</code></pre>
 
-    <h3>Транковый порт (передача нескольких VLAN)</h3>
+    <h3>Транк (несколько VLAN)</h3>
     <pre><code>interface GigabitEthernet0/1
  switchport mode trunk
  switchport trunk allowed vlan 10,20,30
@@ -501,74 +565,68 @@ sudo ip addr add 192.168.10.1/24 dev eth0.10
 sudo ip link set eth0.10 up</code></pre>
 
     <div class="note">
-      <strong>Важно:</strong> команды VLAN сильно зависят от производителя. Указанные примеры — для Cisco IOS (учебный стандарт), MikroTik RouterOS и Linux-роутеров. На домашних роутерах (TP-Link, ASUS, Keenetic) VLAN обычно настраивается через веб-интерфейс, а не через CLI.
+      Команды VLAN зависят от производителя. Примеры — для Cisco IOS, MikroTik RouterOS и Linux. На домашних роутерах VLAN обычно настраивается через веб-интерфейс.
     </div>
   </section>
 
   <!-- ========== IP-ТЕЛЕФОНИЯ ========== -->
   <section id="voip" class="tab">
     <h2>IP-телефония (VoIP)</h2>
-    <p>IP-телефония — это технология передачи голоса по сетям с протоколом IP. В отличие от традиционной телефонии (PSTN), где для каждого звонка выделяется отдельный канал, здесь голос оцифровывается, разбивается на пакеты и передаётся по той же сети, что и обычные данные [citation:1][citation:13].</p>
+    <p>IP-телефония — передача голоса по сетям с протоколом IP. В отличие от PSTN, где на звонок выделяется отдельный канал, здесь голос оцифровывается, разбивается на пакеты и передаётся по общей сети.</p>
 
-    <h3>Как это работает (кратко)</h3>
+    <h3>Как это работает</h3>
     <ol>
-      <li><strong>Регистрация:</strong> IP-телефон или софтфон подключается к серверу (SIP-провайдеру или УАТС) и сообщает, что он онлайн, через запрос <code>REGISTER</code>. Сервер отвечает <code>200 OK</code> [citation:2][citation:8].</li>
-      <li><strong>Установка соединения:</strong> при звонке клиент отправляет запрос <code>INVITE</code>. Сервер находит вызываемого абонента и соединяет их [citation:2].</li>
-      <li><strong>Передача голоса:</strong> после установки соединения голос передаётся по протоколу <strong>RTP</strong> (Real-time Transport Protocol) в виде UDP-пакетов [citation:1][citation:9].</li>
+      <li><strong>Регистрация:</strong> телефон/софтфон отправляет <code>REGISTER</code> SIP-серверу, тот отвечает <code>200 OK</code>.</li>
+      <li><strong>Установка соединения:</strong> клиент отправляет <code>INVITE</code>, сервер соединяет абонентов.</li>
+      <li><strong>Передача голоса:</strong> по протоколу <strong>RTP</strong> в UDP-пакетах.</li>
     </ol>
 
     <h3>Ключевые протоколы</h3>
-    <table>
-      <tr><th>Протокол</th><th>Назначение</th><th>Транспорт / порт</th></tr>
-      <tr>
-        <td><strong>SIP</strong> (Session Initiation Protocol)</td>
-        <td>Установка, управление и завершение сессии (звонка). Сигнализация.</td>
-        <td>UDP/TCP <code>5060</code> (незащищённый), TCP/TLS <code>5061</code> (защищённый) [citation:3][citation:9]</td>
-      </tr>
-      <tr>
-        <td><strong>RTP</strong> (Real-time Transport Protocol)</td>
-        <td>Передача самого голоса и видео в реальном времени.</td>
-        <td>UDP, обычно диапазон <code>16384–32768</code> (зависит от вендора) [citation:9]</td>
-      </tr>
-    </table>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Протокол</th><th>Назначение</th><th>Порт</th></tr>
+        <tr><td><strong>SIP</strong></td><td>Сигнализация: установка/завершение звонка</td><td>UDP/TCP <code>5060</code>, TLS <code>5061</code></td></tr>
+        <tr><td><strong>RTP</strong></td><td>Передача голоса и видео</td><td>UDP <code>16384–32768</code></td></tr>
+      </table>
+    </div>
 
-    <h3>Основные SIP-запросы (методы)</h3>
-    <table>
-      <tr><th>Метод</th><th>Что делает</th></tr>
-      <tr><td><code>REGISTER</code></td><td>Регистрирует абонента на сервере (сообщает: «я онлайн, вот мой IP»)</td></tr>
-      <tr><td><code>INVITE</code></td><td>Инициирует вызов (приглашает абонента к разговору)</td></tr>
-      <tr><td><code>ACK</code></td><td>Подтверждает получение финального ответа на INVITE</td></tr>
-      <tr><td><code>BYE</code></td><td>Завершает сессию (кладём трубку)</td></tr>
-      <tr><td><code>OPTIONS</code></td><td>Проверка доступности сервера/абонента (SIP-ping)</td></tr>
-      <tr><td><code>CANCEL</code></td><td>Отмена ещё не установленного вызова</td></tr>
-    </table>
+    <h3>SIP-методы</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Метод</th><th>Назначение</th></tr>
+        <tr><td><code>REGISTER</code></td><td>Регистрация абонента на сервере</td></tr>
+        <tr><td><code>INVITE</code></td><td>Инициирование вызова</td></tr>
+        <tr><td><code>ACK</code></td><td>Подтверждение ответа на INVITE</td></tr>
+        <tr><td><code>BYE</code></td><td>Завершение сессии</td></tr>
+        <tr><td><code>OPTIONS</code></td><td>Проверка доступности (SIP-ping)</td></tr>
+        <tr><td><code>CANCEL</code></td><td>Отмена несостоявшегося вызова</td></tr>
+      </table>
+    </div>
 
     <h3>Диагностика SIP с компьютера</h3>
-    <p>Для проверки доступности SIP-сервера используется утилита <code>sipsak</code>. Она отправляет запрос <code>OPTIONS</code> и показывает ответ сервера [citation:4][citation:10].</p>
+    <p>Утилита <code>sipsak</code> отправляет запрос <code>OPTIONS</code> и показывает ответ сервера.</p>
 
-    <div class="os-block"><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install sipsak</code></div>
-    <div class="os-block"><strong>macOS (Homebrew):</strong> <code>brew install sipsak</code></div>
-    <div class="os-block"><strong>Windows:</strong> используйте WSL (Windows Subsystem for Linux) и устанавливайте как для Linux [citation:4].</div>
+    <div class="os-block"><strong>Linux:</strong> <code>sudo apt install sipsak</code></div>
+    <div class="os-block"><strong>macOS:</strong> <code>brew install sipsak</code></div>
+    <div class="os-block"><strong>Windows:</strong> через WSL, как для Linux</div>
 
-    <h4>Пример проверки SIP-сервера</h4>
+    <h4>Пример</h4>
     <pre><code>sipsak -v -s sip:sip.example.com</code></pre>
-    <p>Успешный ответ выглядит как <code>SIP/2.0 200 Keepalive</code> или <code>200 OK</code> — это значит, что двусторонняя UDP-связь с сервером работает [citation:4].</p>
+    <p>Успех — <code>SIP/2.0 200 OK</code> или <code>200 Keepalive</code>.</p>
 
-    <h4>Если ответа нет — что проверять</h4>
+    <h4>Если ответа нет</h4>
     <ul>
-      <li>Порт <code>5060/UDP</code> не блокируется файрволом или провайдером.</li>
-      <li>Правильно ли указано имя SIP-сервера (домен).</li>
-      <li>Нет ли проблем с NAT (особенно если сервер за роутером).</li>
+      <li>Порт <code>5060/UDP</code> не блокируется файрволом.</li>
+      <li>Правильное имя SIP-сервера.</li>
+      <li>Проблемы с NAT.</li>
     </ul>
 
-    <h3>IP-телефония на маршрутизаторах (Cisco)</h3>
-    <p>На Cisco IOS для настройки VoIP используются <strong>dial-peer</strong> — правила, которые определяют, как обрабатывать вызовы [citation:5].</p>
+    <h3>IP-телефония на Cisco</h3>
+    <p>Для VoIP используются <strong>dial-peer</strong> — правила обработки вызовов.</p>
 
-    <pre><code>! Вход в режим конфигурации
-enable
+    <pre><code>enable
 configure terminal
 
-! Создание VoIP dial-peer для исходящих вызовов
 dial-peer voice 10 voip
  description To-SIP-Provider
  destination-pattern 9T
@@ -577,34 +635,36 @@ dial-peer voice 10 voip
  codec g711ulaw
  exit</code></pre>
 
-    <p><strong>Что означают параметры:</strong></p>
+    <p><strong>Параметры:</strong></p>
     <ul>
-      <li><code>destination-pattern 9T</code> — набор номера, начинающийся с 9 (префикс выхода на внешнюю линию).</li>
-      <li><code>session target ipv4:...</code> — IP-адрес SIP-провайдера или УАТС.</li>
-      <li><code>codec g711ulaw</code> — аудиокодек (G.711 — стандарт качества, ~64 Кбит/с; G.729 — сжатие, ~8 Кбит/с) [citation:5].</li>
+      <li><code>destination-pattern 9T</code> — номер с префиксом 9 (выход на внешнюю линию).</li>
+      <li><code>session target</code> — IP SIP-провайдера.</li>
+      <li><code>codec g711ulaw</code> — кодек G.711 (~64 Кбит/с); G.729 — сжатие (~8 Кбит/с).</li>
     </ul>
 
-    <h3>Особенности работы через NAT</h3>
-    <p>Если IP-телефон или УАТС (например, Asterisk) находится за NAT, а SIP-провайдер — в интернете, голос может не проходить в одну или обе стороны, хотя вызовы «звонят». Причина — SIP в заголовках передаёт внутренние IP-адреса, которые снаружи недостижимы.</p>
+    <h3>Особенности через NAT</h3>
+    <p>Если УАТС за NAT, голос может не проходить в одну или обе стороны, хотя вызовы «звонят». SIP в заголовках передаёт внутренние IP, недостижимые снаружи.</p>
     <ul>
-      <li>В настройках УАТС (Asterisk/FreePBX) нужно включить поддержку NAT.</li>
-      <li>На роутере должны быть проброшены порты SIP (<code>5060</code>) и диапазон RTP (обычно <code>10000–20000</code> или <code>16384–32768</code>) на внутренний IP УАТС.</li>
-      <li>Если провайдер сменил тип подключения (например, с L2TP на IPoE), может измениться IP-адрес — его нужно обновить в настройках УАТС [citation:12].</li>
+      <li>Включите поддержку NAT в УАТС (Asterisk/FreePBX).</li>
+      <li>Пробросьте на роутере порты SIP (<code>5060</code>) и RTP (<code>10000–20000</code> или <code>16384–32768</code>) на внутренний IP УАТС.</li>
+      <li>При смене IP от провайдера обновите его в настройках УАТС.</li>
     </ul>
 
     <div class="note">
-      <strong>Важно:</strong> SIP-телефония очень чувствительна к задержкам и потерям пакетов. Если в сети есть перегрузки, голос будет «рваться». Для качественной связи рекомендуется использовать QoS (приоритизацию трафика RTP) на маршрутизаторе.
+      SIP чувствителен к задержкам и потерям пакетов. Для качественной связи используйте QoS — приоритизацию трафика RTP на маршрутизаторе.
     </div>
 
-    <h3>Полезные команды для диагностики (сводка)</h3>
-    <table>
-      <tr><th>Задача</th><th>Команда</th></tr>
-      <tr><td>Проверить доступность сервера (ICMP)</td><td><code>ping sip.example.com</code></td></tr>
-      <tr><td>Проверить, слушается ли порт 5060</td><td><code>nc -zvu sip.example.com 5060</code> (Linux/macOS)</td></tr>
-      <tr><td>SIP-ping (проверка отклика)</td><td><code>sipsak -s sip:sip.example.com</code></td></tr>
-      <tr><td>Захват SIP-трафика</td><td><code>sngrep</code> (Linux) или <code>tcpdump -i any port 5060 -w sip.pcap</code></td></tr>
-      <tr><td>Просмотр открытых портов на УАТС</td><td><code>ss -tuln | grep 5060</code> (Linux)</td></tr>
-    </table>
+    <h3>Полезные команды</h3>
+    <div class="table-scroll">
+      <table>
+        <tr><th>Задача</th><th>Команда</th></tr>
+        <tr><td>Пинг сервера</td><td><code>ping sip.example.com</code></td></tr>
+        <tr><td>Порт 5060</td><td><code>nc -zvu sip.example.com 5060</code></td></tr>
+        <tr><td>SIP-ping</td><td><code>sipsak -s sip:sip.example.com</code></td></tr>
+        <tr><td>Захват SIP</td><td><code>sngrep</code> или <code>tcpdump -i any port 5060 -w sip.pcap</code></td></tr>
+        <tr><td>Порты на УАТС</td><td><code>ss -tuln | grep 5060</code></td></tr>
+      </table>
+    </div>
   </section>
 
 </main>
@@ -617,6 +677,11 @@ dial-peer voice 10 voip
     document.getElementById(id).classList.add('active');
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    // Прокрутить активную кнопку в зону видимости на мобильных
+    if (btn.scrollIntoView) {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+    // Плавно наверх
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
