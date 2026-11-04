@@ -30,48 +30,89 @@
   header h1 { margin: 0 0 6px; font-size: 24px; }
   header p { margin: 0; opacity: 0.9; font-size: 13px; }
 
-  nav {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-    padding: 12px 12px;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-  }
-  nav::-webkit-scrollbar { display: none; }
-  nav button {
-    flex: 0 0 auto;
-    padding: 12px 18px;
-    min-height: 44px;
-    border: 2px solid #2563eb;
-    background: #fff;
-    color: #2563eb;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-    touch-action: manipulation;
-  }
-  nav button:hover { background: #e0ecff; }
-  nav button.active { background: #2563eb; color: #fff; }
-  nav button:active { transform: scale(0.97); }
-
   main {
     max-width: 1080px;
     margin: 16px auto;
     padding: 0 12px 40px;
   }
-  .tab {
+
+  /* ===== ГЛАВНЫЙ ЭКРАН ===== */
+  .home-screen {
+    display: block;
+    animation: fade 0.25s ease;
+  }
+  .home-screen.hidden { display: none; }
+  .home-title {
+    text-align: center;
+    color: #1e3a8a;
+    margin: 8px 0 4px;
+    font-size: 20px;
+  }
+  .home-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    margin: 0 0 20px;
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 18px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    color: #1f2933;
+    transition: transform 0.12s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    min-height: 78px;
+    touch-action: manipulation;
+  }
+  .card:hover {
+    border-color: #2563eb;
+    box-shadow: 0 6px 18px rgba(37,99,235,0.15);
+    transform: translateY(-2px);
+  }
+  .card:active { transform: scale(0.985); }
+  .card-icon {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+  .card-body { flex: 1; min-width: 0; }
+  .card-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #1e3a8a;
+    margin-bottom: 3px;
+  }
+  .card-desc {
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.4;
+  }
+  .card-arrow {
+    flex-shrink: 0;
+    color: #94a3b8;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  /* ===== СТРАНИЦЫ РАЗДЕЛОВ ===== */
+  .page {
     display: none;
     background: #fff;
     border-radius: 12px;
@@ -80,11 +121,32 @@
     animation: fade 0.25s ease;
     overflow-wrap: break-word;
   }
-  .tab.active { display: block; }
+  .page.active { display: block; }
   @keyframes fade {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  .page-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    min-height: 44px;
+    background: #eff6ff;
+    color: #1e3a8a;
+    border: 2px solid #dbeafe;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    touch-action: manipulation;
+  }
+  .page-back:hover { background: #dbeafe; border-color: #bfdbfe; }
+  .page-back:active { transform: scale(0.97); }
+
   h2 {
     margin-top: 0;
     color: #1e3a8a;
@@ -166,38 +228,152 @@
     padding: 20px 12px calc(20px + env(safe-area-inset-bottom));
   }
 
-  .cidr-wrap {
-    max-height: 60vh;
+  .btn-open-modal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    min-height: 44px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 0 16px;
+    transition: background 0.15s ease, transform 0.1s ease;
+    touch-action: manipulation;
+  }
+  .btn-open-modal:hover { background: #1e40af; }
+  .btn-open-modal:active { transform: scale(0.97); }
+  .btn-open-modal::before { content: "📊"; font-size: 16px; }
+
+  /* ===== МОДАЛЬНОЕ ОКНО ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    z-index: 100;
+    padding: 16px;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    animation: modalFade 0.2s ease;
+  }
+  .modal-overlay.open { display: flex; }
+  @keyframes modalFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .modal-content {
+    background: #fff;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 900px;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    animation: modalSlide 0.25s ease;
+    overflow: hidden;
+  }
+  @keyframes modalSlide {
+    from { transform: translateY(20px); opacity: 0.6; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .modal-header h3 { margin: 0; color: #fff; font-size: 17px; }
+  .modal-close {
+    width: 38px;
+    height: 38px;
+    border: none;
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+    touch-action: manipulation;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.32); }
+  .modal-close:active { transform: scale(0.94); }
+  .modal-body {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    margin: 12px 0 8px;
+    padding: 0;
+    flex: 1;
+    min-height: 0;
+  }
+  .modal-hint {
+    font-size: 12.5px;
+    color: #64748b;
+    padding: 10px 18px 6px;
+    margin: 0;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .modal-footer-note {
+    font-size: 12px;
+    color: #64748b;
+    padding: 10px 18px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    margin: 0;
+    flex-shrink: 0;
+  }
+  .cidr-wrap {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: none;
   }
   .cidr-table {
     margin: 0;
-    font-size: 12.5px;
+    font-size: 13px;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    min-width: 560px;
+    min-width: 580px;
+    width: 100%;
   }
   .cidr-table th {
     position: sticky;
     top: 0;
     background: #1e3a8a;
     color: #fff;
-    z-index: 1;
+    z-index: 2;
     font-weight: 600;
     text-align: center;
     white-space: nowrap;
+    padding: 10px 8px;
   }
-  .cidr-table td { text-align: center; white-space: nowrap; }
+  .cidr-table td {
+    text-align: center;
+    white-space: nowrap;
+    padding: 7px 8px;
+  }
   .cidr-table td:first-child {
     font-weight: 700;
     color: #1e40af;
     background: #eff6ff;
     position: sticky;
     left: 0;
-    z-index: 2;
+    z-index: 1;
   }
   .cidr-table th:first-child {
     position: sticky;
@@ -205,15 +381,21 @@
     z-index: 3;
     background: #1e3a8a;
   }
-  .cidr-table tr:nth-child(even) td:first-child { background: #dbeafe; }
   .cidr-table tr:nth-child(even) td { background: #fafbfd; }
-  .cidr-hint { font-size: 12px; color: #64748b; margin: 0 0 6px; }
+  .cidr-table tr:nth-child(even) td:first-child { background: #dbeafe; }
+  body.modal-lock { overflow: hidden; }
 
+  /* ===== АДАПТИВ ===== */
+  @media (min-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .home-title { font-size: 24px; }
+    .home-subtitle { font-size: 14px; }
+  }
   @media (min-width: 700px) {
     header h1 { font-size: 28px; }
     header p { font-size: 14px; }
     main { padding: 0 20px 50px; }
-    .tab { padding: 24px; }
+    .page { padding: 24px; }
     h2 { font-size: 24px; }
     h3 { font-size: 18px; }
     table { font-size: 14px; }
@@ -221,12 +403,30 @@
     code { font-size: 13px; }
     pre { font-size: 13px; }
     .os-block, .note { font-size: 14px; }
+    .card { padding: 22px; min-height: 90px; }
+    .card-title { font-size: 17px; }
+    .card-desc { font-size: 13px; }
+    .modal-content { max-height: calc(100vh - 64px); }
+    .modal-header h3 { font-size: 19px; }
   }
-
   @media (min-width: 1000px) {
-    nav { flex-wrap: wrap; justify-content: center; }
+    .cards-grid { grid-template-columns: 1fr 1fr 1fr; }
     header h1 { font-size: 30px; }
     header p { font-size: 15px; }
+  }
+  @media (max-width: 480px) {
+    .modal-overlay { padding: 8px; }
+    .modal-content {
+      max-height: calc(100vh - 16px);
+      max-height: calc(100dvh - 16px);
+      border-radius: 10px;
+    }
+    .modal-header { padding: 12px 14px; }
+    .modal-header h3 { font-size: 15px; }
+    .cidr-table { font-size: 12px; }
+    .cidr-table th, .cidr-table td { padding: 6px 6px; }
+    .card-icon { width: 46px; height: 46px; font-size: 22px; }
+    .card-title { font-size: 15px; }
   }
 </style>
 </head>
@@ -237,20 +437,82 @@
   <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды</p>
 </header>
 
-<nav id="nav">
-  <button class="active" onclick="showTab('info', this)">Общая информация</button>
-  <button onclick="showTab('diag', this)">Диагностика сети</button>
-  <button onclick="showTab('http', this)">HTTP vs HTTPS</button>
-  <button onclick="showTab('servers', this)">Серверы</button>
-  <button onclick="showTab('router', this)">Маршрутизатор</button>
-  <button onclick="showTab('voip', this)">IP-телефония</button>
-  <button onclick="showTab('commands', this)">Команды</button>
-</nav>
-
 <main>
 
+  <!-- ========== ГЛАВНЫЙ ЭКРАН ========== -->
+  <div class="home-screen" id="home">
+    <h2 class="home-title">Выберите раздел</h2>
+    <p class="home-subtitle">Нажмите на карточку, чтобы перейти</p>
+
+    <div class="cards-grid">
+      <a class="card" href="#info" onclick="navigateTo('info'); return false;">
+        <div class="card-icon">🌐</div>
+        <div class="card-body">
+          <div class="card-title">Общая информация</div>
+          <div class="card-desc">IP, маска, шлюз, DNS, таблица CIDR</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#diag" onclick="navigateTo('diag'); return false;">
+        <div class="card-icon">🩺</div>
+        <div class="card-body">
+          <div class="card-title">Диагностика сети</div>
+          <div class="card-desc">ping, traceroute, nslookup, netstat</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#http" onclick="navigateTo('http'); return false;">
+        <div class="card-icon">🔒</div>
+        <div class="card-body">
+          <div class="card-title">HTTP vs HTTPS</div>
+          <div class="card-desc">Определения и отличия протоколов</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#servers" onclick="navigateTo('servers'); return false;">
+        <div class="card-icon">🖥️</div>
+        <div class="card-body">
+          <div class="card-title">Серверы</div>
+          <div class="card-desc">Что такое сервер и как с ним работать</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#router" onclick="navigateTo('router'); return false;">
+        <div class="card-icon">📡</div>
+        <div class="card-body">
+          <div class="card-title">Маршрутизатор</div>
+          <div class="card-desc">Основные команды, VLAN, порты</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#voip" onclick="navigateTo('voip'); return false;">
+        <div class="card-icon">☎️</div>
+        <div class="card-body">
+          <div class="card-title">IP-телефония</div>
+          <div class="card-desc">SIP, RTP, диагностика, NAT</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card" href="#commands" onclick="navigateTo('commands'); return false;">
+        <div class="card-icon">⌨️</div>
+        <div class="card-body">
+          <div class="card-title">Команды</div>
+          <div class="card-desc">PowerShell и CMD: установка, управление</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+    </div>
+  </div>
+
   <!-- ========== ОБЩАЯ ИНФОРМАЦИЯ ========== -->
-  <section id="info" class="tab active">
+  <section id="info" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Общая информация</h2>
     <p>Базовые понятия, которые нужны для понимания любой сети — от домашней до корпоративной.</p>
 
@@ -318,61 +580,9 @@ Broadcast:              192.168.1.255
     </div>
 
     <h4>Полная таблица CIDR</h4>
-    <p class="cidr-hint">Прокрутите таблицу по горизонтали и вертикали. Значения для IPv4.</p>
+    <p>Полная таблица со всеми префиксами от <code>/0</code> до <code>/32</code> — в отдельном окне, чтобы не растягивать страницу.</p>
 
-    <div class="cidr-wrap">
-      <table class="cidr-table">
-        <thead>
-          <tr>
-            <th>CIDR</th>
-            <th>Маска</th>
-            <th>Wildcard</th>
-            <th>Всего IP</th>
-            <th>Хостов</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>/32</td><td>255.255.255.255</td><td>0.0.0.0</td><td>1</td><td>1</td></tr>
-          <tr><td>/31</td><td>255.255.255.254</td><td>0.0.0.1</td><td>2</td><td>2*</td></tr>
-          <tr><td>/30</td><td>255.255.255.252</td><td>0.0.0.3</td><td>4</td><td>2</td></tr>
-          <tr><td>/29</td><td>255.255.255.248</td><td>0.0.0.7</td><td>8</td><td>6</td></tr>
-          <tr><td>/28</td><td>255.255.255.240</td><td>0.0.0.15</td><td>16</td><td>14</td></tr>
-          <tr><td>/27</td><td>255.255.255.224</td><td>0.0.0.31</td><td>32</td><td>30</td></tr>
-          <tr><td>/26</td><td>255.255.255.192</td><td>0.0.0.63</td><td>64</td><td>62</td></tr>
-          <tr><td>/25</td><td>255.255.255.128</td><td>0.0.0.127</td><td>128</td><td>126</td></tr>
-          <tr><td>/24</td><td>255.255.255.0</td><td>0.0.0.255</td><td>256</td><td>254</td></tr>
-          <tr><td>/23</td><td>255.255.254.0</td><td>0.0.1.255</td><td>512</td><td>510</td></tr>
-          <tr><td>/22</td><td>255.255.252.0</td><td>0.0.3.255</td><td>1 024</td><td>1 022</td></tr>
-          <tr><td>/21</td><td>255.255.248.0</td><td>0.0.7.255</td><td>2 048</td><td>2 046</td></tr>
-          <tr><td>/20</td><td>255.255.240.0</td><td>0.0.15.255</td><td>4 096</td><td>4 094</td></tr>
-          <tr><td>/19</td><td>255.255.224.0</td><td>0.0.31.255</td><td>8 192</td><td>8 190</td></tr>
-          <tr><td>/18</td><td>255.255.192.0</td><td>0.0.63.255</td><td>16 384</td><td>16 382</td></tr>
-          <tr><td>/17</td><td>255.255.128.0</td><td>0.0.127.255</td><td>32 768</td><td>32 766</td></tr>
-          <tr><td>/16</td><td>255.255.0.0</td><td>0.0.255.255</td><td>65 536</td><td>65 534</td></tr>
-          <tr><td>/15</td><td>255.254.0.0</td><td>0.1.255.255</td><td>131 072</td><td>131 070</td></tr>
-          <tr><td>/14</td><td>255.252.0.0</td><td>0.3.255.255</td><td>262 144</td><td>262 142</td></tr>
-          <tr><td>/13</td><td>255.248.0.0</td><td>0.7.255.255</td><td>524 288</td><td>524 286</td></tr>
-          <tr><td>/12</td><td>255.240.0.0</td><td>0.15.255.255</td><td>1 048 576</td><td>1 048 574</td></tr>
-          <tr><td>/11</td><td>255.224.0.0</td><td>0.31.255.255</td><td>2 097 152</td><td>2 097 150</td></tr>
-          <tr><td>/10</td><td>255.192.0.0</td><td>0.63.255.255</td><td>4 194 304</td><td>4 194 302</td></tr>
-          <tr><td>/9</td><td>255.128.0.0</td><td>0.127.255.255</td><td>8 388 608</td><td>8 388 606</td></tr>
-          <tr><td>/8</td><td>255.0.0.0</td><td>0.255.255.255</td><td>16 777 216</td><td>16 777 214</td></tr>
-          <tr><td>/7</td><td>254.0.0.0</td><td>1.255.255.255</td><td>33 554 432</td><td>33 554 430</td></tr>
-          <tr><td>/6</td><td>252.0.0.0</td><td>3.255.255.255</td><td>67 108 864</td><td>67 108 862</td></tr>
-          <tr><td>/5</td><td>248.0.0.0</td><td>7.255.255.255</td><td>134 217 728</td><td>134 217 726</td></tr>
-          <tr><td>/4</td><td>240.0.0.0</td><td>15.255.255.255</td><td>268 435 456</td><td>268 435 454</td></tr>
-          <tr><td>/3</td><td>224.0.0.0</td><td>31.255.255.255</td><td>536 870 912</td><td>536 870 910</td></tr>
-          <tr><td>/2</td><td>192.0.0.0</td><td>63.255.255.255</td><td>1 073 741 824</td><td>1 073 741 822</td></tr>
-          <tr><td>/1</td><td>128.0.0.0</td><td>127.255.255.255</td><td>2 147 483 648</td><td>2 147 483 646</td></tr>
-          <tr><td>/0</td><td>0.0.0.0</td><td>255.255.255.255</td><td>4 294 967 296</td><td>4 294 967 294</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note">
-      <strong>* /31</strong> — по RFC 3021 используется на линках «точка-точка», оба адреса назначаемы.<br>
-      <strong>/32</strong> — маска для одного конкретного хоста (host route).
-    </div>
+    <button class="btn-open-modal" onclick="openCidrModal()">Открыть полную таблицу CIDR</button>
 
     <h4>Быстрые примеры</h4>
     <div class="table-scroll">
@@ -386,7 +596,8 @@ Broadcast:              192.168.1.255
   </section>
 
   <!-- ========== ДИАГНОСТИКА СЕТИ ========== -->
-  <section id="diag" class="tab">
+  <section id="diag" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Диагностика сети</h2>
     <p>Основные команды для проверки соединения и поиска проблем.</p>
 
@@ -421,7 +632,8 @@ Broadcast:              192.168.1.255
   </section>
 
   <!-- ========== HTTP vs HTTPS ========== -->
-  <section id="http" class="tab">
+  <section id="http" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>HTTP vs HTTPS</h2>
 
     <h3>Определения</h3>
@@ -454,7 +666,8 @@ Broadcast:              192.168.1.255
   </section>
 
   <!-- ========== СЕРВЕРЫ ========== -->
-  <section id="servers" class="tab">
+  <section id="servers" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Серверы</h2>
 
     <h3>Что такое сервер</h3>
@@ -502,7 +715,8 @@ Broadcast:              192.168.1.255
   </section>
 
   <!-- ========== МАРШРУТИЗАТОР ========== -->
-  <section id="router" class="tab">
+  <section id="router" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Маршрутизатор</h2>
 
     <h3>Что такое маршрутизатор</h3>
@@ -565,7 +779,8 @@ sudo ip link set eth0.10 up</code></pre>
   </section>
 
   <!-- ========== IP-ТЕЛЕФОНИЯ ========== -->
-  <section id="voip" class="tab">
+  <section id="voip" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>IP-телефония (VoIP)</h2>
     <p>IP-телефония — передача голоса по сетям с протоколом IP. В отличие от PSTN, где на звонок выделяется отдельный канал, здесь голос оцифровывается, разбивается на пакеты и передаётся по общей сети.</p>
 
@@ -663,12 +878,13 @@ dial-peer voice 10 voip
   </section>
 
   <!-- ========== КОМАНДЫ ========== -->
-  <section id="commands" class="tab">
+  <section id="commands" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Команды Windows (PowerShell и CMD)</h2>
     <p>Основные команды для повседневной работы с Windows: установка программ, удалённое управление, работа с процессами, службами, сетью и файлами.</p>
 
     <h3>Установка программ (WinGet)</h3>
-    <p><strong>WinGet</strong> — официальный пакетный менеджер Microsoft, встроенный в Windows 11 и современные версии Windows 10 (1809+). Позволяет устанавливать, обновлять и удалять приложения из командной строки [citation:2][citation:6].</p>
+    <p><strong>WinGet</strong> — официальный пакетный менеджер Microsoft, встроенный в Windows 11 и современные версии Windows 10 (1809+). Позволяет устанавливать, обновлять и удалять приложения из командной строки.</p>
 
     <div class="table-scroll">
       <table>
@@ -802,19 +1018,157 @@ Invoke-Command -ComputerName 192.168.1.100 -ScriptBlock { Get-Process }</code></
 
 </main>
 
+<!-- ========== МОДАЛЬНОЕ ОКНО: ПОЛНАЯ ТАБЛИЦА CIDR ========== -->
+<div class="modal-overlay" id="cidrModal" onclick="closeCidrModalOnBackdrop(event)">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="cidrModalTitle">
+    <div class="modal-header">
+      <h3 id="cidrModalTitle">Полная таблица CIDR (IPv4)</h3>
+      <button class="modal-close" onclick="closeCidrModal()" aria-label="Закрыть">×</button>
+    </div>
+    <p class="modal-hint">Прокручивайте таблицу внутри окна. Шапка и первый столбец закреплены.</p>
+    <div class="modal-body">
+      <div class="cidr-wrap">
+        <table class="cidr-table">
+          <thead>
+            <tr>
+              <th>CIDR</th>
+              <th>Маска подсети</th>
+              <th>Маска с подстановочным знаком</th>
+              <th>Всего IP-адресов</th>
+              <th>Используемых IP-адресов</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>/32</td><td>255.255.255.255</td><td>0.0.0.0</td><td>1</td><td>1</td></tr>
+            <tr><td>/31</td><td>255.255.255.254</td><td>0.0.0.1</td><td>2</td><td>2*</td></tr>
+            <tr><td>/30</td><td>255.255.255.252</td><td>0.0.0.3</td><td>4</td><td>2</td></tr>
+            <tr><td>/29</td><td>255.255.255.248</td><td>0.0.0.7</td><td>8</td><td>6</td></tr>
+            <tr><td>/28</td><td>255.255.255.240</td><td>0.0.0.15</td><td>16</td><td>14</td></tr>
+            <tr><td>/27</td><td>255.255.255.224</td><td>0.0.0.31</td><td>32</td><td>30</td></tr>
+            <tr><td>/26</td><td>255.255.255.192</td><td>0.0.0.63</td><td>64</td><td>62</td></tr>
+            <tr><td>/25</td><td>255.255.255.128</td><td>0.0.0.127</td><td>128</td><td>126</td></tr>
+            <tr><td>/24</td><td>255.255.255.0</td><td>0.0.0.255</td><td>256</td><td>254</td></tr>
+            <tr><td>/23</td><td>255.255.254.0</td><td>0.0.1.255</td><td>512</td><td>510</td></tr>
+            <tr><td>/22</td><td>255.255.252.0</td><td>0.0.3.255</td><td>1 024</td><td>1 022</td></tr>
+            <tr><td>/21</td><td>255.255.248.0</td><td>0.0.7.255</td><td>2 048</td><td>2 046</td></tr>
+            <tr><td>/20</td><td>255.255.240.0</td><td>0.0.15.255</td><td>4 096</td><td>4 094</td></tr>
+            <tr><td>/19</td><td>255.255.224.0</td><td>0.0.31.255</td><td>8 192</td><td>8 190</td></tr>
+            <tr><td>/18</td><td>255.255.192.0</td><td>0.0.63.255</td><td>16 384</td><td>16 382</td></tr>
+            <tr><td>/17</td><td>255.255.128.0</td><td>0.0.127.255</td><td>32 768</td><td>32 766</td></tr>
+            <tr><td>/16</td><td>255.255.0.0</td><td>0.0.255.255</td><td>65 536</td><td>65 534</td></tr>
+            <tr><td>/15</td><td>255.254.0.0</td><td>0.1.255.255</td><td>131 072</td><td>131 070</td></tr>
+            <tr><td>/14</td><td>255.252.0.0</td><td>0.3.255.255</td><td>262 144</td><td>262 142</td></tr>
+            <tr><td>/13</td><td>255.248.0.0</td><td>0.7.255.255</td><td>524 288</td><td>524 286</td></tr>
+            <tr><td>/12</td><td>255.240.0.0</td><td>0.15.255.255</td><td>1 048 576</td><td>1 048 574</td></tr>
+            <tr><td>/11</td><td>255.224.0.0</td><td>0.31.255.255</td><td>2 097 152</td><td>2 097 150</td></tr>
+            <tr><td>/10</td><td>255.192.0.0</td><td>0.63.255.255</td><td>4 194 304</td><td>4 194 302</td></tr>
+            <tr><td>/9</td><td>255.128.0.0</td><td>0.127.255.255</td><td>8 388 608</td><td>8 388 606</td></tr>
+            <tr><td>/8</td><td>255.0.0.0</td><td>0.255.255.255</td><td>16 777 216</td><td>16 777 214</td></tr>
+            <tr><td>/7</td><td>254.0.0.0</td><td>1.255.255.255</td><td>33 554 432</td><td>33 554 430</td></tr>
+            <tr><td>/6</td><td>252.0.0.0</td><td>3.255.255.255</td><td>67 108 864</td><td>67 108 862</td></tr>
+            <tr><td>/5</td><td>248.0.0.0</td><td>7.255.255.255</td><td>134 217 728</td><td>134 217 726</td></tr>
+            <tr><td>/4</td><td>240.0.0.0</td><td>15.255.255.255</td><td>268 435 456</td><td>268 435 454</td></tr>
+            <tr><td>/3</td><td>224.0.0.0</td><td>31.255.255.255</td><td>536 870 912</td><td>536 870 910</td></tr>
+            <tr><td>/2</td><td>192.0.0.0</td><td>63.255.255.255</td><td>1 073 741 824</td><td>1 073 741 822</td></tr>
+            <tr><td>/1</td><td>128.0.0.0</td><td>127.255.255.255</td><td>2 147 483 648</td><td>2 147 483 646</td></tr>
+            <tr><td>/0</td><td>0.0.0.0</td><td>255.255.255.255</td><td>4 294 967 296</td><td>4 294 967 294</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="modal-footer-note">
+      <strong>* /31</strong> — по RFC 3021 используется на линках «точка-точка», оба адреса назначаемы.
+      <strong>/32</strong> — маска для одного конкретного хоста (host route).
+    </p>
+  </div>
+</div>
+
 <footer>Сетевая шпаргалка · Статический сайт для GitHub Pages</footer>
 
 <script>
-  function showTab(id, btn) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    if (btn.scrollIntoView) {
-      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  // ===== Навигация между "страницами" =====
+  function navigateTo(id) {
+    // Скрываем всё
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const home = document.getElementById('home');
+    home.classList.add('hidden');
+
+    if (id === 'home' || !id) {
+      // Показываем главный экран
+      home.classList.remove('hidden');
+      history.replaceState(null, '', location.pathname + location.search);
+    } else {
+      // Показываем нужную страницу
+      const page = document.getElementById(id);
+      if (page) {
+        page.classList.add('active');
+        // Меняем хеш в адресной строке
+        if (location.hash !== '#' + id) {
+          history.pushState(null, '', '#' + id);
+        }
+      } else {
+        home.classList.remove('hidden');
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // Определяем, какую страницу открыть при загрузке
+  function handleInitialRoute() {
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      navigateTo(hash);
+    } else {
+      navigateTo('home');
+    }
+  }
+
+  // Кнопки назад/вперёд браузера
+  window.addEventListener('popstate', function () {
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      // Показываем страницу без повторного pushState
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const home = document.getElementById('home');
+      home.classList.add('hidden');
+      const page = document.getElementById(hash);
+      if (page) page.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('home').classList.remove('hidden');
+    }
+  });
+
+  // ===== Модальное окно CIDR =====
+  function openCidrModal() {
+    const modal = document.getElementById('cidrModal');
+    modal.classList.add('open');
+    document.body.classList.add('modal-lock');
+    const body = modal.querySelector('.modal-body');
+    if (body) body.scrollTop = 0;
+  }
+
+  function closeCidrModal() {
+    const modal = document.getElementById('cidrModal');
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-lock');
+  }
+
+  function closeCidrModalOnBackdrop(event) {
+    if (event.target === event.currentTarget) {
+      closeCidrModal();
+    }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      closeCidrModal();
+    }
+  });
+
+  // Инициализация
+  handleInitialRoute();
 </script>
 
 </body>
