@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="Сетевая шпаргалка">
 <meta name="format-detection" content="telephone=no">
-<meta name="description" content="Сетевая шпаргалка: IP, маски, диагностика, HTTP/HTTPS, серверы, роутеры, VoIP, команды, генератор батников, модель OSI.">
+<meta name="description" content="Сетевая шпаргалка: IP, маски, диагностика, HTTP/HTTPS, серверы, роутеры, VoIP, команды, генератор батников, модель OSI, личные данные.">
 <title>Сетевая шпаргалка</title>
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -54,7 +54,6 @@
   .card-desc { font-size: 12.5px; color: #64748b; line-height: 1.4; }
   .card-arrow { flex-shrink: 0; color: #94a3b8; font-size: 22px; font-weight: 700; }
 
-  /* Спецкарточка установки */
   .card.install-card {
     background: linear-gradient(135deg, #ecfdf5, #d1fae5);
     border: 2px solid #a7f3d0;
@@ -63,6 +62,15 @@
   .card.install-card .card-icon { background: linear-gradient(135deg, #a7f3d0, #6ee7b7); }
   .card.install-card .card-title { color: #065f46; }
   .card.install-card .card-arrow { color: #059669; }
+
+  .card.profile-card {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 2px solid #fcd34d;
+  }
+  .card.profile-card:hover { border-color: #f59e0b; box-shadow: 0 6px 18px rgba(245,158,11,0.2); }
+  .card.profile-card .card-icon { background: linear-gradient(135deg, #fde68a, #fcd34d); }
+  .card.profile-card .card-title { color: #78350f; }
+  .card.profile-card .card-arrow { color: #b45309; }
 
   .page {
     display: none; background: #fff; border-radius: 12px; padding: 18px 16px;
@@ -190,15 +198,16 @@
   .cidr-table tr:nth-child(even) td:first-child { background: #dbeafe; }
   body.modal-lock { overflow: hidden; }
 
-  /* ===== ФОРМА БАТНИКА ===== */
+  /* ===== Формы ===== */
   .form-row { margin-bottom: 16px; }
   .form-row label { display: block; font-size: 14px; font-weight: 600; color: #1e3a8a; margin-bottom: 6px; }
-  .form-row input[type="text"], .form-row select, .form-row textarea {
+  .form-row input[type="text"], .form-row input[type="email"], .form-row input[type="tel"],
+  .form-row select, .form-row textarea {
     width: 100%; padding: 11px 12px; font-size: 14px; font-family: inherit;
     border: 2px solid #e2e8f0; border-radius: 8px; background: #fff;
     color: #1f2933; transition: border-color 0.15s ease;
   }
-  .form-row input[type="text"]:focus, .form-row select:focus, .form-row textarea:focus {
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
     outline: none; border-color: #2563eb;
   }
   .form-row textarea {
@@ -252,10 +261,7 @@
   /* ===== AI-генератор по описанию ===== */
   .ai-box {
     background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-    border: 2px solid #bae6fd;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 20px;
+    border: 2px solid #bae6fd; border-radius: 12px; padding: 16px; margin-bottom: 20px;
   }
   .ai-box h4 {
     margin: 0 0 8px; color: #075985; font-size: 15px;
@@ -307,23 +313,11 @@
 
   /* ===== Плавающая кнопка установки ===== */
   .fab-install {
-    position: fixed;
-    right: 16px;
-    bottom: calc(16px + env(safe-area-inset-bottom));
-    z-index: 50;
-    display: none;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 18px;
-    background: #10b981;
-    color: #fff;
-    border: none;
-    border-radius: 28px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(16,185,129,0.4);
-    touch-action: manipulation;
+    position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 50; display: none; align-items: center; gap: 8px;
+    padding: 12px 18px; background: #10b981; color: #fff; border: none;
+    border-radius: 28px; font-size: 14px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(16,185,129,0.4); touch-action: manipulation;
     transition: transform 0.12s ease, background 0.15s ease;
   }
   .fab-install.show { display: inline-flex; }
@@ -339,8 +333,7 @@
   }
   .install-step:last-child { border-bottom: none; }
   .install-step-num {
-    flex-shrink: 0;
-    width: 30px; height: 30px; border-radius: 50%;
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
     background: #2563eb; color: #fff; font-weight: 700; font-size: 14px;
     display: flex; align-items: center; justify-content: center;
   }
@@ -358,21 +351,12 @@
   }
   .btn-install-native:hover { background: #059669; }
   .btn-install-native:active { transform: scale(0.98); }
-  .install-platform-badge {
-    display: inline-block; background: #dbeafe; color: #1e40af;
-    font-size: 11px; font-weight: 700; padding: 2px 8px;
-    border-radius: 10px; margin-left: 6px; vertical-align: middle;
-  }
 
-  /* ===== Баннер установки (сверху) ===== */
+  /* ===== Баннер установки ===== */
   .install-banner {
-    display: none;
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border-bottom: 2px solid #a7f3d0;
-    padding: 12px 16px;
-    align-items: center;
-    gap: 12px;
-    animation: slideDown 0.3s ease;
+    display: none; background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-bottom: 2px solid #a7f3d0; padding: 12px 16px;
+    align-items: center; gap: 12px; animation: slideDown 0.3s ease;
   }
   .install-banner.show { display: flex; }
   @keyframes slideDown {
@@ -391,6 +375,129 @@
     padding: 6px 10px; background: transparent; border: none;
     color: #065f46; font-size: 18px; cursor: pointer; flex-shrink: 0;
     line-height: 1;
+  }
+
+  /* ===== ЛИЧНЫЕ ДАННЫЕ ===== */
+  .profile-info {
+    background: #fffbeb; border-left: 4px solid #f59e0b;
+    padding: 12px 14px; border-radius: 6px; margin-bottom: 18px;
+    font-size: 13px;
+  }
+  .profile-info strong { color: #78350f; }
+
+  .profile-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0 20px;
+  }
+  @media (min-width: 600px) {
+    .profile-links { grid-template-columns: 1fr 1fr; }
+  }
+  .profile-link {
+    display: flex; align-items: center; gap: 14px; padding: 18px 16px;
+    background: #fff; border: 2px solid #fcd34d; border-radius: 12px;
+    text-decoration: none; color: #1f2933;
+    transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
+    cursor: pointer; touch-action: manipulation; min-height: 80px;
+  }
+  .profile-link:hover { background: #fffbeb; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(245,158,11,0.18); }
+  .profile-link:active { transform: scale(0.98); }
+  .profile-link-icon {
+    flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .profile-link-body { flex: 1; min-width: 0; }
+  .profile-link-title { font-weight: 700; font-size: 16px; color: #78350f; margin-bottom: 2px; }
+  .profile-link-desc { font-size: 12.5px; color: #92400e; line-height: 1.4; }
+  .profile-link-arrow { color: #b45309; font-size: 22px; font-weight: 700; flex-shrink: 0; }
+
+  .profile-section {
+    background: #f8fafc; border-radius: 10px; padding: 16px;
+    margin-bottom: 16px; border: 1px solid #e2e8f0;
+  }
+  .profile-section h3 { margin-top: 0; color: #1e3a8a; font-size: 16px; }
+
+  .person-card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .person-card:last-child { margin-bottom: 0; }
+  .person-role {
+    display: inline-block; background: #dbeafe; color: #1e40af;
+    font-size: 11px; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .person-name { font-size: 16px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px; }
+  .person-dob { font-size: 13.5px; color: #475569; }
+  .person-dob strong { color: #1f2933; }
+
+  .edu-card {
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .edu-card:last-child { margin-bottom: 0; }
+  .edu-year {
+    display: inline-block; background: #d1fae5; color: #065f46;
+    font-size: 12px; font-weight: 700; padding: 2px 10px;
+    border-radius: 10px; margin-bottom: 8px;
+  }
+  .edu-institution { font-size: 15.5px; font-weight: 700; color: #1e3a8a; margin-bottom: 4px; }
+  .edu-details { font-size: 13.5px; color: #475569; line-height: 1.5; }
+
+  /* ===== РЕЗЮМЕ ===== */
+  .resume-toolbar {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 0 0 16px; padding: 12px;
+    background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 10px;
+  }
+  .resume-toolbar-label {
+    width: 100%; font-size: 12.5px; color: #075985;
+    font-weight: 700; margin-bottom: 4px;
+  }
+  .btn-export {
+    padding: 10px 16px; min-height: 42px;
+    background: #0284c7; color: #fff; border: none; border-radius: 8px;
+    font-size: 13.5px; font-weight: 600; cursor: pointer;
+    touch-action: manipulation; transition: background 0.15s ease, transform 0.1s ease;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-export:hover { background: #0369a1; }
+  .btn-export:active { transform: scale(0.97); }
+  .btn-export.secondary { background: #fff; color: #0284c7; border: 2px solid #bae6fd; }
+  .btn-export.secondary:hover { background: #e0f2fe; }
+
+  .resume-doc {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+    padding: 20px 22px; font-size: 14px; line-height: 1.6;
+  }
+  .resume-doc h1 {
+    font-size: 22px; color: #1e3a8a; margin: 0 0 8px;
+    border-bottom: 2px solid #e0ecff; padding-bottom: 8px;
+  }
+  .resume-doc .resume-contact { font-size: 13.5px; color: #475569; margin-bottom: 14px; }
+  .resume-doc .resume-contact div { margin-bottom: 2px; }
+  .resume-doc h2 {
+    font-size: 16px; color: #1e40af; margin: 20px 0 8px;
+    padding-bottom: 4px; border-bottom: 1px solid #e2e8f0;
+    border-top: none; display: block;
+  }
+  .resume-doc h2:first-of-type { margin-top: 0; }
+  .resume-doc h3 { font-size: 14.5px; color: #1f2933; margin: 14px 0 4px; font-weight: 700; }
+  .resume-doc .resume-meta { font-size: 12.5px; color: #64748b; margin-bottom: 6px; }
+  .resume-doc ul { padding-left: 20px; margin: 6px 0 10px; }
+  .resume-doc li { font-size: 13.5px; margin-bottom: 4px; }
+  .resume-doc .resume-job { padding: 12px 0; border-bottom: 1px solid #eef2f7; }
+  .resume-doc .resume-job:last-child { border-bottom: none; }
+  .resume-doc .resume-company { font-weight: 700; color: #1e3a8a; font-size: 14.5px; }
+  .resume-doc .resume-role { font-weight: 600; color: #1f2933; font-size: 13.5px; }
+  .resume-doc .resume-period { font-size: 12.5px; color: #64748b; font-style: italic; margin-bottom: 4px; }
+  .resume-doc .resume-about {
+    background: #f8fafc; border-left: 4px solid #2563eb;
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 13.5px; color: #334155;
   }
 
   @media (min-width: 600px) {
@@ -416,6 +523,8 @@
     .modal-content { max-height: calc(100vh - 64px); }
     .modal-header h3 { font-size: 19px; }
     .osi-layer p { font-size: 14.5px; }
+    .resume-doc { padding: 28px 32px; font-size: 14.5px; }
+    .profile-links { grid-template-columns: 1fr 1fr; }
   }
   @media (min-width: 1000px) {
     .cards-grid { grid-template-columns: 1fr 1fr 1fr; }
@@ -435,10 +544,23 @@
     .card-icon { width: 46px; height: 46px; font-size: 22px; }
     .card-title { font-size: 15px; }
     .fab-install { right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
+    .resume-doc { padding: 14px 16px; }
+    .resume-doc h1 { font-size: 19px; }
+  }
+
+  @media print {
+    body * { visibility: hidden; }
+    #resume, #resume * { visibility: visible; }
+    #resume {
+      position: absolute; left: 0; top: 0; width: 100%;
+      padding: 0; margin: 0; background: #fff; box-shadow: none;
+    }
+    .resume-doc { border: none; padding: 0; }
+    .resume-toolbar, .page-back { display: none !important; }
+    #resume h2 { border-bottom: 1px solid #ccc; }
   }
 </style>
 <script>
-  // Динамический manifest — создаётся из data URL, чтобы работало без отдельного файла
   (function() {
     try {
       const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs><rect width="192" height="192" rx="36" fill="url(#g)"/><text x="96" y="88" font-family="-apple-system,Arial,sans-serif" font-size="64" font-weight="800" fill="#fff" text-anchor="middle">🌐</text><text x="96" y="140" font-family="-apple-system,Arial,sans-serif" font-size="22" font-weight="700" fill="#bfdbfe" text-anchor="middle">СЕТЬ</text></svg>`;
@@ -446,7 +568,7 @@
       const manifest = {
         name: 'Сетевая шпаргалка',
         short_name: 'Сеть',
-        description: 'IP, маски, диагностика, HTTP/HTTPS, серверы, роутеры, VoIP, команды, генератор батников, модель OSI.',
+        description: 'Сетевая шпаргалка с личными данными',
         start_url: location.pathname + location.search,
         scope: location.pathname,
         display: 'standalone',
@@ -466,7 +588,6 @@
       link.rel = 'manifest';
       link.href = manifestUrl;
       document.head.appendChild(link);
-      // Apple touch icon — SVG работает с iOS 12+
       const appleLink = document.createElement('link');
       appleLink.rel = 'apple-touch-icon';
       appleLink.href = iconUrl;
@@ -476,7 +597,6 @@
       favicon.type = 'image/svg+xml';
       favicon.href = iconUrl;
       document.head.appendChild(favicon);
-      window.__appIconUrl = iconUrl;
     } catch (e) {
       console.warn('Не удалось создать manifest:', e);
     }
@@ -485,7 +605,6 @@
 </head>
 <body>
 
-<!-- ===== Баннер установки ===== -->
 <div class="install-banner" id="installBanner">
   <span class="install-banner-icon">📲</span>
   <div class="install-banner-text">
@@ -498,7 +617,7 @@
 
 <header>
   <h1>Сетевая шпаргалка</h1>
-  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды · Батник · OSI</p>
+  <p>IP · Маски · Диагностика · HTTP/HTTPS · Серверы · Маршрутизаторы · IP-телефония · Команды · Батник · OSI · Личные данные</p>
 </header>
 
 <main>
@@ -509,12 +628,20 @@
     <p class="home-subtitle">Нажмите на карточку, чтобы перейти</p>
 
     <div class="cards-grid">
-      <!-- Установка на телефон — первая карточка -->
       <a class="card install-card" href="#install" onclick="openInstallModal(); return false;">
         <div class="card-icon">📲</div>
         <div class="card-body">
           <div class="card-title">Установить на телефон</div>
           <div class="card-desc">Ярлык на главный экран — как приложение</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+
+      <a class="card profile-card" href="#profile" onclick="navigateTo('profile'); return false;">
+        <div class="card-icon">👤</div>
+        <div class="card-body">
+          <div class="card-title">Личные данные</div>
+          <div class="card-desc">Семья, образование, резюме</div>
         </div>
         <div class="card-arrow">›</div>
       </a>
@@ -602,11 +729,392 @@
     </div>
   </div>
 
+  <!-- ========== ЛИЧНЫЕ ДАННЫЕ ========== -->
+  <section id="profile" class="page">
+    <button class="page-back" onclick="navigateTo('home')">← На главную</button>
+    <h2>Личные данные</h2>
+
+    <div class="profile-info">
+      <strong>🔒 Данные встроены в страницу</strong> и не сохраняются в браузере. Ничего не отправляется на сервер — всё отображается локально.
+    </div>
+
+    <div class="profile-links">
+      <a class="profile-link" href="#family" onclick="navigateTo('family'); return false;">
+        <div class="profile-link-icon">👨‍👩‍👧</div>
+        <div class="profile-link-body">
+          <div class="profile-link-title">Семья</div>
+          <div class="profile-link-desc">Родители, сёстры и сын</div>
+        </div>
+        <div class="profile-link-arrow">›</div>
+      </a>
+
+      <a class="profile-link" href="#education" onclick="navigateTo('education'); return false;">
+        <div class="profile-link-icon">🎓</div>
+        <div class="profile-link-body">
+          <div class="profile-link-title">Образование</div>
+          <div class="profile-link-desc">Колледж и университет</div>
+        </div>
+        <div class="profile-link-arrow">›</div>
+      </a>
+
+      <a class="profile-link" href="#resume" onclick="navigateTo('resume'); return false;">
+        <div class="profile-link-icon">📄</div>
+        <div class="profile-link-body">
+          <div class="profile-link-title">Резюме</div>
+          <div class="profile-link-desc">Опыт, навыки, экспорт</div>
+        </div>
+        <div class="profile-link-arrow">›</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== СЕМЬЯ ========== -->
+  <section id="family" class="page">
+    <button class="page-back" onclick="navigateTo('profile')">← Назад к личным данным</button>
+    <h2>👨‍👩‍👧 Семья</h2>
+
+    <div class="person-card">
+      <div class="person-role">Отец</div>
+      <div class="person-name">Карашаев Вячеслав Макмулович</div>
+      <div class="person-dob"><strong>Дата рождения:</strong> 05.12.1955</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-role">Мать</div>
+      <div class="person-name">Карашаева Тамара Султановна</div>
+      <div class="person-dob"><strong>Дата рождения:</strong> 12.08.1961</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-role">Сестра 1</div>
+      <div class="person-name">Корикова Наталья Вячеславовна</div>
+      <div class="person-dob"><strong>Дата рождения:</strong> 20.09.1985</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-role">Сестра 2</div>
+      <div class="person-name">Карашаева Венера Вячеславовна</div>
+      <div class="person-dob"><strong>Дата рождения:</strong> 15.09.1986</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-role">Сын</div>
+      <div class="person-name">Карашаев Артур Темирканович</div>
+      <div class="person-dob"><strong>Дата рождения:</strong> 20.10.2015</div>
+    </div>
+  </section>
+
+  <!-- ========== ОБРАЗОВАНИЕ ========== -->
+  <section id="education" class="page">
+    <button class="page-back" onclick="navigateTo('profile')">← Назад к личным данным</button>
+    <h2>🎓 Образование</h2>
+
+    <div class="edu-card">
+      <div class="edu-year">Год окончания: 2008</div>
+      <div class="edu-institution">Колледж Малого Бизнеса 48</div>
+      <div class="edu-details">Специальность: <strong>налоги и налогообложение</strong></div>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-year">Год окончания: 2012</div>
+      <div class="edu-institution">Белгородский университет кооперации, экономики и права, Белгород</div>
+      <div class="edu-details">
+        <strong>Экономический факультет</strong><br>
+        Специальность: <strong>Финансы и кредит</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== РЕЗЮМЕ ========== -->
+  <section id="resume" class="page">
+    <button class="page-back" onclick="navigateTo('profile')">← Назад к личным данным</button>
+    <h2>📄 Резюме</h2>
+
+    <div class="resume-toolbar">
+      <div class="resume-toolbar-label">📥 Скачать файл:</div>
+      <button class="btn-export" onclick="downloadResume('html')" title="Скачать как HTML (открывается в Word)">🌐 HTML</button>
+      <button class="btn-export" onclick="downloadResume('txt')" title="Скачать как обычный текст">📝 TXT</button>
+      <button class="btn-export" onclick="downloadResume('json')" title="Скачать как JSON">🧾 JSON</button>
+      <button class="btn-export secondary" onclick="printResume()" title="Печать / Сохранить как PDF">🖨️ PDF</button>
+      <button class="btn-export secondary" onclick="copyResumeText()" title="Скопировать текст">📋 Копировать</button>
+    </div>
+
+    <div class="resume-doc" id="resumeDoc">
+      <h1>Карашаев Темиркан Вячеславович</h1>
+      <div class="resume-contact">
+        <div>Мужчина, 38 лет, родился 5 июля 1988</div>
+        <div>📞 +7 (916) 296-11-77</div>
+        <div>✉️ oboiadm@bk.ru — предпочитаемый способ связи</div>
+        <div>🔗 setka: https://set.kia/account/7Ya7KC7</div>
+        <div>📍 Проживает: Москва, м. Медведково</div>
+        <div>🌍 Гражданство: Россия · есть разрешение на работу: Россия</div>
+        <div>🚗 Не готов к переезду, готов к командировкам</div>
+      </div>
+
+      <h2>Желаемая должность и зарплата</h2>
+      <h3>Специалист технической поддержки</h3>
+      <div class="resume-meta">100 000 р на руки</div>
+      <ul>
+        <li><strong>Специализации:</strong> Специалист технической поддержки</li>
+        <li><strong>Тип занятости:</strong> полная занятость</li>
+        <li><strong>Формат работы:</strong> гибрид, удалённо, разъездная, на месте работодателя</li>
+        <li><strong>Желательное время в пути до работы:</strong> не имеет значения</li>
+        <li><strong>Самозанятость:</strong> Нет · <strong>Медкнижка:</strong> Нет</li>
+      </ul>
+
+      <h2>Опыт работы — 16 лет 2 месяца</h2>
+
+      <div class="resume-job">
+        <div class="resume-period">Январь 2025 — Август 2026 · 1 год 8 месяцев</div>
+        <div class="resume-company">ФИНАМ · www.finam.ru</div>
+        <div class="resume-meta">Финансовый сектор · Управляющая, инвестиционная компания</div>
+        <div class="resume-role">Инженер технической поддержки</div>
+        <ul>
+          <li>Сопровождение рабочих мест сотрудников компании.</li>
+          <li>Диагностика и устранение неисправностей компьютеров, ПО, печатной техники.</li>
+          <li>Настройка ПК и мобильных устройств.</li>
+          <li>Установка и настройка ОС Windows, Linux, Mac, ПО общего и специального назначения.</li>
+          <li>Профилактическое обслуживание техники и ПО.</li>
+          <li>Консультирование пользователей.</li>
+          <li>Сопровождение проекта Биометрии АИС ВЕБС (Сотрудник Банк Финам по всей России): подготовка ПК, настройка ПО и периферии (микрофон, камера, токены, аккорд, VipNet).</li>
+          <li>Участие в открытии дополнительных мест в офисах Москвы, сопровождение мероприятий компании.</li>
+          <li>Поиск оборудования для закупки.</li>
+          <li>Настройка и решение проблем с ЭЦП и сопутствующими программами (КриптоПро, КриптоАРМ и т.д.).</li>
+          <li>Комплексная подготовка ВКС-зон: установка, настройка, переустановка ОС, приведение переговорных к корпоративным стандартам.</li>
+          <li>Монтаж и интеграция мультимедийного оборудования в переговорных и конференц-залах.</li>
+          <li>Техническое сопровождение встреч и мероприятий.</li>
+          <li>Оперативная локализация и устранение инцидентов.</li>
+          <li>Регулярный мониторинг работоспособности мультимедиа- и ВКС-оборудования.</li>
+          <li>Плановое ТО: обновление и настройка ОС/ПО.</li>
+          <li>Оперативная замена, модернизация и демонтаж оборудования.</li>
+          <li>Кабель-менеджмент, коммутация и подключение мультимедийных устройств.</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Апрель 2024 — Январь 2025 · 10 месяцев</div>
+        <div class="resume-company">АО Россети Цифра</div>
+        <div class="resume-role">Инженер технической поддержки</div>
+        <ul>
+          <li>Диагностика и устранение неисправностей компьютеров, ПО, печатной техники.</li>
+          <li>Настройка ПК и мобильных устройств.</li>
+          <li>Установка и настройка ОС Windows, Linux, ПО общего и специального назначения.</li>
+          <li>Профилактическое обслуживание техники и ПО.</li>
+          <li>Консультирование пользователей.</li>
+          <li>Подготовка и сопровождение ВКС (TrueConf, Яндекс Телемост, Cisco).</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Октябрь 2022 — Февраль 2024 · 1 год 5 месяцев</div>
+        <div class="resume-company">Департамент IT</div>
+        <div class="resume-meta">Работа в госучреждении Росавтодор</div>
+        <div class="resume-role">Системный администратор</div>
+        <ul>
+          <li>Регистрация и отслеживание запросов пользователей в системе управления запросами.</li>
+          <li>Техническая поддержка пользователей.</li>
+          <li>Сопровождение видеоконференций (5–10 в день).</li>
+          <li>Сборка, ремонт и диагностика компьютерного оборудования и оргтехники.</li>
+          <li>Подготовка, установка и настройка рабочих мест, мобильных устройств, ПО.</li>
+          <li>Контроль наличия и замена расходных материалов.</li>
+          <li>Взаимодействие с сотрудниками ИТ-управления, эскалация запросов.</li>
+          <li>Помощь системному администратору.</li>
+          <li>Создание учётных записей в AD, Exchange, справочнике. Администрирование Windows.</li>
+          <li>Техническое сопровождение мобильных устройств сотрудников и руководителей Росавтодор.</li>
+          <li>Техническое сопровождение руководителей организации.</li>
+          <li>Техническое сопровождение СКУД (формирование отчётов, выдача карт пропусков).</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Апрель 2020 — Август 2022 · 2 года 5 месяцев</div>
+        <div class="resume-company">Люксофт · www.luxoft.com</div>
+        <div class="resume-meta">Информационные технологии, системная интеграция, интернет</div>
+        <div class="resume-role">Senior specialist</div>
+        <ul>
+          <li>Установка и администрирование ОС Windows, Linux, Mac OS.</li>
+          <li>Настройка мобильных устройств на iOS и Android.</li>
+          <li>Работа в Active Directory.</li>
+          <li>Удалённая поддержка пользователей средствами SCCM, psexec, Team Viewer, AnyDesk или screen sharing в Zoom.</li>
+          <li>Настройка софтфона Zoiper.</li>
+          <li>Смена номеров на IP-телефонов Avaya.</li>
+          <li>Добавление баз в 1С.</li>
+          <li>Настройка Zoiper, Zoom, MS Teams, Skype for Business.</li>
+          <li>Настройка ЭЦП и доступов в банк-клиенты.</li>
+          <li>Опыт работы с клиентом Cisco AnyConnect.</li>
+          <li>Поиск источника блокировок учётных записей пользователей на контроллерах домена.</li>
+          <li>Администрирование MS Office.</li>
+          <li>Работа с заявками в Jira.</li>
+          <li>Модульный ремонт ПК и ноутбуков.</li>
+          <li>Конфигурирование VLAN на коммутаторах Cisco.</li>
+          <li>Использование средств сетевой диагностики (telnet, ping, nslookup, tracert, wireshark).</li>
+          <li>Чтение логов и постоянный поиск способов решения нестандартных ошибок.</li>
+          <li>Добавление VDI в приложение Citrix и первичная диагностика проблем с виртуальными машинами на портале Citrix Direct.</li>
+          <li>Выдача прав и настройка доступов к папкам пользователей.</li>
+          <li>Подключение и настройка сетевых МФУ.</li>
+          <li>Диагностика локальной сети с помощью Fluke.</li>
+          <li>Помощь в монтаже сетевого оборудования.</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Октябрь 2018 — Март 2020 · 1 год 6 месяцев</div>
+        <div class="resume-company">36.6 · Москва</div>
+        <div class="resume-meta">Медицина, фармацевтика, аптеки · Аптека, оптика</div>
+        <div class="resume-role">Выездной инженер технической поддержки</div>
+        <ul>
+          <li>Установка ОС Windows, настройка ПК, сборка ПК.</li>
+          <li>Установка ККМ, сканеров ШК, дисплеев покупателей.</li>
+          <li>Замена комплектующих ПК.</li>
+          <li>Настройка базы данных, перенос и восстановление базы данных.</li>
+          <li>Настройка сети.</li>
+          <li>Открытие и закрытие аптек, поиск помещений.</li>
+          <li>Полное сопровождение.</li>
+          <li>Управление штатом от 5 до 10 человек.</li>
+          <li>Работы проводятся в Москве и Московской области.</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Январь 2015 — [окончание не указано]</div>
+        <div class="resume-company">Сбербанк-сервис · Москва</div>
+        <div class="resume-meta">Информационные технологии, системная интеграция, интернет · Разработка программного обеспечения</div>
+        <div class="resume-role">Инженер</div>
+        <ul>
+          <li>Установка, настройка и администрирование клиентских рабочих станций Windows 7, Ubuntu (infokiosk).</li>
+          <li>Office 2013.</li>
+          <li>Администрирование и техническое сопровождение доп. офисов свыше 500 рабочих станций.</li>
+          <li>Приём и решение по ИТ-обращениям сотрудников.</li>
+          <li>Взаимодействие с внешними компаниями, интернет-провайдерами и другими поставщиками телекоммуникационных услуг.</li>
+          <li>Техническая поддержка, обслуживание и ремонт компьютерной и оргтехники.</li>
+          <li>Поддержка пользователей.</li>
+          <li>Материально-техническое обеспечение компьютерной оргтехникой, ПО, сетевым оборудованием.</li>
+          <li>Сопровождение и обслуживание ВКС и ТКС, презентаций, учебных процессов.</li>
+          <li>Обслуживание учебного центра свыше 300 рабочих станций.</li>
+          <li>Установка, настройка и сопровождение ПК.</li>
+          <li>Обслуживание и сопровождение серверной комнаты, кроссировка, перекроссировка, разбор проводов в серверном шкафу.</li>
+          <li>Подготовка к мероприятиям конференц-залов.</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Октябрь 2013 — Январь 2015 · 1 год 4 месяца</div>
+        <div class="resume-company">Ventra Employment · Москва · www.ventra.ru</div>
+        <div class="resume-meta">Услуги для бизнеса · Кадровые агентства</div>
+        <div class="resume-role">Инженер СУО и технической поддержки</div>
+        <ul>
+          <li>Установка, настройка и администрирование клиентских рабочих станций Windows 7, Ubuntu (infokiosk).</li>
+          <li>Office 2013.</li>
+          <li>Администрирование и техническое сопровождение доп. офисов свыше 500 рабочих станций.</li>
+          <li>Приём и решение по ИТ-обращениям сотрудников.</li>
+          <li>Взаимодействие с внешними компаниями, интернет-провайдерами и поставщиками телекоммуникационных услуг.</li>
+          <li>Техническая поддержка, обслуживание и ремонт компьютерной и оргтехники.</li>
+          <li>Поддержка пользователей.</li>
+          <li>Материально-техническое обеспечение компьютерной оргтехникой, ПО, сетевым оборудованием.</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Март 2013 — Июнь 2013 · 4 месяца</div>
+        <div class="resume-company">ЗАО Сигма Технотрон</div>
+        <div class="resume-meta">Информационные технологии, системная интеграция, интернет · Интернет-провайдер</div>
+        <div class="resume-role">Инженер</div>
+        <ul>
+          <li>Установка, настройка и администрирование клиентских рабочих станций Windows 7, Ubuntu (infokiosk).</li>
+          <li>Office 2013.</li>
+          <li>Администрирование и техническое сопровождение доп. офисов свыше 500 рабочих станций.</li>
+          <li>Приём и решение по ИТ-обращениям сотрудников.</li>
+          <li>Взаимодействие с внешними компаниями, интернет-провайдерами и поставщиками телекоммуникационных услуг.</li>
+          <li>Техническая поддержка, обслуживание и ремонт компьютерной и оргтехники.</li>
+          <li>Поддержка пользователей.</li>
+          <li>Материально-техническое обеспечение компьютерной оргтехникой, ПО, сетевым оборудованием.</li>
+          <li>Работа с печатной техникой (МФУ, принтеры, сканеры, ксероксы).</li>
+          <li>Сертификация на обслуживание принтеров (разбор, ремонт, сборка).</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Июнь 2009 — Июнь 2012 · 3 года 1 месяц</div>
+        <div class="resume-company">Инспекция ФНС России №27 по Москве · r77.nalog.ru</div>
+        <div class="resume-role">Специалист 1 разряда, отдел работы с налогоплательщиками 1</div>
+        <ul>
+          <li>Сверка по налогам и сборам с юридическими лицами, ИП и физлицами.</li>
+          <li>Информирование налогоплательщиков.</li>
+          <li>ТКС и подключение к ТКС.</li>
+          <li>Информирование клиентов.</li>
+          <li>Обслуживание информационного зала.</li>
+          <li>Работа с письмами от госорганов (запросов).</li>
+          <li>Проведение комиссий по убыткам.</li>
+        </ul>
+      </div>
+
+      <div class="resume-job">
+        <div class="resume-period">Май 2010 — Май 2011 · 1 год 1 месяц</div>
+        <div class="resume-company">ВС РФ в в/ч 33149 · Брянск</div>
+        <div class="resume-role">Помощник начальника отдела делопроизводства</div>
+        <ul>
+          <li>Оформление документации 3-х взводов и части.</li>
+          <li>Секретная документация: карты, журналы, тетради командира части и батальона.</li>
+          <li>Введение отчётности части взводов и рот.</li>
+          <li>Категория годности Б.</li>
+          <li>Инспектор по ТБ и ПБ.</li>
+          <li>Стропольщик.</li>
+          <li>Приём материальных ценностей во время тревоги, учёт и выдача.</li>
+          <li>Учёт военнослужащих (увольнение, больничные, штат).</li>
+        </ul>
+      </div>
+
+      <h2>Образование</h2>
+      <div class="resume-job">
+        <div class="resume-period">2012 · Высшее</div>
+        <div class="resume-company">Белгородский университет кооперации, экономики и права, Белгород</div>
+        <div class="resume-meta">Экономический факультет, финансы и кредит</div>
+      </div>
+      <div class="resume-job">
+        <div class="resume-period">2008 · Среднее специальное</div>
+        <div class="resume-company">Колледж Малого Бизнеса 48</div>
+        <div class="resume-meta">налоги и налогообложение</div>
+      </div>
+
+      <h2>Повышение квалификации, курсы</h2>
+      <div class="resume-job">
+        <div class="resume-period">2011</div>
+        <div class="resume-company">Центр подготовки персонала ФНС России г. С.-Петербург</div>
+        <div class="resume-meta">ФНС России</div>
+      </div>
+      <div class="resume-job">
+        <div class="resume-period">2010</div>
+        <div class="resume-company">Центр подготовки специалистов налоговых органов</div>
+        <div class="resume-meta">по программе «Система ЭОД. Работа с налогоплательщиками». ФНС России</div>
+      </div>
+
+      <h2>Навыки</h2>
+      <ul>
+        <li><strong>Знание языков:</strong> Русский — родной; Английский — A1 (начальный).</li>
+        <li><strong>Навыки:</strong> Работоспособность.</li>
+      </ul>
+
+      <h2>Опыт вождения</h2>
+      <p>Права категории B.</p>
+
+      <h2>Дополнительная информация</h2>
+      <div class="resume-about">
+        Целеустремлён, коммуникабелен, вежлив, стойко переношу тяготы и лишения, связанные с работой, интеллект в наличии, легко уживаюсь в любом коллективе. Люблю трудиться. Быстро обучаюсь новому. Сопровождал проект Кубка конфедераций на арене Спартак и ЧМ мира 2018 на арене Лужники, техническое сопровождение концессий в области POS-терминалов от компании VISA.
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:16px;">
+      <strong>Совет по форматам:</strong> HTML — открывается в Word и браузере. TXT — простой текст. JSON — структурированные данные. PDF — через «Печать → Сохранить как PDF».
+    </div>
+
+    <div class="status" id="resumeStatus"></div>
+  </section>
+
   <!-- ========== МОДЕЛЬ OSI ========== -->
   <section id="osi" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Модель OSI</h2>
-    <p><strong>OSI</strong> (Open Systems Interconnection) — эталонная сетевая модель, описывающая, как данные передаются от приложения одного устройства к приложению другого. Модель разбивает процесс на 7 уровней, каждый из которых отвечает за свою часть работы.</p>
+    <p><strong>OSI</strong> (Open Systems Interconnection) — эталонная сетевая модель, описывающая, как данные передаются от приложения одного устройства к приложению другого. Модель разбивает процесс на 7 уровней.</p>
 
     <div class="osi-highlight">
       <h4>Зачем нужна модель OSI</h4>
@@ -622,7 +1130,7 @@
     <div class="osi-layer">
       <div><span class="layer-num">7</span><span class="layer-name">Прикладной (Application)</span></div>
       <p>Обеспечивает взаимодействие сети и пользователя. Интерфейс для браузера, почтового клиента, мессенджера.</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>HTTP</code>, <code>HTTPS</code>, <code>FTP</code>, <code>DNS</code>, <code>SMTP</code>, <code>DHCP</code>, <code>SSH</code><br><strong>Устройства:</strong> Gateway, Proxy</div>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>HTTP</code>, <code>HTTPS</code>, <code>FTP</code>, <code>DNS</code>, <code>SMTP</code>, <code>DHCP</code>, <code>SSH</code></div>
     </div>
 
     <div class="osi-layer">
@@ -640,25 +1148,25 @@
     <div class="osi-layer">
       <div><span class="layer-num">4</span><span class="layer-name">Транспортный (Transport)</span></div>
       <p>Обеспечивает надёжную (или быструю) доставку данных. Разбивает на сегменты, управляет потоком, использует порты.</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>TCP</code>, <code>UDP</code>, <code>SCTP</code><br><strong>PDU:</strong> сегменты / датаграммы</div>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>TCP</code>, <code>UDP</code>, <code>SCTP</code></div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">3</span><span class="layer-name">Сетевой (Network)</span></div>
       <p>Определяет путь передачи данных между разными сетями. Логическая адресация (IP) и маршрутизация.</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>IP</code>, <code>ICMP</code>, <code>IPsec</code>, <code>OSPF</code>, <code>BGP</code><br><strong>PDU:</strong> пакет<br><strong>Устройства:</strong> маршрутизатор, L3-switch</div>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>IP</code>, <code>ICMP</code>, <code>IPsec</code>, <code>OSPF</code>, <code>BGP</code><br><strong>Устройства:</strong> маршрутизатор, L3-switch</div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">2</span><span class="layer-name">Канальный (Data Link)</span></div>
       <p>Передаёт данные между соседними устройствами в одной сети. MAC-адреса, контроль ошибок.</p>
-      <div class="layer-meta"><strong>Протоколы:</strong> <code>Ethernet</code>, <code>Wi-Fi</code>, <code>PPP</code>, <code>VLAN</code><br><strong>PDU:</strong> кадр<br><strong>Устройства:</strong> коммутатор, мост, точка доступа</div>
+      <div class="layer-meta"><strong>Протоколы:</strong> <code>Ethernet</code>, <code>Wi-Fi</code>, <code>PPP</code>, <code>VLAN</code><br><strong>Устройства:</strong> коммутатор, мост, точка доступа</div>
     </div>
 
     <div class="osi-layer">
       <div><span class="layer-num">1</span><span class="layer-name">Физический (Physical)</span></div>
       <p>Передаёт биты (0 и 1) по физической среде: кабелю, оптоволокну, радиоволнам.</p>
-      <div class="layer-meta"><strong>Среда:</strong> витая пара, оптоволокно, радиоволны<br><strong>PDU:</strong> биты<br><strong>Устройства:</strong> концентратор, репитер, кабель</div>
+      <div class="layer-meta"><strong>Устройства:</strong> концентратор, репитер, кабель</div>
     </div>
 
     <h3>Соответствие OSI и TCP/IP</h3>
@@ -681,14 +1189,8 @@
 Канальный (2)       [Ethernet][Пакет][FCS]          → Кадр
 Физический (1)      101101001011010010110100...     → Биты</code></pre>
 
-    <h3>Как запомнить порядок уровней</h3>
-    <div class="os-block">
-      <strong>Сверху вниз (7→1):</strong> «<strong>П</strong>рикладной, <strong>П</strong>редставления, <strong>С</strong>еансовый, <strong>Т</strong>ранспортный, <strong>С</strong>етевой, <strong>К</strong>анальный, <strong>Ф</strong>изический»<br>
-      <strong>Мнемоника:</strong> «<em>П</em>рилежный <em>П</em>рограммист <em>С</em>делал <em>Т</em>естовую <em>С</em>еть <em>К</em>рутой <em>Ф</em>ишкой»
-    </div>
-
     <div class="note">
-      <strong>Практическая польза:</strong> если у вас «не открывается сайт», начните с <strong>физического</strong> уровня, затем <strong>канального</strong> (MAC, коммутатор), <strong>сетевого</strong> (ping, IP), <strong>транспортного</strong> (порт) и только потом <strong>прикладного</strong> (DNS, HTTP).
+      <strong>Практическая польза:</strong> если у вас «не открывается сайт», начните с физического уровня, затем канального, сетевого (ping, IP), транспортного (порт) и только потом прикладного (DNS, HTTP).
     </div>
   </section>
 
@@ -733,7 +1235,6 @@ Broadcast:              192.168.1.255
       <li>Количество адресов = <strong>2<sup>(32 − префикс)</sup></strong></li>
       <li>Используемых хостов = <strong>2<sup>(32 − префикс)</sup> − 2</strong></li>
       <li><code>/24</code> → 256 адресов → 254 хоста</li>
-      <li><code>/30</code> → 4 адреса → 2 хоста</li>
     </ul>
 
     <h4>Маска с подстановочным знаком (Wildcard)</h4>
@@ -1049,7 +1550,6 @@ dial-peer voice 10 voip
         <tr><td>Список служб</td><td><code>Get-Service</code></td><td><code>sc query</code></td></tr>
         <tr><td>Запустить службу</td><td><code>Start-Service -Name &lt;имя&gt;</code></td><td><code>net start &lt;имя&gt;</code></td></tr>
         <tr><td>Остановить службу</td><td><code>Stop-Service -Name &lt;имя&gt;</code></td><td><code>net stop &lt;имя&gt;</code></td></tr>
-        <tr><td>Перезапустить службу</td><td><code>Restart-Service -Name &lt;имя&gt;</code></td><td><code>net stop &lt;имя&gt; &amp;&amp; net start &lt;имя&gt;</code></td></tr>
       </table>
     </div>
 
@@ -1167,7 +1667,6 @@ pause</textarea>
 
 </main>
 
-<!-- ===== Плавающая кнопка «Установить» ===== -->
 <button class="fab-install" id="fabInstall" onclick="openInstallModal()">Установить</button>
 
 <!-- ===== Модалка: полная таблица CIDR ===== -->
@@ -1243,9 +1742,7 @@ pause</textarea>
       <button class="modal-close" onclick="closeInstallModal()" aria-label="Закрыть">×</button>
     </div>
     <div class="modal-body">
-      <div class="install-steps" id="installSteps">
-        <!-- содержимое заполняется JS -->
-      </div>
+      <div class="install-steps" id="installSteps"></div>
     </div>
     <div class="install-actions" id="installActions">
       <button class="btn-install-native" id="btnInstallNative" onclick="triggerNativeInstall()" style="display:none;">Установить</button>
@@ -1298,160 +1795,74 @@ pause</textarea>
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // ===== Модалка CIDR =====
   function openCidrModal() {
-    const modal = document.getElementById('cidrModal');
-    modal.classList.add('open');
+    document.getElementById('cidrModal').classList.add('open');
     document.body.classList.add('modal-lock');
   }
   function closeCidrModal() {
-    const modal = document.getElementById('cidrModal');
-    modal.classList.remove('open');
+    document.getElementById('cidrModal').classList.remove('open');
     document.body.classList.remove('modal-lock');
   }
-  function closeCidrModalOnBackdrop(event) {
-    if (event.target === event.currentTarget) closeCidrModal();
+  function closeCidrModalOnBackdrop(e) {
+    if (e.target === e.currentTarget) closeCidrModal();
   }
 
-  // ===== Модалка установки =====
   let deferredPrompt = null;
-
   function detectPlatform() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     if (/android/i.test(ua)) return 'android';
     if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
     return 'desktop';
   }
-
   function isStandalone() {
-    return window.matchMedia('(display-mode: standalone)').matches ||
-           window.navigator.standalone === true;
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   }
-
   function renderInstallSteps() {
     const platform = detectPlatform();
     const stepsEl = document.getElementById('installSteps');
-    const actionsEl = document.getElementById('installActions');
     const nativeBtn = document.getElementById('btnInstallNative');
-
-    let html = '';
-    let showNative = false;
+    let html = '', showNative = false;
 
     if (isStandalone()) {
-      html = `
-        <div class="install-step">
-          <div class="install-step-num">✓</div>
-          <div class="install-step-text">
-            <strong>Сайт уже установлен!</strong><br>
-            Вы открыли его как приложение. Ярлык «Сетевая шпаргалка» уже на главном экране.
-          </div>
-        </div>`;
+      html = `<div class="install-step"><div class="install-step-num">✓</div><div class="install-step-text"><strong>Сайт уже установлен!</strong><br>Вы открыли его как приложение.</div></div>`;
     } else if (platform === 'android') {
       if (deferredPrompt) {
-        html = `
-          <div class="install-step">
-            <div class="install-step-num">1</div>
-            <div class="install-step-text">
-              Нажмите кнопку <strong>«Установить»</strong> ниже — браузер откроет системный диалог установки.
-            </div>
-          </div>
-          <div class="install-step">
-            <div class="install-step-num">2</div>
-            <div class="install-step-text">
-              Подтвердите установку — иконка появится на главном экране.
-            </div>
-          </div>`;
+        html = `<div class="install-step"><div class="install-step-num">1</div><div class="install-step-text">Нажмите кнопку <strong>«Установить»</strong> ниже — браузер откроет системный диалог.</div></div>
+                <div class="install-step"><div class="install-step-num">2</div><div class="install-step-text">Подтвердите установку — иконка появится на главном экране.</div></div>`;
         showNative = true;
       } else {
-        html = `
-          <div class="install-step">
-            <div class="install-step-num">1</div>
-            <div class="install-step-text">
-              Откройте меню браузера <strong>⋮</strong> (три точки в правом верхнем углу).
-            </div>
-          </div>
-          <div class="install-step">
-            <div class="install-step-num">2</div>
-            <div class="install-step-text">
-              Выберите <strong>«Установить приложение»</strong> или <strong>«Добавить на главный экран»</strong>.
-            </div>
-          </div>
-          <div class="install-step">
-            <div class="install-step-num">3</div>
-            <div class="install-step-text">
-              Подтвердите — иконка «Сетевая шпаргалка» появится на главном экране.
-            </div>
-          </div>`;
+        html = `<div class="install-step"><div class="install-step-num">1</div><div class="install-step-text">Откройте меню браузера <strong>⋮</strong>.</div></div>
+                <div class="install-step"><div class="install-step-num">2</div><div class="install-step-text">Выберите <strong>«Установить приложение»</strong> или <strong>«Добавить на главный экран»</strong>.</div></div>
+                <div class="install-step"><div class="install-step-num">3</div><div class="install-step-text">Подтвердите — иконка появится на главном экране.</div></div>`;
       }
     } else if (platform === 'ios') {
-      html = `
-        <div class="install-step">
-          <div class="install-step-num">1</div>
-          <div class="install-step-text">
-            Откройте этот сайт в <strong>Safari</strong> (не в Chrome или другом браузере).
-          </div>
-        </div>
-        <div class="install-step">
-          <div class="install-step-num">2</div>
-          <div class="install-step-text">
-            Нажмите кнопку <strong>«Поделиться»</strong> внизу экрана (квадрат со стрелкой ↑).
-          </div>
-        </div>
-        <div class="install-step">
-          <div class="install-step-num">3</div>
-          <div class="install-step-text">
-            Прокрутите вниз и выберите <strong>«На экран «Домой»»</strong>.
-          </div>
-        </div>
-        <div class="install-step">
-          <div class="install-step-num">4</div>
-          <div class="install-step-text">
-            Нажмите <strong>«Добавить»</strong> в правом верхнем углу. Готово!
-          </div>
-        </div>`;
+      html = `<div class="install-step"><div class="install-step-num">1</div><div class="install-step-text">Откройте сайт в <strong>Safari</strong>.</div></div>
+              <div class="install-step"><div class="install-step-num">2</div><div class="install-step-text">Нажмите <strong>«Поделиться»</strong> (квадрат со стрелкой ↑).</div></div>
+              <div class="install-step"><div class="install-step-num">3</div><div class="install-step-text">Выберите <strong>«На экран «Домой»»</strong>.</div></div>
+              <div class="install-step"><div class="install-step-num">4</div><div class="install-step-text">Нажмите <strong>«Добавить»</strong>. Готово!</div></div>`;
     } else {
-      html = `
-        <div class="install-step">
-          <div class="install-step-num">💻</div>
-          <div class="install-step-text">
-            Вы на компьютере. Установка на главный экран доступна <strong>на смартфонах</strong>.
-          </div>
-        </div>
-        <div class="install-step">
-          <div class="install-step-num">i</div>
-          <div class="install-step-text">
-            В Chrome или Edge найдите в адресной строке иконку <strong>установки</strong> (монитор со стрелкой) и нажмите её, чтобы создать ярлык на рабочем столе.
-          </div>
-        </div>`;
+      html = `<div class="install-step"><div class="install-step-num">💻</div><div class="install-step-text">Вы на компьютере. Установка на главный экран доступна на смартфонах.</div></div>
+              <div class="install-step"><div class="install-step-num">i</div><div class="install-step-text">В Chrome/Edge найдите в адресной строке иконку установки и нажмите её.</div></div>`;
     }
-
     stepsEl.innerHTML = html;
     nativeBtn.style.display = showNative ? 'inline-block' : 'none';
   }
-
   function openInstallModal() {
     renderInstallSteps();
-    const modal = document.getElementById('installModal');
-    modal.classList.add('open');
+    document.getElementById('installModal').classList.add('open');
     document.body.classList.add('modal-lock');
-    // Убираем баннер, раз пользователь сам открыл установку
     dismissInstallBanner();
   }
-
   function closeInstallModal() {
-    const modal = document.getElementById('installModal');
-    modal.classList.remove('open');
+    document.getElementById('installModal').classList.remove('open');
     document.body.classList.remove('modal-lock');
   }
-
-  function closeInstallModalOnBackdrop(event) {
-    if (event.target === event.currentTarget) closeInstallModal();
+  function closeInstallModalOnBackdrop(e) {
+    if (e.target === e.currentTarget) closeInstallModal();
   }
-
   async function triggerNativeInstall() {
     if (!deferredPrompt) {
-      // fallback
-      alert('Системный диалог недоступен. Откройте меню браузера ⋮ → «Установить приложение» или «Добавить на главный экран».');
+      alert('Системный диалог недоступен. Откройте меню браузера ⋮ → «Установить приложение».');
       return;
     }
     deferredPrompt.prompt();
@@ -1462,48 +1873,37 @@ pause</textarea>
     }
     deferredPrompt = null;
   }
-
-  // Перехват beforeinstallprompt — Android / Chrome
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    // Показать плавающую кнопку и баннер, если ещё не установлено
     if (!isStandalone()) {
       document.getElementById('fabInstall').classList.add('show');
       maybeShowBanner();
     }
   });
-
   window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     document.getElementById('fabInstall').classList.remove('show');
     dismissInstallBanner();
   });
 
-  // Баннер с задержкой и запоминанием отказа
   const BANNER_KEY = 'installBannerDismissedAt';
-  const BANNER_TTL = 7 * 24 * 60 * 60 * 1000; // 7 дней
-
+  const BANNER_TTL = 7 * 24 * 60 * 60 * 1000;
   function maybeShowBanner() {
     if (isStandalone()) return;
     const last = parseInt(localStorage.getItem(BANNER_KEY) || '0', 10);
     if (last && Date.now() - last < BANNER_TTL) return;
-    // Показываем только на мобильных
     const platform = detectPlatform();
     if (platform === 'android' || platform === 'ios') {
-      setTimeout(() => {
-        document.getElementById('installBanner').classList.add('show');
-      }, 1500);
+      setTimeout(() => document.getElementById('installBanner').classList.add('show'), 1500);
     }
   }
-
   function dismissInstallBanner() {
     document.getElementById('installBanner').classList.remove('show');
     localStorage.setItem(BANNER_KEY, String(Date.now()));
   }
 
-  // Esc закрывает обе модалки
-  document.addEventListener('keydown', function (e) {
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeCidrModal();
       closeInstallModal();
@@ -1512,9 +1912,7 @@ pause</textarea>
 
   // ===== Шаблоны батника =====
   const templates = {
-    hello: {
-      name: 'hello',
-      body: `@echo off
+    hello: { name: 'hello', body: `@echo off
 chcp 65001 >nul
 title Приветствие
 echo ================================
@@ -1526,11 +1924,8 @@ echo Текущее время: %time%
 echo Пользователь: %username%
 echo Компьютер: %computername%
 echo.
-pause`
-    },
-    ping: {
-      name: 'ping_check',
-      body: `@echo off
+pause` },
+    ping: { name: 'ping_check', body: `@echo off
 chcp 65001 >nul
 title Проверка доступности
 echo Проверяем 8.8.8.8...
@@ -1540,11 +1935,8 @@ echo Проверяем google.com...
 ping -n 4 google.com
 echo.
 echo Готово.
-pause`
-    },
-    flushdns: {
-      name: 'flush_dns',
-      body: `@echo off
+pause` },
+    flushdns: { name: 'flush_dns', body: `@echo off
 chcp 65001 >nul
 title Очистка DNS-кэша
 echo Очищаем кэш DNS...
@@ -1555,11 +1947,8 @@ ipconfig /release
 ipconfig /renew
 echo.
 echo Готово!
-pause`
-    },
-    winget: {
-      name: 'install_apps',
-      body: `@echo off
+pause` },
+    winget: { name: 'install_apps', body: `@echo off
 chcp 65001 >nul
 title Установка программ через winget
 echo Устанавливаем базовый набор программ...
@@ -1570,11 +1959,8 @@ winget install --id VideoLAN.VLC -e --silent --accept-package-agreements --accep
 winget install --id Notepad++.Notepad++ -e --silent --accept-package-agreements --accept-source-agreements
 echo.
 echo Установка завершена!
-pause`
-    },
-    netoff: {
-      name: 'net_off',
-      body: `@echo off
+pause` },
+    netoff: { name: 'net_off', body: `@echo off
 chcp 65001 >nul
 title Отключение / включение сети
 echo Отключаем сетевой адаптер...
@@ -1585,11 +1971,8 @@ echo Включаем обратно...
 netsh interface set interface "Ethernet" admin=enable
 echo.
 echo Готово. Проверьте имя адаптера командой: ipconfig
-pause`
-    },
-    backup: {
-      name: 'backup_folder',
-      body: `@echo off
+pause` },
+    backup: { name: 'backup_folder', body: `@echo off
 chcp 65001 >nul
 title Резервное копирование
 set SOURCE=C:\\Users\\%username%\\Documents
@@ -1599,17 +1982,13 @@ if not exist "%DEST%" mkdir "%DEST%"
 xcopy "%SOURCE%" "%DEST%" /E /I /H /Y
 echo.
 echo Бэкап завершён!
-pause`
-    },
-    clear: {
-      name: 'clear_screen',
-      body: `@echo off
+pause` },
+    clear: { name: 'clear_screen', body: `@echo off
 chcp 65001 >nul
 title Новый батник
 echo.
 echo Введите свои команды здесь.
-pause`
-    }
+pause` }
   };
 
   function loadTemplate(key) {
@@ -1717,40 +2096,34 @@ pause`
       lines.push(`ping -n 4 ${host}`);
       matched.push('ping');
     }
-
     if (/\b(tracert|tracet?route|трасер|маршрут)\b/.test(text)) {
       const host = extractHost() || 'google.com';
       lines.push(`echo Трассировка до ${host}...`);
       lines.push(`tracert ${host}`);
       matched.push('tracert');
     }
-
     if (/\b(nslookup|dns.*запрос|разреши.*имя)\b/.test(text)) {
       const host = extractHost() || 'google.com';
       lines.push(`echo Проверяем DNS для ${host}...`);
       lines.push(`nslookup ${host}`);
       matched.push('nslookup');
     }
-
     if (/(очист|сброс|flush).*(dns|днс)|dns.*(очист|сброс|flush)|почисти.*dns|сбрось.*dns|flushdns/.test(text)) {
       lines.push('echo Очищаем DNS-кэш...');
       lines.push('ipconfig /flushdns');
       matched.push('flushdns');
     }
-
     if (/(обнови|обновить|renew|release).*(ip|айпи)|ipconfig\s*\/\s*renew|смени.*ip|получи.*ip/.test(text)) {
       lines.push('echo Обновляем IP-адрес...');
       lines.push('ipconfig /release');
       lines.push('ipconfig /renew');
       matched.push('ipconfig renew');
     }
-
     if (/(покажи|показать|выведи|посмотри|show).*(ip|айпи|конфиг|сетев)|ipconfig\s*\/\s*all|мой ip/.test(text)) {
       lines.push('echo Информация о сети:');
       lines.push('ipconfig /all');
       matched.push('ipconfig /all');
     }
-
     if (appsToInstall.length > 0 || /\b(установи|поставь|install|winget)\b/.test(text)) {
       if (appsToInstall.length > 0) {
         lines.push('echo Устанавливаем программы через winget...');
@@ -1764,7 +2137,6 @@ pause`
         matched.push('winget (пример)');
       }
     }
-
     if (/(обнови|обновить|upgrade|апгрейд).*(программ|приложен|по|winget|все)/.test(text)) {
       lines.push('echo Обновляем все установленные программы...');
       lines.push('winget upgrade --all --silent --accept-package-agreements --accept-source-agreements');
@@ -1781,43 +2153,30 @@ pause`
       lines.push('shutdown /a');
       matched.push('shutdown /a');
     } else if (wantsReboot) {
-      if (sec) {
-        lines.push(`echo Перезагрузка через ${sec} секунд...`);
-        lines.push(`shutdown /r /t ${sec}`);
-      } else {
-        lines.push('echo Перезагрузка через 10 секунд...');
-        lines.push('shutdown /r /t 10');
-      }
+      if (sec) { lines.push(`echo Перезагрузка через ${sec} секунд...`); lines.push(`shutdown /r /t ${sec}`); }
+      else { lines.push('echo Перезагрузка через 10 секунд...'); lines.push('shutdown /r /t 10'); }
       matched.push(sec ? `reboot через ${sec} сек` : 'reboot');
     } else if (wantsShutdown) {
-      if (sec) {
-        lines.push(`echo Выключение через ${sec} секунд...`);
-        lines.push(`shutdown /s /t ${sec}`);
-      } else {
-        lines.push('echo Выключение через 10 секунд...');
-        lines.push('shutdown /s /t 10');
-      }
+      if (sec) { lines.push(`echo Выключение через ${sec} секунд...`); lines.push(`shutdown /s /t ${sec}`); }
+      else { lines.push('echo Выключение через 10 секунд...'); lines.push('shutdown /s /t 10'); }
       matched.push(sec ? `shutdown через ${sec} сек` : 'shutdown');
     }
 
     if (/(проверь|проверить|scan|sfc|целостн).*(систем|sfc)|sfc\s*\/\s*scannow/.test(text)) {
-      lines.push('echo Проверяем целостность системных файлов (может занять время)...');
+      lines.push('echo Проверяем целостность системных файлов...');
       lines.push('sfc /scannow');
       matched.push('sfc /scannow');
     }
-
     if (/(проверь|проверить|chkdsk).*(диск|chkdsk)|chkdsk/.test(text)) {
       lines.push('echo Проверяем диск C: ...');
       lines.push('chkdsk C: /f');
       matched.push('chkdsk');
     }
-
     if (/(список|покажи|выведи|list).*(процесс|process|tasklist)|tasklist|какие процессы/.test(text)) {
       lines.push('echo Список процессов:');
       lines.push('tasklist');
       matched.push('tasklist');
     }
-
     const killMatch = text.match(/(убей|заверши|kill|taskkill)\s+([a-z0-9_.-]+)/i);
     if (killMatch) {
       const proc = killMatch[2].replace(/\.exe$/i, '');
@@ -1825,25 +2184,21 @@ pause`
       lines.push(`taskkill /IM ${proc}.exe /F`);
       matched.push(`taskkill ${proc}`);
     }
-
     if (/(информац|сведен|systeminfo|покажи.*систем|систем.*инфо)/.test(text)) {
       lines.push('echo Информация о системе:');
       lines.push('systeminfo');
       matched.push('systeminfo');
     }
-
     if (/(имя|name|hostname).*(комп|пк|машин)|hostname/.test(text)) {
       lines.push('echo Имя компьютера:');
       lines.push('hostname');
       matched.push('hostname');
     }
-
     if (/(список|покажи|выведи|list).*(файл|папк|каталог|dir)|^dir$/.test(text)) {
       lines.push('echo Содержимое текущей папки:');
       lines.push('dir');
       matched.push('dir');
     }
-
     const mdMatch = text.match(/(созда|сделай).*(папк|каталог|директор)\s+([a-z0-9_.\-\\/]+)/i);
     if (mdMatch) {
       const folder = mdMatch[3];
@@ -1851,7 +2206,6 @@ pause`
       lines.push(`mkdir "${folder}"`);
       matched.push(`mkdir ${folder}`);
     }
-
     const delMatch = text.match(/(удали|сотри|delete|del)\s+([a-z0-9_.\-\\/]+)/i);
     if (delMatch) {
       const file = delMatch[2];
@@ -1859,14 +2213,12 @@ pause`
       lines.push(`del /f /q "${file}"`);
       matched.push(`del ${file}`);
     }
-
     const copyMatch = text.match(/(скопиру|копируй|copy)\s+([a-z0-9_.\-\\/]+)\s+(в|to)\s+([a-z0-9_.\-\\/]+)/i);
     if (copyMatch) {
       lines.push(`echo Копируем ${copyMatch[2]} в ${copyMatch[4]}...`);
       lines.push(`copy /Y "${copyMatch[2]}" "${copyMatch[4]}"`);
       matched.push('copy');
     }
-
     if (/(бэкап|бек?ап|резервн|backup|копи.*документ)/.test(text)) {
       const srcMatch = text.match(/(документ|рабоч|desktop|загрузк|downloads|фото|picture)/);
       let source = 'C:\\Users\\%username%\\Documents';
@@ -1884,7 +2236,6 @@ pause`
       lines.push('xcopy "%SOURCE%" "%DEST%" /E /I /H /Y');
       matched.push('backup');
     }
-
     if (/(отключ|выключ|disable).*(сеть|адаптер|интернет|wifi|wi-fi)/.test(text) ||
         /(включ|enable).*(сеть|адаптер|интернет|wifi|wi-fi)/.test(text)) {
       const ifaceMatch = text.match(/(wifi|wi-fi|вайфай|ethernet|эзернет|локалк)/);
@@ -1900,23 +2251,19 @@ pause`
       lines.push(`netsh interface set interface "${iface}" admin=enable`);
       matched.push(`netsh ${iface} toggle`);
     }
-
     if (/(привет|здравств|hello|echo).*(мир|пользовател|пк|комп)/.test(text) || /^привет/.test(text)) {
       lines.push('echo Привет! Скрипт запущен.');
       lines.push('echo Дата: %date%  Время: %time%');
       lines.push('echo Пользователь: %username%  Компьютер: %computername%');
       matched.push('echo');
     }
-
     if (/(netstat|соединен|подключен|порты|ports)/.test(text)) {
       lines.push('echo Активные сетевые подключения:');
       lines.push('netstat -an');
       matched.push('netstat');
     }
 
-    if (lines.length === 0) {
-      return { body: null, matched: [], name: null, admin: false };
-    }
+    if (lines.length === 0) return { body: null, matched: [], name: null, admin: false };
 
     const needAdmin = /(sfc|chkdsk|netsh|shutdown|перезагруз|выключ|winget install|systeminfo)/.test(text);
     const body = '@echo off\nchcp 65001 >nul\n\n' + lines.join('\n') + '\n\necho.\necho Готово!\npause';
@@ -1925,13 +2272,10 @@ pause`
 
   function generateFromDescription() {
     const prompt = document.getElementById('aiPrompt').value.trim();
-    if (!prompt) {
-      showStatus('❌ Сначала опишите, что должен делать батник.', 'err');
-      return;
-    }
+    if (!prompt) { showStatus('❌ Сначала опишите, что должен делать батник.', 'err'); return; }
     const result = buildBatFromDescription(prompt);
     if (!result.body) {
-      showStatus('⚠️ Не удалось распознать команды. Попробуйте перефразировать: «ping google.com», «почисти dns», «установи chrome», «перезагрузи через 60 секунд», «сделай бэкап документов». Или напишите команды вручную ниже.', 'err');
+      showStatus('⚠️ Не удалось распознать команды. Попробуйте перефразировать или напишите команды вручную ниже.', 'err');
       return;
     }
     document.getElementById('batBody').value = result.body;
@@ -1949,47 +2293,28 @@ pause`
     const bodyInput = document.getElementById('batBody');
     const encoding = document.getElementById('batEncoding').value;
     const needAdmin = document.getElementById('batAdmin').checked;
-
     const body = bodyInput.value || '';
-    if (!body.trim()) {
-      showStatus('❌ Текст батника пуст — введите хотя бы одну команду.', 'err');
-      return;
-    }
+    if (!body.trim()) { showStatus('❌ Текст батника пуст — введите хотя бы одну команду.', 'err'); return; }
 
     const fileName = sanitizeFileName(nameInput.value);
-    let content = '';
     const bom = encoding === 'utf-8' ? '\uFEFF' : '';
-
     let adminHeader = '';
     if (needAdmin) {
-      adminHeader = `@echo off
-:: --- Автозапрос прав администратора ---
-net session >nul 2>&1
+      const uacBlock = `net session >nul 2>&1
 if %errorLevel% neq 0 (
     echo Запрос прав администратора...
     powershell -Command "Start-Process '%~f0' -Verb RunAs"
     exit /b
 )
-:: --- Конец блока UAC ---
 `;
-      if (/^\s*@echo off/i.test(body)) {
-        adminHeader = `:: --- Автозапрос прав администратора ---
-net session >nul 2>&1
-if %errorLevel% neq 0 (
-    echo Запрос прав администратора...
-    powershell -Command "Start-Process '%~f0' -Verb RunAs"
-    exit /b
-)
-:: --- Конец блока UAC ---
-`;
-      }
+      adminHeader = /^\s*@echo off/i.test(body)
+        ? `:: --- Автозапрос прав администратора ---\n${uacBlock}:: --- Конец блока UAC ---\n`
+        : `@echo off\n:: --- Автозапрос прав администратора ---\n${uacBlock}:: --- Конец блока UAC ---\n`;
     }
-
-    content = bom + adminHeader + body;
+    let content = bom + adminHeader + body;
     if (!content.endsWith('\n')) content += '\n';
 
-    const previewEl = document.getElementById('batPreview');
-    previewEl.textContent = content.replace(/^\uFEFF/, '');
+    document.getElementById('batPreview').textContent = content.replace(/^\uFEFF/, '');
     document.getElementById('batPreviewWrap').classList.add('show');
 
     try {
@@ -2003,17 +2328,189 @@ if %errorLevel% neq 0 (
       a.click();
       document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 1500);
-
       showStatus('✅ Файл «' + fileName + '» готов и скачивается. Кодировка: ' + (encoding === 'utf-8' ? 'UTF-8' : 'Windows-1251') + '.', 'ok');
     } catch (err) {
       showStatus('❌ Ошибка при создании файла: ' + err.message, 'err');
     }
   }
 
+  // ===== ЭКСПОРТ РЕЗЮМЕ =====
+  function resumeStatus(msg, type) {
+    const el = document.getElementById('resumeStatus');
+    el.textContent = msg;
+    el.className = 'status show ' + (type || 'info');
+    setTimeout(() => { el.classList.remove('show'); }, 4000);
+  }
+
+  function downloadFile(content, filename, mime) {
+    const blob = new Blob([content], { type: mime || 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }
+
+  function buildResumeText() {
+    const doc = document.getElementById('resumeDoc');
+    const walk = (node, out) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const t = node.textContent.replace(/\s+/g, ' ').trim();
+        if (t) out.push(t);
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const tag = node.tagName.toLowerCase();
+        if (tag === 'h1') { out.push('\n' + '='.repeat(50)); out.push(node.textContent.trim().toUpperCase()); out.push('='.repeat(50) + '\n'); return; }
+        if (tag === 'h2') { out.push('\n--- ' + node.textContent.trim() + ' ---\n'); return; }
+        if (tag === 'h3') { out.push('\n### ' + node.textContent.trim() + ' ###\n'); return; }
+        if (tag === 'li') { out.push('  • ' + node.textContent.replace(/\s+/g, ' ').trim()); return; }
+        if (tag === 'div' && node.classList && node.classList.contains('resume-job')) {
+          out.push('');
+        }
+        node.childNodes.forEach(c => walk(c, out));
+      }
+    };
+    const out = [];
+    walk(doc, out);
+    return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  function buildResumeJson() {
+    const doc = document.getElementById('resumeDoc');
+    const data = {
+      name: 'Карашаев Темиркан Вячеславович',
+      gender: 'Мужчина',
+      age: 38,
+      birthDate: '1988-07-05',
+      phone: '+7 (916) 296-11-77',
+      email: 'oboiadm@bk.ru',
+      setka: 'https://set.kia/account/7Ya7KC7',
+      location: 'Москва, м. Медведково',
+      citizenship: 'Россия',
+      workPermit: 'Россия',
+      relocation: 'Не готов к переезду, готов к командировкам',
+      desiredPosition: 'Специалист технической поддержки',
+      desiredSalary: '100 000 р на руки',
+      employment: 'полная занятость',
+      workFormat: ['гибрид', 'удалённо', 'разъездная', 'на месте работодателя'],
+      experience: '16 лет 2 месяца',
+      experienceList: [],
+      education: [
+        { year: 2012, level: 'Высшее', institution: 'Белгородский университет кооперации, экономики и права, Белгород', faculty: 'Экономический факультет', specialty: 'финансы и кредит' },
+        { year: 2008, level: 'Среднее специальное', institution: 'Колледж Малого Бизнеса 48', specialty: 'налоги и налогообложение' }
+      ],
+      courses: [
+        { year: 2011, institution: 'Центр подготовки персонала ФНС России г. С.-Петербург', organization: 'ФНС России' },
+        { year: 2010, institution: 'Центр подготовки специалистов налоговых органов', program: 'Система ЭОД. Работа с налогоплательщиками.', organization: 'ФНС России' }
+      ],
+      languages: [
+        { language: 'Русский', level: 'Родной' },
+        { language: 'Английский', level: 'A1 — Начальный' }
+      ],
+      drivingLicense: 'B',
+      about: 'Целеустремлён, коммуникабелен, вежлив, стойко переношу тяготы и лишения, связанные с работой, интеллект в наличии, легко уживаюсь в любом коллективе. Люблю трудиться. Быстро обучаюсь новому. Сопровождал проект Кубка конфедераций на арене Спартак и ЧМ мира 2018 на арене Лужники, техническое сопровождение концессий в области POS-терминалов от компании VISA.'
+    };
+
+    const jobs = doc.querySelectorAll('.resume-job');
+    jobs.forEach(job => {
+      const period = job.querySelector('.resume-period');
+      const company = job.querySelector('.resume-company');
+      const meta = job.querySelector('.resume-meta');
+      const role = job.querySelector('.resume-role');
+      const list = job.querySelectorAll('li');
+      if (period && /^\d{4}\b/.test(period.textContent.trim())) return;
+      if (!company) return;
+      const jobData = {
+        period: period ? period.textContent.trim() : '',
+        company: company ? company.textContent.trim() : '',
+        meta: meta ? meta.textContent.trim() : '',
+        role: role ? role.textContent.trim() : '',
+        responsibilities: []
+      };
+      list.forEach(li => jobData.responsibilities.push(li.textContent.trim()));
+      if (jobData.company && jobData.responsibilities.length) {
+        data.experienceList.push(jobData);
+      }
+    });
+
+    return JSON.stringify(data, null, 2);
+  }
+
+  function downloadResume(format) {
+    const baseName = 'Karashaev_Temirkan_Rezyume';
+    try {
+      if (format === 'txt') {
+        const txt = buildResumeText();
+        downloadFile(txt, baseName + '.txt', 'text/plain;charset=utf-8');
+        resumeStatus('✅ TXT-файл скачивается.', 'ok');
+      } else if (format === 'json') {
+        const json = buildResumeJson();
+        downloadFile(json, baseName + '.json', 'application/json;charset=utf-8');
+        resumeStatus('✅ JSON-файл скачивается.', 'ok');
+      } else if (format === 'html') {
+        const docEl = document.getElementById('resumeDoc');
+        const html = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Резюме — Карашаев Темиркан Вячеславович</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Arial, sans-serif; max-width: 820px; margin: 30px auto; padding: 20px; color: #1f2933; line-height: 1.6; }
+  h1 { font-size: 24px; color: #1e3a8a; border-bottom: 2px solid #e0ecff; padding-bottom: 8px; margin: 0 0 10px; }
+  h2 { font-size: 17px; color: #1e40af; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin: 22px 0 10px; }
+  h3 { font-size: 15px; color: #1f2933; margin: 12px 0 4px; }
+  .resume-contact { font-size: 13.5px; color: #475569; margin-bottom: 14px; }
+  .resume-contact div { margin-bottom: 2px; }
+  .resume-meta { font-size: 12.5px; color: #64748b; margin-bottom: 6px; }
+  .resume-job { padding: 10px 0; border-bottom: 1px solid #eef2f7; }
+  .resume-job:last-child { border-bottom: none; }
+  .resume-company { font-weight: 700; color: #1e3a8a; font-size: 14.5px; }
+  .resume-role { font-weight: 600; font-size: 13.5px; }
+  .resume-period { font-size: 12.5px; color: #64748b; font-style: italic; margin-bottom: 4px; }
+  .resume-about { background: #f8fafc; border-left: 4px solid #2563eb; padding: 10px 14px; border-radius: 6px; font-size: 13.5px; color: #334155; }
+  ul { padding-left: 20px; margin: 6px 0 10px; }
+  li { font-size: 13.5px; margin-bottom: 4px; }
+  @media print { body { margin: 0; padding: 15px; } }
+</style>
+</head>
+<body>
+${docEl.innerHTML}
+</body>
+</html>`;
+        downloadFile(html, baseName + '.html', 'text/html;charset=utf-8');
+        resumeStatus('✅ HTML-файл скачивается. Можно открыть в Word и сохранить как .docx.', 'ok');
+      }
+    } catch (err) {
+      resumeStatus('❌ Ошибка экспорта: ' + err.message, 'err');
+    }
+  }
+
+  function printResume() {
+    window.print();
+    resumeStatus('ℹ️ Открыто окно печати. Выберите «Сохранить как PDF».', 'info');
+  }
+
+  async function copyResumeText() {
+    try {
+      const txt = buildResumeText();
+      await navigator.clipboard.writeText(txt);
+      resumeStatus('✅ Текст резюме скопирован в буфер обмена.', 'ok');
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = buildResumeText();
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); resumeStatus('✅ Текст скопирован.', 'ok'); }
+      catch (err) { resumeStatus('❌ Не удалось скопировать автоматически. Выделите текст вручную.', 'err'); }
+      document.body.removeChild(ta);
+    }
+  }
+
   // ===== Инициализация =====
   handleInitialRoute();
 
-  // Показываем плавающую кнопку сразу, если это мобильный и сайт не установлен
   (function() {
     if (isStandalone()) return;
     const platform = detectPlatform();
