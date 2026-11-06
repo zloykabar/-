@@ -1261,34 +1261,41 @@ Broadcast:              192.168.1.255
   <section id="diag" class="page">
     <button class="page-back" onclick="navigateTo('home')">← На главную</button>
     <h2>Диагностика сети</h2>
+    <p>Основные команды для проверки соединения и поиска проблем. Приведены для Windows, macOS и Linux.</p>
 
-    <h3>Ping — проверка доступности</h3>
-    <div class="os-block"><strong>Windows:</strong> <code>ping 8.8.8.8</code></div>
-    <div class="os-block"><strong>macOS / Linux:</strong> <code>ping 8.8.8.8</code> (остановить <code>Ctrl+C</code>)</div>
+    <h3>Ping — проверка доступности узла</h3>
+    <p>Отправляет ICMP-пакеты на указанный адрес и показывает, отвечает ли узел и с какой задержкой.</p>
+    <div class="os-block"><strong>Windows:</strong> <code>ping &lt;адрес&gt;</code> — по умолчанию отправляет 4 пакета</div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>ping &lt;адрес&gt;</code> — пингует бесконечно, остановить <code>Ctrl+C</code></div>
 
-    <h3>Traceroute / Tracert</h3>
-    <div class="os-block"><strong>Windows:</strong> <code>tracert google.com</code></div>
-    <div class="os-block"><strong>macOS / Linux:</strong> <code>traceroute google.com</code></div>
+    <h3>Traceroute / Tracert — маршрут до узла</h3>
+    <p>Показывает все промежуточные маршрутизаторы (хопы) на пути к цели. Помогает понять, на каком участке сети теряются пакеты.</p>
+    <div class="os-block"><strong>Windows:</strong> <code>tracert &lt;адрес&gt;</code></div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>traceroute &lt;адрес&gt;</code></div>
 
-    <h3>NSLookup / Dig</h3>
-    <div class="os-block"><strong>Все ОС:</strong> <code>nslookup google.com</code></div>
-    <div class="os-block"><strong>macOS / Linux:</strong> <code>dig google.com</code></div>
+    <h3>NSLookup — проверка DNS</h3>
+    <p>Проверяет, правильно ли имя домена преобразуется в IP-адрес.</p>
+    <div class="os-block"><strong>Все ОС:</strong> <code>nslookup &lt;домен&gt;</code></div>
+    <div class="os-block"><strong>macOS / Linux (расширенно):</strong> <code>dig &lt;домен&gt;</code></div>
 
-    <h3>Netstat / SS</h3>
+    <h3>Netstat — просмотр соединений и портов</h3>
+    <p>Показывает открытые порты и активные подключения на компьютере.</p>
     <div class="os-block"><strong>Windows:</strong> <code>netstat -an</code></div>
     <div class="os-block"><strong>macOS / Linux:</strong> <code>netstat -tuln</code> или <code>ss -tuln</code></div>
 
-    <h3>Проверка порта</h3>
-    <div class="os-block"><strong>Windows (PowerShell):</strong> <code>Test-NetConnection google.com -Port 443</code></div>
-    <div class="os-block"><strong>macOS / Linux:</strong> <code>nc -zv google.com 443</code></div>
+    <h3>Проверка конкретного порта</h3>
+    <p>Позволяет узнать, открыт ли определённый порт на удалённом узле (например, 443 для HTTPS).</p>
+    <div class="os-block"><strong>Windows (PowerShell):</strong> <code>Test-NetConnection &lt;адрес&gt; -Port &lt;порт&gt;</code></div>
+    <div class="os-block"><strong>macOS / Linux:</strong> <code>nc -zv &lt;адрес&gt; &lt;порт&gt;</code></div>
 
     <h3>Сброс сетевых настроек</h3>
-    <div class="os-block"><strong>Windows:</strong> <code>ipconfig /flushdns</code>, <code>ipconfig /release</code> + <code>ipconfig /renew</code></div>
+    <p>Помогает, если интернет вроде бы есть, но сайты не открываются или наблюдаются странные сетевые ошибки.</p>
+    <div class="os-block"><strong>Windows:</strong> <code>ipconfig /flushdns</code>, затем <code>ipconfig /release</code> и <code>ipconfig /renew</code></div>
     <div class="os-block"><strong>macOS:</strong> <code>sudo dscacheutil -flushcache</code></div>
     <div class="os-block"><strong>Linux:</strong> <code>sudo systemctl restart NetworkManager</code></div>
 
     <div class="note">
-      Если <code>ping 8.8.8.8</code> работает, а сайты не открываются — проблема почти наверняка в DNS.
+      <strong>Совет:</strong> если <code>ping 8.8.8.8</code> работает, а сайты не открываются — проблема почти наверняка в DNS.
     </div>
   </section>
 
